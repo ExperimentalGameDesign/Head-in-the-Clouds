@@ -1,14 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\draw.cs">
     <Files>
-      <File FileName="Assets\Scripts\SelectScreen.cs" Line="87" Column="66" />
-      <File FileName="Assets\Scripts\GameController.cs" Line="47" Column="3" />
-      <File FileName="Assets\Scripts\SelectScreen.cs" Line="133" Column="1" />
-      <File FileName="Assets\Scripts\SplashScreen.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\draw.cs" Line="172" Column="3" />
-      <File FileName="Assets\Scripts\bounce_script.cs" Line="6" Column="1" />
-      <File FileName="Assets\Scripts\CameraMove.cs" Line="18" Column="4" />
+      <File FileName="Assets\Scripts\draw.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\bounce_script.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CameraMove.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameOver.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\draw.cs" Line="94" Column="40" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

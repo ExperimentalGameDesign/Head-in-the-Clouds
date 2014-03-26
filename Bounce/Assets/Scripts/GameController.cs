@@ -6,7 +6,7 @@ public class GameController : MonoBehaviour {
 	private GameObject player; 
 	public GameObject playerChoice;
 	public bool playerPicked = false;
-	public bool isGameOver;
+	public bool isGameOver, tester;
 	public float actualScore, thread;
 
 	// Use this for initialization
@@ -35,7 +35,9 @@ public class GameController : MonoBehaviour {
 		if (playerChoice != null) {
 			if (thread > 0 && isGameOver == false)
 				this.GetComponent<draw>().enabled = true;
-			else
+			else if (tester)
+				thread = 100;
+			else	 
 				this.GetComponent<draw>().enabled = false;
 		}
 	}

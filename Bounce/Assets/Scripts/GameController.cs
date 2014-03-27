@@ -1,30 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
 
 	private GameObject player; 
-	public GameObject playerChoice;
+	public GameObject playerChoice, threadPickup;
 	public bool playerPicked = false;
 	public bool isGameOver, tester;
-	public float actualScore, thread;
+	public float actualScore, thread, spawnPoint;
+	public List<GameObject> threadList;
 
 	// Use this for initialization
 	void Start () {
 		thread = 100;
 		actualScore = 0.0f;
-		//player = GameObject.Instantiate(playerChoice, new Vector3 (0.0f, 0.0f, 0.0f), Quaternion.identity) as GameObject;
+		spawnPoint = 0.0f;
+		//threadPickup = (GameObject)Instantiate(Resources.Load("Thread"));
 	}
 	void OnCollisionEnter2D(Collision2D thing)
 	{
-		//rigidbody2D.AddForce(new Vector2(0,1750));
-		//if (thing.transform.name == "floor")
-		//	game.isGameOver = true;
-		Debug.Log (thing.transform.name);
+
 	}
 	// Update is called once per frame
 	void Update () {
-		//Debug.Log (playerChoice);
 		if (playerChoice != null && playerPicked == true) {
 			player = GameObject.Find (playerChoice.name); 
 			player.transform.position = new Vector3 (0.0f, 0.0f, 0.0f);
@@ -39,6 +38,11 @@ public class GameController : MonoBehaviour {
 				thread = 100;
 			else	 
 				this.GetComponent<draw>().enabled = false;
+			if (player.transform.position.y >= spawnPoint) {
+				threadPickup = (GameObject)Instantiate(Resources.Load("Thread"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
+				threadList.Add(threadPickup);
+				spawnPoint = player.transform.position.y + 80;
+			}
 		}
 	}
 

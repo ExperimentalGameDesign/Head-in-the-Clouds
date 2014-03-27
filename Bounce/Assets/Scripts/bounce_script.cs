@@ -4,33 +4,44 @@ using System.Collections;
 public class bounce_script : MonoBehaviour {
 	
 	public float bounceForce;
-	// Use this for initialization
+	public GameController game;
+
 	void Start () {
 		bounceForce = 2000;
+		GameObject temp = GameObject.Find ("Main Camera");
+		game = temp.GetComponent<GameController> ();
 	}
+
 	void OnCollisionEnter2D(Collision2D thing)
 	{
 		bounceForce = 35000 / thing.transform.localScale.x;
-		if(thing.transform.name != "floor") // && thing.transform.name != "left_wall" && thing.transform.name != "right_wall") 
+		if(thing.transform.name != "floor" && thing.transform.name != "Thread") // && thing.transform.name != "left_wall" && thing.transform.name != "right_wall") 
 		{
 			Vector3 temp = thing.contacts[0].normal;
-			if (thing.transform.name == "left_wall" || thing.transform.name == "right_wall") 
-				print (temp);
-			//temp*= 2000;
-			//if (temp.magnitude >= 2000)
-			//{
+			if (thing.transform.name == "left_wall" || thing.transform.name == "right_wall")
 				temp = temp.normalized;
 				temp = temp*bounceForce;
 				rigidbody2D.AddForce(new Vector2(temp.x,temp.y));
-			//}
-			//else
-			//	rigidbody2D.AddForce(new Vector2(temp.x,temp.y));
+
 
 		}
+
 	}
-	// Update is called once per frame
+	
+	void OnTriggerEnter2D(Collider2D thing) {
+		if (thing.transform.name == "Thread(Clone)") {
+			if (game.thread < 50.0f)
+				game.thread += 50.0f;
+			else
+				game.thread = 100.0f;
+			for (int i = 0; i < game.threadList.Count; i++) {
+				if (thing.name == game.threadList[i].name)
+					GameObject.Destroy(game.threadList[i]);
+			}
+		}
+	}
+
 	void Update () {
-		//constantForce.force = Vector3.up *1;
 
 	}
 }

@@ -44,6 +44,11 @@ public class GameController : MonoBehaviour {
 				spawnPoint = player.transform.position.y + 80;
 			}
 		}
+		if (isGameOver) {
+			if (Input.GetMouseButtonDown(0)) { 
+				Application.LoadLevel(0);
+			}
+		}
 	}
 
 	void OnGUI(){

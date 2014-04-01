@@ -6,13 +6,12 @@ public class SelectScreen : MonoBehaviour {
 	
 	public GameObject selectSprite;//, redBall, blueBall, greenBall;
 	public GameController game;
-	private GameObject temp, ballTemp;
+	private GameObject temp, ballTemp, ground;
 	private float fadeValue = 1.0f;
 	private float currentTime = 0.0f;
 	private const float timeItTakesToFade = 0.5f;
 	private bool isFading = false;
 	private SelectScreen selecter;
-	public bool splashing = true;
 	public List<GameObject> ballFabs;
 	public List<GameObject> balls;
 	private float pos = -25.0f;
@@ -43,23 +42,25 @@ public class SelectScreen : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//mousebuttonup because it will start drawing a line otherwise.
-		if (Input.GetMouseButtonUp (0) /*&& splashing == false*/ && isFading == false) {
+		if (Input.GetMouseButtonUp (0) && isFading == false) {
 			//StartFade ();
 			//this.GetComponent<SelectScreen>().splashing = false;
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 			if (hit.collider != null) {
-				Debug.Log(hit.collider);
+				//Debug.Log(hit.collider);
 				game.playerChoice = GameObject.Find(hit.collider.gameObject.name);
 				for (int i = 0; i < balls.Count; i++)
 					if (balls[i].name != game.playerChoice.name)
 						GameObject.Destroy(balls[i]);
 				game.playerPicked = true;
-				this.GetComponent<CameraMove>().ball = GameObject.Find(hit.collider.gameObject.name);
+				ground = (GameObject)Instantiate(Resources.Load("ground"));
 				StartFade();
 				if(hit.collider.name == "Face(Clone)") {
 					this.GetComponent<cameraScript>().enabled = true;
+					this.GetComponent<cameraScript>().picturePlane = GameObject.Find(hit.collider.name);
 				}
+				this.GetComponent<CameraMove>().ball = GameObject.Find(hit.collider.gameObject.name);
 				//GameObject.Destroy(redB);
 				//GameObject.Destroy(greenB);
 				//GameObject.Destroy(blueB);

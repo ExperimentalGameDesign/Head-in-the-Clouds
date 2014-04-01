@@ -34,8 +34,8 @@ public class GameController : MonoBehaviour {
 			
 			if (player.name == "Face(Clone)") {
 				player.transform.position = new Vector3 (0.0f, 0.0f, -1.0f);
-				player.transform.rotation = new Quaternion(0.0f, -180.0f, 0.0f, 0.0f);
-				this.GetComponent<cameraScript>().picturePlane = GameObject.Find(player.name);
+				player.transform.rotation = new Quaternion(180.0f, -180.0f, 0.0f, 0.0f);
+
 			}
 			
 			else {
@@ -63,6 +63,7 @@ public class GameController : MonoBehaviour {
 				spawnPoint = player.transform.position.y + 80;
 			}
 		}
+
 		if (isGameOver) {
 			if (Input.GetMouseButtonDown(0)) { 
 				//Application.LoadLevel(0);

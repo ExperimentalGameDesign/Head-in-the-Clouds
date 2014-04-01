@@ -27,7 +27,7 @@ public class draw : MonoBehaviour {
 		if (Input.GetMouseButtonUp(0))
 		{
 			lastPosExists = false;		
-			print ("released");
+			//print ("released");
 		
 			DrawTexture();
 			textureArray = new List<GameObject>();
@@ -40,7 +40,7 @@ public class draw : MonoBehaviour {
 			lastPosExists = true;
 			//firstClick = true;
 			MakeShape (lastPos);
-			print ("here");
+			//print ("here");
 		}
 		//Mouse is drawing!
 		if (Input.GetMouseButton(0))
@@ -74,7 +74,7 @@ public class draw : MonoBehaviour {
 		shape = (GameObject)Instantiate(Resources.Load("Cube"));
 		shape.collider2D.enabled = false;
 		//shape.transform.localScale = new Vector3(0,0,0);
-		print ("scale = " + shape.transform.localScale);
+		//print ("scale = " + shape.transform.localScale);
 		//GameObject childShape = shape.GetComponentInChildren<GameObject>("box");
 		shape.transform.position = newPos; //Vector3.Lerp(newPos, lastPos, 0.5f);
 		lastPos = newPos;
@@ -94,7 +94,7 @@ public class draw : MonoBehaviour {
 		float yDist = lastPos.y - firstPos.y;
 		distanceBetweenPos = Mathf.Sqrt((xDist*xDist) + (yDist*yDist));
 		this.GetComponent<GameController>().thread -= distanceBetweenPos;
-		print ("dist2 = " + distanceBetweenPos);
+		//print ("dist2 = " + distanceBetweenPos);
 		Vector3 move_direction = new Vector3(lastPos.x-firstPos.x, lastPos.y-firstPos.y, 0);
 		for (int i=0; i<distanceBetweenPos; i++)
 		{
@@ -134,7 +134,7 @@ public class draw : MonoBehaviour {
 			float xDist = newPos.x - firstPos.x;
 			float yDist = newPos.y - firstPos.y;
 			distanceBetweenPos = Mathf.Sqrt((xDist*xDist) + (yDist*yDist));
-			print ("dist = " + distanceBetweenPos);
+			//print ("dist = " + distanceBetweenPos);
 			shape.transform.localScale = new Vector3(distanceBetweenPos, 1, 1);
 
 			shape.transform.position = new Vector3((newPos.x + firstPos.x)/2, (newPos.y+firstPos.y)/2, 0);

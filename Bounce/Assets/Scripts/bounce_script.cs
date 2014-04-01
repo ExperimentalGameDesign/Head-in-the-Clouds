@@ -35,9 +35,15 @@ public class bounce_script : MonoBehaviour {
 			else
 				game.thread = 100.0f;
 			for (int i = 0; i < game.threadList.Count; i++) {
-				if (thing.name == game.threadList[i].name)
+				if (thing.gameObject == game.threadList[i])
 					GameObject.Destroy(game.threadList[i]);
 			}
+		}
+		if (thing.name == "WhiteCloud(Clone)") {
+			rigidbody2D.AddForce(new Vector2(0.0f, 3000.0f));
+		}
+		if (thing.name == "DarkCould(Clone)") {
+						rigidbody2D.AddForce (new Vector2 (0.0f, -1000.0f));
 		}
 	}
 

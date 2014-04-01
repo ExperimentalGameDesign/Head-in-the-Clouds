@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class GameController : MonoBehaviour {
 
 	private GameObject player; 
-	public GameObject playerChoice, threadPickup;
+	public GameObject playerChoice, threadPickup, whiteCloud, darkCloud;
 	public bool playerPicked = false;
 	public bool isGameOver, tester;
 	public float actualScore, thread, spawnPoint;
-	public List<GameObject> threadList;
+	public List<GameObject> threadList, whiteCloudList, darkCloudList;
 	public GameObject leaderboard;
 	public bool leaderboardCreated;
 	public GameObject actualLeaderboard;
@@ -55,7 +55,11 @@ public class GameController : MonoBehaviour {
 				this.GetComponent<draw>().enabled = false;
 			if (player.transform.position.y >= spawnPoint) {
 				threadPickup = (GameObject)Instantiate(Resources.Load("Thread"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
+				whiteCloud = (GameObject)Instantiate(Resources.Load("WhiteCloud"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
+				darkCloud = (GameObject)Instantiate(Resources.Load("DarkCloud"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
 				threadList.Add(threadPickup);
+				whiteCloudList.Add(whiteCloud);
+				darkCloudList.Add(darkCloud);
 				spawnPoint = player.transform.position.y + 80;
 			}
 		}

@@ -15,7 +15,7 @@ public class SelectScreen : MonoBehaviour {
 	public bool splashing = true;
 	public List<GameObject> ballFabs;
 	public List<GameObject> balls;
-	private float pos = -15.0f;
+	private float pos = -25.0f;
 	//	private bool isAppearing = false;
 	
 	// Use this for initialization

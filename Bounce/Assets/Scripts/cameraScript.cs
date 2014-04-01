@@ -14,12 +14,12 @@ public class cameraScript : MonoBehaviour {
 	void Start () {
 		isFront = true;
 
-		picturePlane = GameObject.Find ("picturePlane");
+		//picturePlane = GameObject.Find ("picturePlane");
 		frontRotation = new Vector3(0.0f, 270.0f, 90.0f);
 		frontScale = new Vector3 (5.0f, -1.0f, 5.0f);
 		backRotation = new Vector3 (0.0f, 270.0f, 270.0f);
 		backScale = new Vector3 (5.0f, 1.0f, 5.0f);
-		picturePlane.transform.eulerAngles = frontRotation;
+		//picturePlane.transform.eulerAngles = frontRotation;
 
 		BackgroundTexture = gameObject.AddComponent<GUITexture>();
 		BackgroundTexture.pixelInset = new Rect(0 ,0,Screen.width,Screen.height);
@@ -60,6 +60,7 @@ public class cameraScript : MonoBehaviour {
 		if(GUI.Button(new Rect(0.0f, (Screen.height / 4.0f) * 3.0f, Screen.width, Screen.height / 4), "Tap Here to take Picture")){
 			cameraFront.Stop ();
 			cameraBack.Stop ();
+			enabled = false;
 		}
 
 		//Switches camera

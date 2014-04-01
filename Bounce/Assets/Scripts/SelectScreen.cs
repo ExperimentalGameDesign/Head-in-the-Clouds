@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SelectScreen : MonoBehaviour {
-			
+	
 	public GameObject selectSprite;//, redBall, blueBall, greenBall;
 	public GameController game;
 	private GameObject temp, ballTemp;
@@ -15,27 +15,32 @@ public class SelectScreen : MonoBehaviour {
 	public bool splashing = true;
 	public List<GameObject> ballFabs;
 	public List<GameObject> balls;
-	private float pos = -10.0f;
-		//	private bool isAppearing = false;
-		
-		// Use this for initialization
+	private float pos = -15.0f;
+	//	private bool isAppearing = false;
+	
+	// Use this for initialization
 	void Start () {
 		balls = new List<GameObject>();
 		//temp = GameObject.Instantiate (selectSprite, new Vector3 (0.0f, 0.0f, 0.0f), Quaternion.identity) as GameObject;
 		//temp.transform.localScale = new Vector3 (10.0f, 19.0f, 0.0f);
 		for (int i = 0; i < ballFabs.Count; i++) {
+			if (ballFabs[i].name == "Face") {
+				ballTemp = GameObject.Instantiate (ballFabs[i], new Vector3 (pos, 0.0f, -1.0f), new Quaternion(0.0f, -180.0f, 0.0f, 0.0f)) as GameObject;
+				balls.Add(ballTemp);
+				continue;
+			}
 			ballTemp = GameObject.Instantiate (ballFabs[i], new Vector3 (pos, 0.0f, 0.0f), Quaternion.identity) as GameObject;
 			pos += 10;
 			balls.Add (ballTemp);
 		}
-
+		
 		//blueB = GameObject.Instantiate (blueBall, new Vector3 (0.0f, 0.0f, 0.0f), Quaternion.identity) as GameObject;
 		//greenB = GameObject.Instantiate (greenBall, new Vector3 (10.0f, 0.0f, 0.0f), Quaternion.identity) as GameObject;
-			//temp2 = GameObject.Instantiate (selectSprite, new Vector3 (10.0f, 0.0f, 0.0f), Quaternion.identity) as GameObject;
-			//temp2.transform.localScale = new Vector3 (10.0f, 19.0f, 0.0f);
+		//temp2 = GameObject.Instantiate (selectSprite, new Vector3 (10.0f, 0.0f, 0.0f), Quaternion.identity) as GameObject;
+		//temp2.transform.localScale = new Vector3 (10.0f, 19.0f, 0.0f);
 	}
-		
-		// Update is called once per frame
+	
+	// Update is called once per frame
 	void Update () {
 		//mousebuttonup because it will start drawing a line otherwise.
 		if (Input.GetMouseButtonUp (0) /*&& splashing == false*/ && isFading == false) {
@@ -52,7 +57,9 @@ public class SelectScreen : MonoBehaviour {
 				game.playerPicked = true;
 				this.GetComponent<CameraMove>().ball = GameObject.Find(hit.collider.gameObject.name);
 				StartFade();
-
+				if(hit.collider.name == "Face(Clone)") {
+					this.GetComponent<cameraScript>().enabled = true;
+				}
 				//GameObject.Destroy(redB);
 				//GameObject.Destroy(greenB);
 				//GameObject.Destroy(blueB);
@@ -79,7 +86,7 @@ public class SelectScreen : MonoBehaviour {
 	private void StartFade() {
 		currentTime = 0;
 		isFading = true;
-
-	}
 		
+	}
+	
 }

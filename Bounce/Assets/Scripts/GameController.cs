@@ -30,8 +30,18 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (playerChoice != null && playerPicked == true) {
-			player = GameObject.Find (playerChoice.name); 
-			player.transform.position = new Vector3 (0.0f, 0.0f, 0.0f);
+			player = GameObject.Find (playerChoice.name);
+			
+			if (player.name == "Face(Clone)") {
+				player.transform.position = new Vector3 (0.0f, 0.0f, -1.0f);
+				player.transform.rotation = new Quaternion(0.0f, -180.0f, 0.0f, 0.0f);
+				this.GetComponent<cameraScript>().picturePlane = GameObject.Find(player.name);
+			}
+			
+			else {
+				player.transform.position = new Vector3 (0.0f, 0.0f, 0.0f);
+			}
+			
 			player.GetComponent<Rigidbody2D>().gravityScale = 5.0f;
 			this.GetComponent<CameraMove>().enabled = true;
 			playerPicked = false;

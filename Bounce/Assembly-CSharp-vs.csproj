@@ -49,11 +49,16 @@
      <Compile Include="Assets\Scripts\CameraMove.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\GameOver.cs" />
+     <Compile Include="Assets\Scripts\LeaderboardScript.cs" />
      <Compile Include="Assets\Scripts\SelectScreen.cs" />
      <Compile Include="Assets\Scripts\SplashScreen.cs" />
      <Compile Include="Assets\Scripts\bounce_script.cs" />
      <Compile Include="Assets\Scripts\cameraScript.cs" />
      <Compile Include="Assets\Scripts\draw.cs" />
+     <None Include="Assets\Parse.Unity\Parse.Unity.xml" />
+ <Reference Include="Parse.Unity">
+ <HintPath>Assets\Parse.Unity\Parse.Unity.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

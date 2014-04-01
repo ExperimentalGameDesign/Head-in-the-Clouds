@@ -10,9 +10,14 @@ public class GameController : MonoBehaviour {
 	public bool isGameOver, tester;
 	public float actualScore, thread, spawnPoint;
 	public List<GameObject> threadList;
+	public GameObject leaderboard;
+	public bool leaderboardCreated;
+	public GameObject actualLeaderboard;
+
 
 	// Use this for initialization
 	void Start () {
+		leaderboardCreated = false;
 		thread = 100;
 		actualScore = 0.0f;
 		spawnPoint = 0.0f;
@@ -46,7 +51,7 @@ public class GameController : MonoBehaviour {
 		}
 		if (isGameOver) {
 			if (Input.GetMouseButtonDown(0)) { 
-				Application.LoadLevel(0);
+				//Application.LoadLevel(0);
 			}
 		}
 	}
@@ -61,7 +66,13 @@ public class GameController : MonoBehaviour {
 			GUI.Box (new Rect (0.0f, 0.0f, Screen.width / 3.0f, Screen.height / 20.0f), theScore);
 			GUI.Box (new Rect (0.0f, 50.0f, Screen.width / 3.0f, Screen.height / 20.0f), threadLeft);
 			if (isGameOver) {
-				GUI.Box (new Rect (0.0f, Screen.height/2, Screen.width, Screen.height/4), "Game Over");
+				//GUI.Box (new Rect (0.0f, Screen.height/2, Screen.width, Screen.height/4), "Game Over");
+				if(!leaderboardCreated){
+					leaderboardCreated = true;
+					actualLeaderboard = (GameObject)Instantiate (leaderboard);
+					actualLeaderboard.transform.GetComponent<LeaderboardScript>().score = actualScore;
+				}
+
 				this.GetComponent<draw>().enabled = false;
 			}
 		}

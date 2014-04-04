@@ -69,8 +69,8 @@ public class cameraScript : MonoBehaviour {
 				cameraFront.Stop();
 				cameraBack.Play ();
 				picturePlane.renderer.material.mainTexture = cameraBack;
-				picturePlane.transform.eulerAngles = backRotation;
-				picturePlane.transform.localScale = backScale;
+				//picturePlane.transform.eulerAngles = backRotation;
+				//picturePlane.transform.localScale = backScale;
 				isFront = false;
 			}else{
 				cameraBack.Stop ();

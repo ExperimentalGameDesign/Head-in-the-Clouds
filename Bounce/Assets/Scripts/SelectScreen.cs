@@ -61,6 +61,7 @@ public class SelectScreen : MonoBehaviour {
 					this.GetComponent<cameraScript>().picturePlane = GameObject.Find(hit.collider.name);
 				}
 				this.GetComponent<CameraMove>().ball = GameObject.Find(hit.collider.gameObject.name);
+				enabled = false;
 				//GameObject.Destroy(redB);
 				//GameObject.Destroy(greenB);
 				//GameObject.Destroy(blueB);

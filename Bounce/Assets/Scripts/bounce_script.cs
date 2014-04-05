@@ -17,6 +17,7 @@ public class bounce_script : MonoBehaviour {
 		bounceForce = 35000 / thing.transform.localScale.x;
 		if(thing.transform.name != "floor" && thing.transform.name != "Thread") // && thing.transform.name != "left_wall" && thing.transform.name != "right_wall") 
 		{
+			//thing.collider.rigidbody2D.isKinematic = true;
 			Vector3 temp = thing.contacts[0].normal;
 			if (thing.transform.name == "left_wall" || thing.transform.name == "right_wall")
 				temp = temp.normalized;
@@ -27,7 +28,11 @@ public class bounce_script : MonoBehaviour {
 		}
 
 	}
-	
+	void OnCollisionExit2D( Collision2D thing) {
+		if(thing.transform.name != "floor" && thing.transform.name != "Thread") {
+			//thing.collider.rigidbody2D.isKinematic = false;
+		}
+	}
 	void OnTriggerEnter2D(Collider2D thing) {
 		//running into a thread pickup
 		if (thing.transform.name == "Thread(Clone)") {

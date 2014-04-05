@@ -72,7 +72,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	void OnGUI(){
-		if(playerChoice != null){
+		if(player != null){
 			if(player.transform.position.y > actualScore){
 				actualScore = player.transform.position.y;
 			}

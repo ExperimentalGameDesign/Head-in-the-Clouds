@@ -15,7 +15,7 @@ public class SplashScreen : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//temp = GameObject.Instantiate (splashSprite, new Vector3 (0.0f, -3.0f, 0.0f), Quaternion.identity) as GameObject;
+		temp = GameObject.Find ("StartButton");
 		//temp.transform.localScale = new Vector3 (5.939844f, 5.939858f, 0.0f);
 		//temp2 = GameObject.Instantiate (selectSprite, new Vector3 (10.0f, 0.0f, 0.0f), Quaternion.identity) as GameObject;
 		//temp2.transform.localScale = new Vector3 (10.0f, 19.0f, 0.0f);
@@ -23,10 +23,17 @@ public class SplashScreen : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonUp (0) && isFading == false) {
+		if (Input.GetMouseButtonUp(0) && isFading == false) {
 			//StartFade ();
-			GameObject.Destroy(splashSprite);
-			this.GetComponent<SelectScreen>().enabled = true;
+			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+			RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+			if (hit.collider != null) {
+				if(hit.collider.name == temp.name) {
+					GameObject.Destroy(splashSprite);
+					this.GetComponent<SelectScreen>().enabled = true;
+					enabled = false;
+				}
+			}
 		}
 		if (isFading) {
 			currentTime += Time.deltaTime;

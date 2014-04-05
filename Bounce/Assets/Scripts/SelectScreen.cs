@@ -14,7 +14,7 @@ public class SelectScreen : MonoBehaviour {
 	private SelectScreen selecter;
 	public List<GameObject> ballFabs;
 	public List<GameObject> balls;
-	private float pos = -25.0f;
+	//private float pos = -25.0f;
 	//	private bool isAppearing = false;
 	
 	// Use this for initialization
@@ -24,12 +24,12 @@ public class SelectScreen : MonoBehaviour {
 		//temp.transform.localScale = new Vector3 (10.0f, 19.0f, 0.0f);
 		for (int i = 0; i < ballFabs.Count; i++) {
 			if (ballFabs[i].name == "Face") {
-				ballTemp = GameObject.Instantiate (ballFabs[i], new Vector3 (pos, 0.0f, -1.0f), new Quaternion(0.0f, -180.0f, 0.0f, 0.0f)) as GameObject;
+				ballTemp = GameObject.Instantiate (ballFabs[i], camera.ScreenToWorldPoint(new Vector3 (((Screen.width/(ballFabs.Count+1)) * (i+1))/* + ballFabs[i].renderer.bounds.*/, Screen.height/2, 9.0f)), new Quaternion(0.0f, -180.0f, 0.0f, 0.0f)) as GameObject;
 				balls.Add(ballTemp);
 				continue;
 			}
-			ballTemp = GameObject.Instantiate (ballFabs[i], new Vector3 (pos, 0.0f, 0.0f), Quaternion.identity) as GameObject;
-			pos += 10;
+			ballTemp = GameObject.Instantiate (ballFabs[i], camera.ScreenToWorldPoint(new Vector3 (((Screen.width/(ballFabs.Count+1)) * (i+1))/* + ballFabs[i].renderer.bounds.center.x*/, Screen.height/2, 10.0f)), Quaternion.identity) as GameObject;
+			//pos += 10;
 			balls.Add (ballTemp);
 		}
 		

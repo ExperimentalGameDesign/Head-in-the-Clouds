@@ -16,8 +16,10 @@ public class GameOver : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D thing) {
 		if (thing.transform.name == game.playerChoice.name)
 			game.isGameOver = true;
-		else 
+		else {
+			Debug.Log(thing);
 			GameObject.Destroy (thing.gameObject);
+		}
 
 	}
 	// Update is called once per frame

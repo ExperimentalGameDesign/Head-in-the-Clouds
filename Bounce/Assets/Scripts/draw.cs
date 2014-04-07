@@ -45,7 +45,6 @@ public class draw : MonoBehaviour {
 		//Mouse is drawing!
 		if (Input.GetMouseButton(0))
 		{			
-
 			//Create a ray from the previous and current mouse positions
 			//Calculate distance between positions
 			//Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -73,10 +72,6 @@ public class draw : MonoBehaviour {
 	{
 		shape = (GameObject)Instantiate(Resources.Load("Cube"));
 		shape.collider2D.enabled = false;
-		//shape.transform.localScale = new Vector3(0,0,0);
-		//print ("scale = " + shape.transform.localScale);
-		//GameObject childShape = shape.GetComponentInChildren<GameObject>("box");
-		shape.transform.position = newPos; //Vector3.Lerp(newPos, lastPos, 0.5f);
 		lastPos = newPos;
 	}
 
@@ -111,7 +106,8 @@ public class draw : MonoBehaviour {
 			test.transform.position = drawPoint;
 			test.collider2D.enabled = false;
 		}
-		shape.collider2D.enabled = true;
+		if (distanceBetweenPos != 0) 
+			shape.collider2D.enabled = true;
 		shape.renderer.enabled = false;
 		/*
 

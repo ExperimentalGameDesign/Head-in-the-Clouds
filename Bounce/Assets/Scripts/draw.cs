@@ -91,10 +91,56 @@ public class draw : MonoBehaviour {
 		this.GetComponent<GameController>().thread -= distanceBetweenPos;
 		//print ("dist2 = " + distanceBetweenPos);
 		Vector3 move_direction = new Vector3(lastPos.x-firstPos.x, lastPos.y-firstPos.y, 0);
-		for (int i=0; i<distanceBetweenPos; i++)
+
+		GameObject test;
+		
+		Quaternion new_finalRotation = new Quaternion(0,0,0,0);
+		float tempZ = 0;
+		bool adjusted = false;
+		
+		
+		for (float i=0.0f; i<distanceBetweenPos; i+=1.28f)
 		{
-			GameObject test = (GameObject)Instantiate(Resources.Load("box"));
-			test.transform.rotation = finalRotation;
+			//GameObject test = (GameObject)Instantiate(Resources.Load("box"));
+			//test.transform.rotation = finalRotation;
+			if (finalRotation.eulerAngles.z >= 90 && finalRotation.eulerAngles.z <= 270)
+			{
+				tempZ = finalRotation.eulerAngles.z - 180;
+				//Quaternion rotation2 = Quaternion.Euler(new Vector3(0f, 0f, new_value));
+				adjusted = true;
+				new_finalRotation = Quaternion.Euler(new Vector3(0f, 0f, tempZ));
+			}
+			else
+				new_finalRotation = finalRotation;
+			
+			//first node
+			if (i==0.0f)
+			{
+				test = (GameObject)Instantiate(Resources.Load("DawCloudEndRight")); //tilingCloudTexture2"));
+				if (adjusted)
+					new_finalRotation = Quaternion.Euler(new Vector3(0f, 180.0f, 360.0f-tempZ));
+				//test.transform.rotation = new Quaternion(0,180,0,0);
+				//new_finalRotation = new Quaternion(0, 0, finalRotation.z, 0);
+				//print ("first" + finalRotation.z);
+			}
+			//last node 
+			else if (i+1.28f >= distanceBetweenPos)
+			{
+				test = (GameObject)Instantiate(Resources.Load("DawCloudEndLeft"));
+				if (adjusted)
+					new_finalRotation = Quaternion.Euler(new Vector3(0f, 180.0f, 360.0f - tempZ));
+				//new_finalRotation = new Quaternion(0, 180, finalRotation.z, 0);
+				//print ("last" + finalRotation.z);
+			}
+			//middle node
+			else
+			{
+				test = (GameObject)Instantiate(Resources.Load("tilingCloudTexture2"));
+			}
+			
+			
+			test.transform.rotation = new_finalRotation;
+
 
 			float angleInDeg = Mathf.Atan2 (move_direction.y, move_direction.x) * 180 / Mathf.PI;
 			float angleInRad = Mathf.Deg2Rad*angleInDeg;

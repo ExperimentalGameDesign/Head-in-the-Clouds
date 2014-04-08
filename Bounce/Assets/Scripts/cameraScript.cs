@@ -14,7 +14,7 @@ public class cameraScript : MonoBehaviour {
 	void Start () {
 		isFront = true;
 
-		//picturePlane = GameObject.Find ("picturePlane");
+		//picturePlane = (GameObject)Instantiate(Resources.Load("Thread"), new Vector3 (0.0f, 0.0f, -1.0f), new Quaternion( 0.0f, -180.0f, 0.0f, 0.0f));
 		frontRotation = new Vector3(0.0f, 270.0f, 90.0f);
 		frontScale = new Vector3 (5.0f, -1.0f, 5.0f);
 		backRotation = new Vector3 (0.0f, 270.0f, 270.0f);
@@ -60,6 +60,7 @@ public class cameraScript : MonoBehaviour {
 		if(GUI.Button(new Rect(0.0f, (Screen.height / 4.0f) * 3.0f, Screen.width, Screen.height / 4), "Tap Here to take Picture")){
 			cameraFront.Stop ();
 			cameraBack.Stop ();
+			GetComponent<GameController>().facePicked = true;
 			enabled = false;
 		}
 

@@ -6,7 +6,7 @@ public class GameController : MonoBehaviour {
 
 	private GameObject player; 
 	public GameObject playerChoice, threadPickup, whiteCloud, darkCloud, birdy;
-	public bool playerPicked = false;
+	public bool playerPicked = false, facePicked = false;
 	public bool isGameOver, tester;
 	public float actualScore, thread, spawnPoint;
 	public List<GameObject> threadList, whiteCloudList, darkCloudList;
@@ -35,18 +35,25 @@ public class GameController : MonoBehaviour {
 			if (player.name == "Face(Clone)") {
 				player.transform.position = new Vector3 (0.0f, 0.0f, -1.0f);
 				player.transform.rotation = new Quaternion(180.0f, -180.0f, 0.0f, 0.0f);
-
+				player.transform.localScale = player.transform.localScale * 5;
+				
 			}
 			
 			else {
 				player.transform.position = new Vector3 (0.0f, 0.0f, 0.0f);
+				player.GetComponent<Rigidbody2D>().gravityScale = 5.0f;
 			}
 			
-			player.GetComponent<Rigidbody2D>().gravityScale = 5.0f;
-			this.GetComponent<CameraMove>().enabled = true;
+			//player.GetComponent<Rigidbody2D>().gravityScale = 5.0f;
+			//			this.GetComponent<CameraMove>().enabled = true;
 			playerPicked = false;
 		}
 		if (playerChoice != null) {
+			if (facePicked) {
+				player.transform.localScale = player.transform.localScale / 5;
+				player.GetComponent<Rigidbody2D>().gravityScale = 5.0f;
+				facePicked = false;
+			}
 			if (thread > 0 && isGameOver == false)
 				this.GetComponent<draw>().enabled = true;
 			else if (tester)
@@ -73,6 +80,9 @@ public class GameController : MonoBehaviour {
 				whiteCloudList.Add(whiteCloud);
 				darkCloudList.Add(darkCloud);
 				spawnPoint = player.transform.position.y + 80;
+			}
+			if (player.transform.position.y > transform.position.y) {
+				transform.position = Vector3.Lerp(transform.position, new Vector3 (transform.position.x, player.transform.position.y, transform.position.z), Time.deltaTime*2);
 			}
 		}
 

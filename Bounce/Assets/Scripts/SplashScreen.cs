@@ -4,7 +4,7 @@ using System.Collections;
 public class SplashScreen : MonoBehaviour {
 
 
-	public GameObject splashSprite;
+	public GameObject splashSprite, selectSprite, faceSprite;
 	private GameObject temp, temp2;
 	private float fadeValue = 1.0f;
 	private float currentTime = 0.0f;
@@ -30,26 +30,13 @@ public class SplashScreen : MonoBehaviour {
 			if (hit.collider != null) {
 				if(hit.collider.name == temp.name) {
 					GameObject.Destroy(splashSprite);
-					this.GetComponent<SelectScreen>().enabled = true;
+					GetComponent<SelectScreen>().enabled = true;
+					selectSprite.GetComponent<SpriteRenderer>().enabled = true;
+					faceSprite.GetComponent<SpriteRenderer>().enabled = true;
 					enabled = false;
 				}
 			}
 		}
-		if (isFading) {
-			currentTime += Time.deltaTime;
-			if(currentTime <= timeItTakesToFade){
-				fadeValue = 1f - (currentTime / timeItTakesToFade);
-				splashSprite.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f, fadeValue);
-			}
-			else {
-				GameObject.Destroy(splashSprite);
-			}
-		}
 	}
-	private void StartFade() {
-		currentTime = 0;
-		isFading = true;
-
-	}
-   
+		   
 }

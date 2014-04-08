@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class GameController : MonoBehaviour {
 
 	private GameObject player; 
-	public GameObject playerChoice, threadPickup, whiteCloud, darkCloud;
+	public GameObject playerChoice, threadPickup, whiteCloud, darkCloud, birdy;
 	public bool playerPicked = false;
 	public bool isGameOver, tester;
 	public float actualScore, thread, spawnPoint;
@@ -57,6 +57,18 @@ public class GameController : MonoBehaviour {
 				threadPickup = (GameObject)Instantiate(Resources.Load("Thread"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
 				whiteCloud = (GameObject)Instantiate(Resources.Load("WhiteCloud"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
 				darkCloud = (GameObject)Instantiate(Resources.Load("DarkCloud"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
+				int randDirection = Random.Range (0,2);
+				if (randDirection == 0) //Bird comes from left of screen
+				{
+					birdy = (GameObject)Instantiate(Resources.Load("Bird"), new Vector3(/*Screen.width*/ -35, Random.Range(player.transform.position.y + 25, player.transform.position.y + 50), 0.0f), Quaternion.identity);
+					birdy.GetComponent<Bird>().screenStart = "left";
+				}
+				else //Bird comes from right of screen
+				{
+					birdy = (GameObject)Instantiate(Resources.Load("Bird"), new Vector3(/*Screen.width*/ 35, Random.Range(player.transform.position.y + 25, player.transform.position.y + 50), 0.0f), Quaternion.identity);
+					birdy.GetComponent<Bird>().screenStart = "right";
+				}
+
 				threadList.Add(threadPickup);
 				whiteCloudList.Add(whiteCloud);
 				darkCloudList.Add(darkCloud);

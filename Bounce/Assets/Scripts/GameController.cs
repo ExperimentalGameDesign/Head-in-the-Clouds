@@ -61,7 +61,7 @@ public class GameController : MonoBehaviour {
 			else	 
 				this.GetComponent<draw>().enabled = false;
 			if (player.transform.position.y >= spawnPoint) {
-				threadPickup = (GameObject)Instantiate(Resources.Load("Thread"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
+				//threadPickup = (GameObject)Instantiate(Resources.Load("Thread"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
 				whiteCloud = (GameObject)Instantiate(Resources.Load("WhiteCloud"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
 				darkCloud = (GameObject)Instantiate(Resources.Load("DarkCloud"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
 				int randDirection = Random.Range (0,2);
@@ -76,7 +76,7 @@ public class GameController : MonoBehaviour {
 					birdy.GetComponent<Bird>().screenStart = "right";
 				}
 
-				threadList.Add(threadPickup);
+				//threadList.Add(threadPickup);
 				whiteCloudList.Add(whiteCloud);
 				darkCloudList.Add(darkCloud);
 				spawnPoint = player.transform.position.y + 80;

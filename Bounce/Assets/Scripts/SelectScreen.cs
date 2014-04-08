@@ -24,16 +24,19 @@ public class SelectScreen : MonoBehaviour {
 		//temp.transform.localScale = new Vector3 (10.0f, 19.0f, 0.0f);
 		float tempY = 0.0f;
 		for (int i = 0; i < ballFabs.Count; i++) {
-			if (ballFabs[i].name == "Face") {
-				continue;
-			}
 			if (i%2 == 0) {
-				ballTemp = GameObject.Instantiate (ballFabs[i], camera.ScreenToWorldPoint(new Vector3 ((Screen.width/(3) * (i%2 + 1)), (Screen.height/(ballFabs.Count+3)) * (i + 2), 10.0f)), Quaternion.identity) as GameObject;
-				balls.Add (ballTemp);
-				tempY += 50.0f;
+				if (ballFabs[i].name == "FaceSelect") {
+					ballTemp = GameObject.Instantiate (ballFabs[i], camera.ScreenToWorldPoint(new Vector3 ((Screen.width/2), (Screen.height - (Screen.height/(ballFabs.Count+7)) * (i + 2))- 50, 10.0f)), Quaternion.identity) as GameObject;
+					balls.Add (ballTemp);
+				}
+				else {
+					ballTemp = GameObject.Instantiate (ballFabs[i], camera.ScreenToWorldPoint(new Vector3 ((Screen.width/(3) * (i%2 + 1)), (Screen.height - (Screen.height/(ballFabs.Count+7)) * (i + 2))- 50, 10.0f)), Quaternion.identity) as GameObject;
+					balls.Add (ballTemp);
+				}
+
 			}
 			else {
-				ballTemp = GameObject.Instantiate (ballFabs[i], camera.ScreenToWorldPoint(new Vector3 ((Screen.width/(3) * (i%2 + 1)), (Screen.height/(ballFabs.Count+3)) * (i + 1), 10.0f)), Quaternion.identity) as GameObject;
+				ballTemp = GameObject.Instantiate (ballFabs[i], camera.ScreenToWorldPoint(new Vector3 ((Screen.width/(3) * (i%2 + 1)), (Screen.height - (Screen.height/(ballFabs.Count+7)) * (i + 1))- 50, 10.0f)), Quaternion.identity) as GameObject;
 				balls.Add (ballTemp);
 			}
 		}
@@ -50,7 +53,7 @@ public class SelectScreen : MonoBehaviour {
 			RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
 			if (hit.collider != null) {
-				if(hit.collider.name == "FaceSelect") {
+				if(hit.collider.name == "FaceSelect(Clone)") {
 					GetComponent<cameraScript>().enabled = true;
 					game.playerChoice = (GameObject)Instantiate(Resources.Load("Face"), new Vector3 (0.0f, 0.0f, -1.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 					GetComponent<cameraScript>().picturePlane = game.playerChoice;

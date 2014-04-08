@@ -32,7 +32,7 @@ public class SplashScreen : MonoBehaviour {
 					GameObject.Destroy(splashSprite);
 					GetComponent<SelectScreen>().enabled = true;
 					selectSprite.GetComponent<SpriteRenderer>().enabled = true;
-					faceSprite.GetComponent<SpriteRenderer>().enabled = true;
+					//faceSprite.GetComponent<SpriteRenderer>().enabled = true;
 					enabled = false;
 				}
 			}

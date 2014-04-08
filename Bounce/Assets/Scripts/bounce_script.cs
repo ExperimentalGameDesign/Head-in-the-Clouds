@@ -3,7 +3,7 @@ using System.Collections;
 
 public class bounce_script : MonoBehaviour {
 	
-	public float bounceForce = 2000.0f, threadCount = 50.0f, maxThread = 100.0f, cloudForce = 3000.0f, blackCloudForce = 15.0f;
+	public float bounceForce = 2000.0f, threadCount = 10.0f, maxThread = 100.0f, cloudForce = 3000.0f, blackCloudForce = 15.0f;
 	public GameController game;
 
 	void Start () {
@@ -51,10 +51,20 @@ public class bounce_script : MonoBehaviour {
 		//send character up if hit a white cloud
 		if (thing.name == "WhiteCloud(Clone)") {
 			rigidbody2D.AddForce(new Vector2(0.0f, cloudForce));
+			if (game.thread < maxThread-threadCount)
+				game.thread += threadCount;
+			//if not then just make it the max thread so that you don't have more than the max
+			else
+				game.thread = maxThread;
+
 		}
 		if (thing.name == "DarkCloud(Clone)") {
 			rigidbody2D.velocity = rigidbody2D.velocity - new Vector2(0.0f, rigidbody2D.velocity.y/blackCloudForce);
-			//Debug.Log ("slowed");
+			if (game.thread < maxThread-threadCount)
+				game.thread += threadCount;
+			//if not then just make it the max thread so that you don't have more than the max
+			else
+				game.thread = maxThread;
 		}
 	}
 

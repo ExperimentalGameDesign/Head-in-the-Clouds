@@ -4,13 +4,13 @@ using System.Collections;
 public class SplashScreen : MonoBehaviour {
 
 
-	public GameObject splashSprite, selectSprite, faceSprite;
+	public GameObject splashSprite, faceSprite;
 	private GameObject temp, temp2;
 	private float fadeValue = 1.0f;
 	private float currentTime = 0.0f;
 	private const float timeItTakesToFade = 0.5f;
 	private bool isFading = false;
-	private SelectScreen selecter;
+	//private SelectScreen selecter;
 //	private bool isAppearing = false;
 
 	// Use this for initialization
@@ -31,7 +31,7 @@ public class SplashScreen : MonoBehaviour {
 				if(hit.collider.name == temp.name) {
 					GameObject.Destroy(splashSprite);
 					GetComponent<SelectScreen>().enabled = true;
-					selectSprite.GetComponent<SpriteRenderer>().enabled = true;
+					//selectSprite.GetComponent<SpriteRenderer>().enabled = true;
 					//faceSprite.GetComponent<SpriteRenderer>().enabled = true;
 					enabled = false;
 				}

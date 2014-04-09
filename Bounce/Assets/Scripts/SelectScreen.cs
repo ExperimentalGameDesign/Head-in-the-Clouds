@@ -25,18 +25,18 @@ public class SelectScreen : MonoBehaviour {
 		float tempY = 0.0f;
 		for (int i = 0; i < ballFabs.Count; i++) {
 			if (i%2 == 0) {
-				if (ballFabs[i].name == "FaceSelect") {
-					ballTemp = GameObject.Instantiate (ballFabs[i], camera.ScreenToWorldPoint(new Vector3 ((Screen.width/2), (Screen.height - (Screen.height/(ballFabs.Count+7)) * (i + 2))- 50, 10.0f)), Quaternion.identity) as GameObject;
+				if (ballFabs[i].name == "FaceSelectButton" || ballFabs[i].name == "SelectaBallText") {
+					ballTemp = GameObject.Instantiate (ballFabs[i], camera.ScreenToWorldPoint(new Vector3 ((Screen.width/2), (Screen.height - (Screen.height/(ballFabs.Count+5)) * (i + 2)), 10.0f)), Quaternion.identity) as GameObject;
 					balls.Add (ballTemp);
 				}
 				else {
-					ballTemp = GameObject.Instantiate (ballFabs[i], camera.ScreenToWorldPoint(new Vector3 ((Screen.width/(3) * (i%2 + 1)), (Screen.height - (Screen.height/(ballFabs.Count+7)) * (i + 2))- 50, 10.0f)), Quaternion.identity) as GameObject;
+					ballTemp = GameObject.Instantiate (ballFabs[i], camera.ScreenToWorldPoint(new Vector3 ((Screen.width/(3) * (i%2 + 1)), (Screen.height - (Screen.height/(ballFabs.Count+5)) * (i + 2)), 10.0f)), Quaternion.identity) as GameObject;
 					balls.Add (ballTemp);
 				}
 
 			}
 			else {
-				ballTemp = GameObject.Instantiate (ballFabs[i], camera.ScreenToWorldPoint(new Vector3 ((Screen.width/(3) * (i%2 + 1)), (Screen.height - (Screen.height/(ballFabs.Count+7)) * (i + 1))- 50, 10.0f)), Quaternion.identity) as GameObject;
+				ballTemp = GameObject.Instantiate (ballFabs[i], camera.ScreenToWorldPoint(new Vector3 ((Screen.width/(3) * (i%2 + 1)), (Screen.height - (Screen.height/(ballFabs.Count+5)) * (i + 1)), 10.0f)), Quaternion.identity) as GameObject;
 				balls.Add (ballTemp);
 			}
 		}

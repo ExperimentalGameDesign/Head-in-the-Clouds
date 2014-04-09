@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
-
+	public GUISkin customSkin;
 	private GameObject player; 
 	public GameObject playerChoice, threadPickup, whiteCloud, darkCloud, birdy;
 	public bool playerPicked = false, facePicked = false;
@@ -94,14 +94,18 @@ public class GameController : MonoBehaviour {
 	}
 
 	void OnGUI(){
+		GUI.skin = customSkin;
+
 		if(player != null){
 			if(player.transform.position.y > actualScore){
 				actualScore = player.transform.position.y;
 			}
+			int tempThread = (int)thread;
 			string theScore = "Score: " + actualScore.ToString ("F2");
-			string threadLeft = "Thread: " + thread.ToString("F2");
+			string threadLeft = "H20: " + tempThread.ToString();
+
 			GUI.Box (new Rect (0.0f, 0.0f, Screen.width / 3.0f, Screen.height / 20.0f), theScore);
-			GUI.Box (new Rect (0.0f, 50.0f, Screen.width / 3.0f, Screen.height / 20.0f), threadLeft);
+			GUI.Box (new Rect (0.0f, 20.0f, Screen.width / 3.0f, Screen.height / 20.0f), threadLeft);
 			if (isGameOver) {
 				//GUI.Box (new Rect (0.0f, Screen.height/2, Screen.width, Screen.height/4), "Game Over");
 				if(!leaderboardCreated){

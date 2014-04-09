@@ -264,6 +264,7 @@ public class LeaderboardScript : MonoBehaviour {
 	void OnGUI(){
 		GUI.skin = customSkin;
 		if(phase == 1){		//New High Score
+
 			GUIStyle customBox = new GUIStyle("box");
 			customBox.fontSize = 30;
 			

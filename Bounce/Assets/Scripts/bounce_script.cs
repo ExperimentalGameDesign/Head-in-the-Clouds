@@ -3,7 +3,7 @@ using System.Collections;
 
 public class bounce_script : MonoBehaviour {
 	
-	public float bounceForce = 2000.0f, threadCount = 10.0f, maxThread = 100.0f, cloudForce = 3000.0f, blackCloudForce = 15.0f;
+	public float bounceForce = 2000.0f, xbounceForce = 2000.0f, threadCount = 10.0f, maxThread = 100.0f, cloudForce = 3000.0f, blackCloudForce = 15.0f;
 	public GameController game;
 
 	void Start () {
@@ -15,13 +15,15 @@ public class bounce_script : MonoBehaviour {
 	{
 		//change force based on string length
 		bounceForce = 35000 / thing.transform.localScale.x;
+		xbounceForce = 5000 / thing.transform.localScale.x;
+		//xbounceForce = 5000 / thing.transform.localScale.x;
 		if(thing.transform.name != "floor" && thing.transform.name != "Thread") // && thing.transform.name != "left_wall" && thing.transform.name != "right_wall") 
 		{
 			//thing.collider.rigidbody2D.isKinematic = true;
 			Vector3 temp = thing.contacts[0].normal;
 			if (thing.transform.name == "left_wall" || thing.transform.name == "right_wall")
 				temp = temp.normalized;
-				temp = temp*bounceForce;
+				temp = new Vector3(temp.x*xbounceForce, temp.y*bounceForce, temp.z);
 				rigidbody2D.AddForce(new Vector2(temp.x,temp.y));
 
 
@@ -69,6 +71,23 @@ public class bounce_script : MonoBehaviour {
 	}
 
 	void Update () {
+		print (rigidbody2D.velocity.x);
+		float velocityDiff = 0.0f;
+		//rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x / 1.1f, rigidbody2D.velocity.y);
 
+		//Mathf.Min (value1, value2);
+		//float vel;
+		//Mathf.Clamp(vel, min, max);
+
+		//velocityDiff = rigidbody2D.velocity.x - 15;
+		if (rigidbody2D.velocity.x < 0)
+			rigidbody2D.velocity = new Vector2 (Mathf.Max(rigidbody2D.velocity.x, -15.0f), rigidbody2D.velocity.y);
+		else 
+			rigidbody2D.velocity = new Vector2 (Mathf.Min(rigidbody2D.velocity.x, 15.0f), rigidbody2D.velocity.y);
+
+		/*else if (rigidbody2D.velocity.x < -15)
+		{
+			rigidbody2D.velocity = new Vector2 (-15.0f, rigidbody2D.velocity.y);
+		}*/
 	}
 }

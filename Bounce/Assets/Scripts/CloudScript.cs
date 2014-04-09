@@ -16,7 +16,6 @@ public class CloudScript : MonoBehaviour {
 	void Update () {
 		if (transform.localScale.x <= 0.3f)
 		{
-			print ("die");
 			Destroy(gameObject);
 		}
 		if (shrink == true)
@@ -27,7 +26,6 @@ public class CloudScript : MonoBehaviour {
 				if (transform.localScale.x < midSize.x + 0.2f)
 				{
 					midSize = new Vector3(0.1f, 0.1f, 1.0f);
-					print ("reset");
 					shrink = false;
 				}
 			}

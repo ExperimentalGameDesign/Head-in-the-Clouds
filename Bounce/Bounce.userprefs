@@ -1,8 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Mics\Advertisement\AdvertisementManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\LeaderboardScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\Mics\Advertisement\AdvertisementManager.cs" Line="174" Column="1" />
+      <File FileName="Assets\Scripts\draw.cs" Line="61" Column="27" />
+      <File FileName="Assets\Scripts\bounce_script.cs" Line="65" Column="52" />
+      <File FileName="Assets\Scripts\CloudScript.cs" Line="29" Column="1" />
+      <File FileName="Assets\Scripts\LeaderboardScript.cs" Line="397" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

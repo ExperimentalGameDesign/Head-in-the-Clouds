@@ -3,7 +3,7 @@ using System.Collections;
 using Parse;
 
 public class LeaderboardScript : MonoBehaviour {
-
+	public GUISkin customSkin;
 	public string objectId;
 	public float score;
 	public float lastPlace;
@@ -262,7 +262,7 @@ public class LeaderboardScript : MonoBehaviour {
 	}
 
 	void OnGUI(){
-
+		GUI.skin = customSkin;
 		if(phase == 1){		//New High Score
 			GUIStyle customBox = new GUIStyle("box");
 			customBox.fontSize = 30;

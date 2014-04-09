@@ -8,6 +8,10 @@ public class draw : MonoBehaviour {
 	Vector3 lastPos = new Vector3(-9999,-9999,-9999);
 	Vector3 newPos;
 	Vector3 firstPos;
+	Vector3 firstCamPos;
+	Vector3 lastCamPos;
+	Vector3 newCamPos;
+	float deltaCamPos;
 	bool lastPosExists = false;
 	bool ready = false;
 	GameObject shape;
@@ -36,6 +40,8 @@ public class draw : MonoBehaviour {
 		if (Input.GetMouseButtonDown(0))
 		{
 			lastPos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x,Input.mousePosition.y,50));
+			firstCamPos = Camera.main.transform.position;
+			lastCamPos = Camera.main.transform.position;
 			firstPos = lastPos;
 			lastPosExists = true;
 			//firstClick = true;
@@ -49,6 +55,10 @@ public class draw : MonoBehaviour {
 			//Calculate distance between positions
 			//Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 			newPos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x,Input.mousePosition.y,0));//mouseRay.origin - mouseRay.direction / mouseRay.direction.y * mouseRay.origin.y;
+			newCamPos = Camera.main.transform.position;
+			deltaCamPos = newCamPos.y - lastCamPos.y;
+			firstPos.y +=  + deltaCamPos;
+			lastCamPos = newCamPos;
 			//float yDist = newPos.y - lastPos.y; Ignoring y because it is unnecessary
 			float xDist = newPos.x - lastPos.x;
 			float zDist = newPos.y - lastPos.y;			

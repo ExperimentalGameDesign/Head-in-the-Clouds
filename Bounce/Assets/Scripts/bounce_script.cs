@@ -52,6 +52,7 @@ public class bounce_script : MonoBehaviour {
 		}
 		//send character up if hit a white cloud
 		if (thing.name == "WhiteCloud(Clone)") {
+			thing.GetComponent<CloudScript>().shrink = true;
 			rigidbody2D.AddForce(new Vector2(0.0f, cloudForce));
 			if (game.thread < maxThread-threadCount)
 				game.thread += threadCount;
@@ -61,6 +62,7 @@ public class bounce_script : MonoBehaviour {
 
 		}
 		if (thing.name == "DarkCloud(Clone)") {
+			thing.GetComponent<CloudScript>().shrink = true;
 			rigidbody2D.velocity = rigidbody2D.velocity - new Vector2(0.0f, rigidbody2D.velocity.y/blackCloudForce);
 			if (game.thread < maxThread-threadCount)
 				game.thread += threadCount;
@@ -71,7 +73,6 @@ public class bounce_script : MonoBehaviour {
 	}
 
 	void Update () {
-		print (rigidbody2D.velocity.x);
 		float velocityDiff = 0.0f;
 		//rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x / 1.1f, rigidbody2D.velocity.y);
 

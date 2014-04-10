@@ -161,6 +161,8 @@ public class GameController : MonoBehaviour {
 					leaderboardCreated = true;
 					actualLeaderboard = (GameObject)Instantiate (leaderboard);
 					actualLeaderboard.transform.GetComponent<LeaderboardScript>().score = actualScore;
+					GameObject Ad = GameObject.Find("AdvertisementManager");
+					//Ad.GetComponent<AdvertisementManager>().show();
 				}
 
 				this.GetComponent<draw>().enabled = false;

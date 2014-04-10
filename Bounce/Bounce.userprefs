@@ -1,11 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\cameraScript.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\LeaderboardScript.cs">
     <Files>
       <File FileName="Assets\Scripts\SplashScreen.cs" Line="26" Column="16" />
-      <File FileName="Assets\Scripts\GameController.cs" Line="103" Column="7" />
-      <File FileName="Assets\Scripts\cameraScript.cs" Line="80" Column="38" />
-      <File FileName="Assets\Scripts\SelectScreen.cs" Line="54" Column="4" />
+      <File FileName="Assets\Scripts\GameController.cs" Line="165" Column="8" />
+      <File FileName="Assets\Scripts\cameraScript.cs" Line="70" Column="26" />
+      <File FileName="Assets\Scripts\LeaderboardScript.cs" Line="319" Column="71" />
+      <File FileName="Assets\Scripts\SelectScreen.cs" Line="57" Column="7" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -26,7 +26,7 @@ public class LeaderboardScript : MonoBehaviour {
 
 		lastPlace = 0.0f;
 		//print (score);
-		thePlayerName = "Your Name Here";
+		thePlayerName = "";
 		names = new string[] {"", "", "", "", "", "", "", "", "", ""};
 		scores = new float[]{0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
@@ -263,61 +263,90 @@ public class LeaderboardScript : MonoBehaviour {
 
 	void OnGUI(){
 		GUI.skin = customSkin;
+
 		Vector2 resolution = new Vector2(Screen.width, Screen.height);
 		float resx = resolution.x/265.0f; // 1280 is the x value of the working resolution
 		float resy = resolution.y/398.0f; // 800 is the y value of the working resolution
+		//Font size for long thin box
+		customSkin.customStyles[1].fontSize = (int)(7.0f*resx);
+		//Font size for "Global Leaderboard" and "Local Leaderboard" text
+		customSkin.customStyles[2].fontSize = (int)(10.0f*resx);
+		customSkin.customStyles[2].padding.top = (int)(10.0f*resx);
+		//Font size and padding for Leaderboard Values
+		customSkin.customStyles[4].fontSize = (int)(13.0f*resx);
+		customSkin.customStyles[4].padding.top = (int)(25.0f*resx);
+		customSkin.customStyles[4].padding.left = (int)(25.0*resx);
+		customSkin.customStyles[4].padding.right = (int)(25.0*resx);
+		//Padding for Enter Name: box
+		customSkin.customStyles[6].fontSize = (int)(10.0f*resx);
+		customSkin.customStyles[6].padding.top = (int)(9.0f*resx);
+		customSkin.customStyles[6].padding.left = (int)(8.0f*resx);
+
+		customSkin.customStyles[7].fontSize = (int)(10.0f*resx);
+		customSkin.customStyles[7].padding.top = (int)(8.5f*resx);
+		customSkin.customStyles[7].padding.left = (int)(7.0f*resx);
+
+		//Congrats Font Size
+		customSkin.customStyles[8].fontSize = (int)(17.0f*resx);
+
+
+
 		if(phase == 1){		//New High Score
 
 			GUIStyle customBox = new GUIStyle("box");
 			customBox.fontSize = 30;
-			
-			GUI.color = Color.cyan;
-			string theText = "Enter name for worldwide leaderboard!!!!!";
-			GUI.Box (new Rect (0.0f, 10.0f, Screen.width, 50), theText, customBox);
-			GUI.color = Color.green;
 
-			thePlayerName = GUI.TextArea(new Rect (0.0f, 190.0f, Screen.width, 50), thePlayerName, 20, customBox);
+			string congrats = "CONGRATULATIONS!";
+			GUI.Box (new Rect ((Screen.width-(861.0f/4.0f*resx))/2.0f, 90.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), congrats, customSkin.customStyles[8]);
+			string theText = "Enter name: ";
 
-			if(GUI.Button (new Rect(0.0f, Screen.height /2, Screen.width, 50), "Touch here when done", customBox)){
+			GUI.Box (new Rect ((Screen.width-(861.0f/4.0f*resx))/2.0f, 135.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), theText, customSkin.customStyles[6]);
+
+			thePlayerName = GUI.TextArea(new Rect ((Screen.width-(861.0f/4.0f*resx))/2.0f + customSkin.customStyles[6].fontSize*9.5f, 135.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), thePlayerName, 17, customSkin.customStyles[7]);
+
+			if(GUI.Button (new Rect((Screen.width-(861.0f/4.0f*resx))/2.0f, 175.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), "", customSkin.customStyles[5])){
 				createNewLeaderboard (thePlayerName);
 			}
-			GUI.color = Color.cyan;
 			//print (thePlayerName);
 		}else if(phase == 2){	//No New High Score
 
 			GUIStyle customButton = new GUIStyle("button");
 			customButton.fontSize = 30;
+
 			Color superTransColor = Color.white;
-			superTransColor.a = 0.0f;
-			GUI.color = superTransColor;
+			//superTransColor.a = 0.0f;
+			//GUI.color = superTransColor;
 			string newestText = "";
 			
 			GUIStyle customBox = new GUIStyle("box");
 			customBox.fontSize = 30;
 			
-			//Restart button
-			GUI.color = Color.green;
-			string firstText = "Tap Here to Play Again!";
-			if(GUI.Button (new Rect (0.0f, 10.0f, Screen.width, 200), firstText, customButton)){
+			//Restart button (PLAY AGAIN)
+			//GUI.color = Color.green;
+			string firstText = "";
+
+			if(GUI.Button (new Rect ((Screen.width-(861.0f/8.0f*resx))/2.0f, 50.0f*resy, 861.0f/8.0f*resx, 345.0f/8.0f*resy), firstText, customSkin.customStyles[0])){
 				Application.LoadLevel (0);
 			}
-			GUI.color = Color.cyan;
+
+			//Screenshot button
+			if(GUI.Button (new Rect ((Screen.width-(861.0f/5.0f*resx))/2.0f, 85.0f*resy + 345.0f/8.0f*resy + 582.0f/3.5f*resy, 861.0f/5.0f*resx, 204.0f/5.0f*resy), firstText, customSkin.customStyles[3])){
+				print ("Taking screenshot.. JK");
+			}
 
 			if(score > PlayerPrefs.GetFloat("HighScore10") && !changedLocal){	//Local Leaderboard Stuff
-				GUI.color = Color.cyan;
 				setLocalLeaderboard();
-				GUI.color = Color.cyan;
 			}else{	//Back to Normal leaderboard stuff
-				GUI.color = Color.green;
 				if(isGlobal == true){
 					newestText = "Tap here to see your high scores!";
-					if(GUI.Button (new Rect (0.0f, 280.0f, Screen.width, 50), newestText, customButton)){
+					if(GUI.Button (new Rect ((Screen.width-(861.0f/4.0f*resx))/2.0f, 95.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), newestText, customSkin.customStyles[1])){
 						isGlobal = false;
 					}
 
-					GUI.color = Color.cyan;
 					newestText = "Global Leaderboard";
-					GUI.Box (new Rect (0.0f, 340.0f, Screen.width, 50), newestText, customBox);
+					//Draw Leaderboard Background and Text
+					GUI.Box (new Rect((Screen.width-(861.0f/3.5f*resx))/2.0f, 125.0f*resy, 861.0f/3.5f*resx, 582.0f/3.5f*resy), newestText, customSkin.customStyles[2]);
+					//GUI.Box (new Rect (0.0f, 340.0f, Screen.width, 50), newestText, customBox);
 
 					//newestText = lastPlace.ToString();
 					//GUI.Box (new Rect (0.0f, 250.0f, Screen.width, 50), newestText, customBox);
@@ -330,68 +359,72 @@ public class LeaderboardScript : MonoBehaviour {
 						}else{
 							newestText = (i + 1) + ". " + names[i];
 						}
-						GUI.Box (new Rect (0.0f, 400.0f + (60.0f * i), Screen.width / 2, 50.0f), newestText, customBox);
+						GUI.Box (new Rect ((Screen.width-(861.0f/3.5f*resx))/2.0f, 125.0f*resy+(customSkin.customStyles[4].fontSize*i), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
 
 						if(scores[i] == 0.0f){
 							newestText = "Loading...";
 						}else{
 							newestText = scores[i].ToString();
 						}
-						GUI.Box (new Rect(Screen.width / 2, 400.0f + (60.0f * i), Screen.width / 2, 50.0f), newestText, customBox);
+						GUI.Box (new Rect(((861.0f/3.5f*resx)/1.8f), 125.0f*resy+(customSkin.customStyles[4].fontSize*i), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
 					}
 				}else{
-					newestText = "Tap here to see GLOBAL leaderboard!";
-					if(GUI.Button (new Rect (0.0f, 280.0f, Screen.width, 50), newestText, customButton)){
+					newestText = "Tap to see GLOBAL leaderboard!";
+					if(GUI.Button (new Rect ((Screen.width-(861.0f/4.0f*resx))/2.0f, 95.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), newestText, customSkin.customStyles[1])){
 						isGlobal = true;
 					}
 					
-					GUI.color = Color.cyan;
+
+
+					float theIncrement = 0.0f;
+					//Background Box
+					newestText = "";
+					//Draw Leaderboard Background and Text
+					GUI.Box (new Rect((Screen.width-(861.0f/3.5f*resx))/2.0f, 125.0f*resy, 861.0f/3.5f*resx, 582.0f/3.5f*resy), newestText, customSkin.customStyles[2]);
+
 					newestText = "Your High Scores";
-					GUI.Box (new Rect (0.0f, 340.0f, Screen.width, 50), newestText, customBox);
-
-
-					float theIncrement = 400.0f;
+					GUI.Box (new Rect((Screen.width-(861.0f/3.5f*resx))/2.0f, 125.0f*resy, 861.0f/3.5f*resx, 582.0f/3.5f*resy), newestText, customSkin.customStyles[2]);
 
 					//Actually print local high scores--------------------------------------------------------------------------------------------------------------------
-					newestText = "1st: " + PlayerPrefs.GetFloat("HighScore").ToString ("F2");
-					GUI.Box (new Rect(0.0f, theIncrement, Screen.width, 50.0f), newestText, customBox);
-					theIncrement += 60.0f;
+					newestText = "1st:   " + PlayerPrefs.GetFloat("HighScore").ToString ("F2");
+					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
+					theIncrement += 1.0f;
 
-					newestText = "2nd: " + PlayerPrefs.GetFloat("HighScore2").ToString ("F2");
-					GUI.Box (new Rect(0.0f, theIncrement, Screen.width, 50.0f), newestText, customBox);
-					theIncrement += 60.0f;
+					newestText = "2nd:   " + PlayerPrefs.GetFloat("HighScore2").ToString ("F2");
+					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
+					theIncrement += 1.0f;
 
-					newestText = "3rd: " + PlayerPrefs.GetFloat("HighScore3").ToString ("F2");
-					GUI.Box (new Rect(0.0f, theIncrement, Screen.width, 50.0f), newestText, customBox);
-					theIncrement += 60.0f;
+					newestText = "3rd:   " + PlayerPrefs.GetFloat("HighScore3").ToString ("F2");
+					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
+					theIncrement += 1.0f;
 
-					newestText = "4th: " + PlayerPrefs.GetFloat("HighScore4").ToString ("F2");
-					GUI.Box (new Rect(0.0f, theIncrement, Screen.width, 50.0f), newestText, customBox);
-					theIncrement += 60.0f;
+					newestText = "4th:   " + PlayerPrefs.GetFloat("HighScore4").ToString ("F2");
+					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
+					theIncrement += 1.0f;
 
-					newestText = "5th: " + PlayerPrefs.GetFloat("HighScore5").ToString ("F2");
-					GUI.Box (new Rect(0.0f, theIncrement, Screen.width, 50.0f), newestText, customBox);
-					theIncrement += 60.0f;
+					newestText = "5th:   " + PlayerPrefs.GetFloat("HighScore5").ToString ("F2");
+					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
+					theIncrement += 1.0f;
 
-					newestText = "6th: " + PlayerPrefs.GetFloat("HighScore6").ToString ("F2");
-					GUI.Box (new Rect(0.0f, theIncrement, Screen.width, 50.0f), newestText, customBox);
-					theIncrement += 60.0f;
+					newestText = "6th:   " + PlayerPrefs.GetFloat("HighScore6").ToString ("F2");
+					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
+					theIncrement += 1.0f;
 
-					newestText = "7th: " + PlayerPrefs.GetFloat("HighScore7").ToString ("F2");
-					GUI.Box (new Rect(0.0f, theIncrement, Screen.width, 50.0f), newestText, customBox);
-					theIncrement += 60.0f;
+					newestText = "7th:   " + PlayerPrefs.GetFloat("HighScore7").ToString ("F2");
+					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
+					theIncrement += 1.0f;
 
-					newestText = "8th: " + PlayerPrefs.GetFloat("HighScore8").ToString ("F2");
-					GUI.Box (new Rect(0.0f, theIncrement, Screen.width, 50.0f), newestText, customBox);
-					theIncrement += 60.0f;
+					newestText = "8th:   " + PlayerPrefs.GetFloat("HighScore8").ToString ("F2");
+					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
+					theIncrement += 1.0f;
 
-					newestText = "9th: " + PlayerPrefs.GetFloat("HighScore9").ToString ("F2");
-					GUI.Box (new Rect(0.0f, theIncrement, Screen.width, 50.0f), newestText, customBox);
-					theIncrement += 60.0f;
+					newestText = "9th:   " + PlayerPrefs.GetFloat("HighScore9").ToString ("F2");
+					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
+					theIncrement += 1.0f;
 
-					newestText = "10th: " + PlayerPrefs.GetFloat("HighScore10").ToString ("F2");
-					GUI.Box (new Rect(0.0f, theIncrement, Screen.width, 50.0f), newestText, customBox);
-					theIncrement += 60.0f;
+					newestText = "10th:  " + PlayerPrefs.GetFloat("HighScore10").ToString ("F2");
+					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
+					theIncrement += 1.0f;
 					//End Actually printing local high scores--------------------------------------------------------------------------------------------------------------------
 				}
 			}

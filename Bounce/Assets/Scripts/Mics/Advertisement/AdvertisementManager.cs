@@ -4,9 +4,17 @@ using System.Collections;
 public class AdvertisementManager : MonoBehaviour {
 
     Rect rect = new Rect();
+	public void hide()
+	{
+		AdvertisementHandler.HideAds();
+	}
+	public void show()
+	{
+		AdvertisementHandler.ShowAds();
+	}
     void OnGUI()
-    {
-        /*rect.x = 20;
+    {/*
+        rect.x = 20;
         rect.y = 40;
 
         rect.width = Screen.width * 0.3f;
@@ -31,7 +39,7 @@ public class AdvertisementManager : MonoBehaviour {
         // Make the Show button.
         if (GUI.Button(rect, "Show"))   {
             AdvertisementHandler.ShowAds();
-        }*/
+            }*/
 
     }
 

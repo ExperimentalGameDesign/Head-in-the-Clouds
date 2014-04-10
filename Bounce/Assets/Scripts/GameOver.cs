@@ -17,8 +17,8 @@ public class GameOver : MonoBehaviour {
 		if (thing.transform.name == game.playerChoice.name)
 			game.isGameOver = true;
 		else {
-			Debug.Log(thing);
-			GameObject.Destroy (thing.gameObject);
+			if (thing.name != "ModularSprite")
+				GameObject.Destroy (thing.gameObject);
 		}
 
 	}

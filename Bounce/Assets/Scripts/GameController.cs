@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour {
 	public GameObject leaderboard;
 	public bool leaderboardCreated;
 	public GameObject actualLeaderboard;
+	public TilingBackground tiler;
 
 
 	// Use this for initialization
@@ -31,7 +32,7 @@ public class GameController : MonoBehaviour {
 	void Update () {
 		if (playerChoice != null && playerPicked == true) {
 			player = GameObject.Find (playerChoice.name);
-			
+			tiler.player = player;
 			if (player.name == "Face(Clone)") {
 				player.transform.position = new Vector3 (0.0f, 0.0f, -1.0f);
 				player.transform.rotation = new Quaternion(180.0f, -180.0f, 0.0f, 0.0f);

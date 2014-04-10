@@ -53,7 +53,7 @@ public class SelectScreen : MonoBehaviour {
 			RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
 			if (hit.collider != null) {
-				if(hit.collider.name == "FaceSelect(Clone)") {
+				if(hit.collider.name == "FaceSelectButton(Clone)") {
 					GetComponent<cameraScript>().enabled = true;
 					game.playerChoice = (GameObject)Instantiate(Resources.Load("Face"), new Vector3 (0.0f, 0.0f, -1.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 					GetComponent<cameraScript>().picturePlane = game.playerChoice;

@@ -22,8 +22,9 @@ public class cameraScript : MonoBehaviour {
 
 		//picturePlane = (GameObject)Instantiate(Resources.Load("Thread"), new Vector3 (0.0f, 0.0f, -1.0f), new Quaternion( 0.0f, -180.0f, 0.0f, 0.0f));
 		picturePlane.transform.position = new Vector3 (0.0f, 0.0f, -1.0f);
-		picturePlane.transform.rotation = new Quaternion(180.0f, -180.0f, 0.0f, 0.0f);
-		picturePlane.transform.localScale = picturePlane.transform.localScale * 5;
+		picturePlane.transform.rotation = Quaternion.Euler(0.0f, 180.0f, 90.0f);
+		print (picturePlane.transform.rotation.eulerAngles);
+		picturePlane.transform.localScale = new Vector3(picturePlane.transform.localScale.x *-5, picturePlane.transform.localScale.y *5, picturePlane.transform.localScale.z*5);
 		//picturePlane.transform.eulerAngles = frontRotation;
 
 		BackgroundTexture = gameObject.AddComponent<GUITexture>();
@@ -68,12 +69,21 @@ public class cameraScript : MonoBehaviour {
 						cameraFront.Stop();
 						cameraBack.Play ();
 						picturePlane.renderer.material.mainTexture = cameraBack;
+						picturePlane.transform.rotation = Quaternion.Euler(0.0f, 180.0f, 90.0f); //RIGHT SIDE UP FOR THE BACK
+						picturePlane.transform.localScale = new Vector3(picturePlane.transform.localScale.x *-1, picturePlane.transform.localScale.y *1, picturePlane.transform.localScale.z*1);
+						//picturePlane.transform.localScale = new Vector3(picturePlane.transform.localScale.x *-1, picturePlane.transform.localScale.y * -1, picturePlane.transform.localScale.z);
+						//picturePlane.transform.rotation = Quaternion.Euler(0.0f, 180.0f, 180.0f);
 						isFront = false;
 					}
 					else{
 						cameraBack.Stop ();
 						cameraFront.Play ();
 						picturePlane.renderer.material.mainTexture = cameraFront;
+						picturePlane.transform.rotation = Quaternion.Euler(0.0f, 180.0f, 90.0f); //RIGHT SIDE UP FOR THE BACK
+						picturePlane.transform.localScale = new Vector3(picturePlane.transform.localScale.x *-1, picturePlane.transform.localScale.y *1, picturePlane.transform.localScale.z*1);
+						//picturePlane.transform.localScale = new Vector3(picturePlane.transform.localScale.x *-1, picturePlane.transform.localScale.y * -1, picturePlane.transform.localScale.z);
+						//picturePlane.transform.rotation = new Quaternion(180.0f, -180.0f, 0.0f, 0.0f);
+						//picturePlane.transform.rotation = Quaternion.Euler(0.0f, 180.0f, 270.0f);
 						isFront = true;
 					}
 				}

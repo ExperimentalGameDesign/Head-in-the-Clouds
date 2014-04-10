@@ -263,6 +263,9 @@ public class LeaderboardScript : MonoBehaviour {
 
 	void OnGUI(){
 		GUI.skin = customSkin;
+		Vector2 resolution = new Vector2(Screen.width, Screen.height);
+		float resx = resolution.x/265.0f; // 1280 is the x value of the working resolution
+		float resy = resolution.y/398.0f; // 800 is the y value of the working resolution
 		if(phase == 1){		//New High Score
 
 			GUIStyle customBox = new GUIStyle("box");

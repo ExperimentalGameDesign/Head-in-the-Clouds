@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
 	public bool leaderboardCreated;
 	public GameObject actualLeaderboard;
 	public TilingBackground tiler;
+	public GUIStyle customStyle;
 
 
 	// Use this for initialization
@@ -125,7 +126,21 @@ public class GameController : MonoBehaviour {
 	}
 
 	void OnGUI(){
-		GUI.skin = customSkin;
+		//GUI.skin = customSkin;
+		//customStyle = new GUIStyle("box");
+		//customStyle.font = fontType;
+		customStyle.alignment = TextAnchor.UpperLeft;
+		Vector3 camVect = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+		Vector2 resolution = new Vector2(Screen.width, Screen.height);
+		float resx = resolution.x/265.0f; // 1280 is the x value of the working resolution
+		float resy = resolution.y/398.0f; // 800 is the y value of the working resolution
+		//print ("screen width = " + Screen.width);
+		//print ("screen height = " + Screen.height);
+
+		int fontSize = (int)(15.0f*resx);
+		customStyle.fontSize = fontSize;
+			//(int)(camVect.x/2.0f);
+		//customStyle.normal = null;
 
 		if(player != null){
 			if(player.transform.position.y > actualScore){
@@ -135,8 +150,11 @@ public class GameController : MonoBehaviour {
 			string theScore = "Score: " + actualScore.ToString ("F2");
 			string threadLeft = "H20: " + tempThread.ToString();
 
-			GUI.Box (new Rect (0.0f, 0.0f, Screen.width / 3.0f, Screen.height / 20.0f), theScore);
-			GUI.Box (new Rect (0.0f, 20.0f, Screen.width / 3.0f, Screen.height / 20.0f), threadLeft);
+			//GUI.Box (new Rect (0.0f, 0.0f, camVect.x, camVect.y / 2.0f), theScore, customStyle);
+			//GUI.Box (new Rect (0.0f, fontSize+5.0f, camVect.x, camVect.y / 2.0f), threadLeft, customStyle);
+
+			GUI.Box (new Rect (0.0f, 0.0f, 70*resx, 15*resy), theScore, customStyle);
+			GUI.Box (new Rect (0.0f, fontSize+5.0f, 70*resx, 15*resy), threadLeft, customStyle);
 			if (isGameOver) {
 				//GUI.Box (new Rect (0.0f, Screen.height/2, Screen.width, Screen.height/4), "Game Over");
 				if(!leaderboardCreated){

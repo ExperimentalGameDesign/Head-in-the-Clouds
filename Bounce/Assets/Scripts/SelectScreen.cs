@@ -71,7 +71,8 @@ public class SelectScreen : MonoBehaviour {
 
 				for (int i = 0; i < selectors.Length; i++)
 					GameObject.Destroy(selectors[i]);
-
+				GameObject.Find("DrawALineText").GetComponent<SpriteRenderer>().enabled = true;
+				GameObject.Find("greyDashedLine").GetComponent<SpriteRenderer>().enabled = true;
 				//ground = (GameObject)Instantiate(Resources.Load("GroundTexture"));
 				enabled = false;
 			}

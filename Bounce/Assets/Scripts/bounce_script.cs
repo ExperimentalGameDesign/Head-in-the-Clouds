@@ -38,8 +38,8 @@ public class bounce_script : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter2D(Collider2D thing) {
-		//running into a thread pickup
-		if (thing.transform.name == "Bird(Clone)") {
+		//running into a bird
+		if (thing.transform.name == "Bird(Clone)" || thing.transform.name == "AstroBird(Clone)") {
 			if (!thing.audio.isPlaying) {
 				thing.audio.Play();
 			}

@@ -17,8 +17,10 @@ public class GameOver : MonoBehaviour {
 	//}
 	void OnTriggerEnter2D (Collider2D thing) {
 		if (thing.transform.name == game.player.name) {
-			audio.Play();
-			didFall = true;
+			if(didFall == false) {
+				audio.Play();
+				didFall = true;
+			}
 			game.isGameOver = true;
 		}
 		else {

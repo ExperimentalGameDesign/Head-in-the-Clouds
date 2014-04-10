@@ -17,7 +17,7 @@ public class bounce_script : MonoBehaviour {
 		bounceForce = 35000 / thing.transform.localScale.x;
 		xbounceForce = 5000 / thing.transform.localScale.x;
 		//xbounceForce = 5000 / thing.transform.localScale.x;
-		if (thing.transform.name == "Bird(Clone)") {
+		if (thing.transform.name == "Bird(Clone)" || thing.transform.name == "AstroBird(Clone)") {
 			if (!thing.collider.audio.isPlaying) {
 				thing.collider.audio.Play();
 			}
@@ -39,12 +39,7 @@ public class bounce_script : MonoBehaviour {
 	
 	void OnTriggerEnter2D(Collider2D thing) {
 		//running into a bird
-		if (thing.transform.name == "Bird(Clone)" || thing.transform.name == "AstroBird(Clone)") {
-			if (!thing.audio.isPlaying) {
-				thing.audio.Play();
-			}
-		}
-		//send character up if hit a white cloud
+			//send character up if hit a white cloud
 		if (thing.name == "WhiteCloud(Clone)") {
 			if (!thing.audio.isPlaying) {
 				thing.audio.Play();

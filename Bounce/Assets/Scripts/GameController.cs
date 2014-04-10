@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
 	public GUISkin customSkin;
-	private GameObject player; 
+	public GameObject player; 
 	public GameObject playerChoice, threadPickup, whiteCloud, darkCloud, birdy;
 	public bool playerPicked = false, facePicked = false;
 	public bool isGameOver, tester;
@@ -49,10 +49,18 @@ public class GameController : MonoBehaviour {
 			//			this.GetComponent<CameraMove>().enabled = true;
 			playerPicked = false;
 		}
-		if (playerChoice != null) {
+		if (player != null) {
 			if (facePicked) {
+				GameObject tempPlayer = (GameObject)Instantiate(Resources.Load("FaceSprite 1"), player.transform.position, Quaternion.identity);
+				//tempPlayer.GetComponentInChildren<gameObject>().renderer.material.mainTexture = 
+				//GameObject tempPlayer = (GameObject)Instantiate(Resources.Load("FaceSprite"));
+				Destroy(player);
+				player = tempPlayer;
 
-				player.transform.localScale = player.transform.localScale / 5;
+				//player.GetComponent<SpriteRenderer>().sprite = (Sprite)(Resources.Load ("testIMAGE"));
+				//player.GetComponent<SpriteRenderer>().sprite = //(Sprite)(Resources.Load ("testIMAGE"));
+
+				//player.transform.localScale = player.transform.localScale / 5;
 				player.GetComponent<Rigidbody2D>().gravityScale = 5.0f;
 
 				facePicked = false;
@@ -60,7 +68,7 @@ public class GameController : MonoBehaviour {
 			if (thread > 0 && isGameOver == false)
 			{
 				this.GetComponent<draw>().enabled = true;
-				player.GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.Interpolate;
+				//player.GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.Interpolate;
 			}
 			else if (tester)
 				thread = 100;

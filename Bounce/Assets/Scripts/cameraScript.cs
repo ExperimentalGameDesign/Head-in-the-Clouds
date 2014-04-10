@@ -86,13 +86,33 @@ public class cameraScript : MonoBehaviour {
 				finalCamTexture = cameraFront;
 			else
 				finalCamTexture = cameraBack;
+
+			picturePlane.renderer.material.mainTexture = finalCamTexture;
+			//picturePlane.renderer.material.SetFloat("_Cutoff", 1.0f);
 			// Ashley messing with camera stuff
 			//finalPicture = picturePlane.renderer.material.mainTexture;
-			Texture2D text = new Texture2D(finalCamTexture.width, finalCamTexture.height, TextureFormat.ARGB32, false);
+			Texture2D text = new Texture2D(finalCamTexture.width, finalCamTexture.height, TextureFormat.ARGB32, false); //finalCamTexture.width, finalCamTexture.height, TextureFormat.ARGB32, false);
 			Color[] textureData = finalCamTexture.GetPixels();
-
 			text.SetPixels(textureData);
 			text.Apply();
+			//START CIRCLE STUFF
+			/*
+			Color[] colors = new Color[3];
+			colors[0] = new Color(0.0f,0.0f,0.0f,0.1f);
+			colors[1] = Color.green;
+			colors[2] = Color.blue;
+			float mipCount = Mathf.Min( 3, text.mipmapCount );
+			// tint each mip level
+			for( int mip = 0; mip < mipCount; ++mip ) {
+				Color[] cols = text.GetPixels( mip );
+				for( int i = 0; i < cols.Length; ++i ) {
+					cols[i] = colors[0];
+				}
+				text.SetPixels( cols, mip );
+			}
+			// actually apply all SetPixels, don't recalculate mip levels
+			text.Apply( false );*/
+			//END OF CIRCLE STUFF
 			//Texture text = picturePlane.renderer.material.mainTexture;
 			string fileName = "testIMAGE.png";
 			SaveTextureToFile(text, fileName);

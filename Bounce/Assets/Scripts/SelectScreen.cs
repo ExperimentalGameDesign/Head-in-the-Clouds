@@ -73,7 +73,7 @@ public class SelectScreen : MonoBehaviour {
 				for (int i = 0; i < selectors.Length; i++)
 					GameObject.Destroy(selectors[i]);
 
-				ground = (GameObject)Instantiate(Resources.Load("ground"));
+				//ground = (GameObject)Instantiate(Resources.Load("GroundTexture"));
 				enabled = false;
 			}
 		}

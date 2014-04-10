@@ -4,6 +4,8 @@ using System.Collections;
 public class GameOver : MonoBehaviour {
 
 	public GameController game;
+	public AudioClip falling, sploding;
+	private bool hasExploded = false, didFall = false;
 	// Use this for initialization
 	void Start () {
 	
@@ -14,8 +16,11 @@ public class GameOver : MonoBehaviour {
 
 	//}
 	void OnTriggerEnter2D (Collider2D thing) {
-		if (thing.transform.name == game.playerChoice.name)
+		if (thing.transform.name == game.player.name) {
+			audio.Play();
+			didFall = true;
 			game.isGameOver = true;
+		}
 		else {
 			if (thing.name != "ModularSprite")
 				GameObject.Destroy (thing.gameObject);
@@ -24,6 +29,11 @@ public class GameOver : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-	
+		if (game.isGameOver && !hasExploded && didFall == true) {
+			if (audio.isPlaying == false) {
+				AudioSource.PlayClipAtPoint(sploding, transform.position);
+				hasExploded = true;
+			}
+		}
 	}
 }

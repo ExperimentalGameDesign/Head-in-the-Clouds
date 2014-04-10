@@ -50,17 +50,23 @@ public class GameController : MonoBehaviour {
 		}
 		if (playerChoice != null) {
 			if (facePicked) {
+
 				player.transform.localScale = player.transform.localScale / 5;
 				player.GetComponent<Rigidbody2D>().gravityScale = 5.0f;
+
 				facePicked = false;
 			}
 			if (thread > 0 && isGameOver == false)
+			{
 				this.GetComponent<draw>().enabled = true;
+				player.GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.Interpolate;
+			}
 			else if (tester)
 				thread = 100;
 			else	 
 				this.GetComponent<draw>().enabled = false;
 			if (player.transform.position.y >= spawnPoint) {
+
 				//threadPickup = (GameObject)Instantiate(Resources.Load("Thread"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
 				whiteCloud = (GameObject)Instantiate(Resources.Load("WhiteCloud"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
 				darkCloud = (GameObject)Instantiate(Resources.Load("DarkCloud"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);

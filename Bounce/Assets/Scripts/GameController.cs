@@ -51,17 +51,24 @@ public class GameController : MonoBehaviour {
 		}
 		if (player != null) {
 			if (facePicked) {
-				GameObject tempPlayer = (GameObject)Instantiate(Resources.Load("FaceSprite 1"), player.transform.position, Quaternion.identity);
 				//tempPlayer.GetComponentInChildren<gameObject>().renderer.material.mainTexture = 
 				//GameObject tempPlayer = (GameObject)Instantiate(Resources.Load("FaceSprite"));
-				Destroy(player);
-				player = tempPlayer;
+				//Destroy(player);
+				//player = tempPlayer;
 
 				//player.GetComponent<SpriteRenderer>().sprite = (Sprite)(Resources.Load ("testIMAGE"));
 				//player.GetComponent<SpriteRenderer>().sprite = //(Sprite)(Resources.Load ("testIMAGE"));
 
-				//player.transform.localScale = player.transform.localScale / 5;
-				player.GetComponent<Rigidbody2D>().gravityScale = 5.0f;
+				//player.GetComponent<Rigidbody2D>().gravityScale = 5.0f;
+				//player.GetComponent<bounce_script>().enabled = false;
+				//player.GetComponent<Rigidbody2D>().Sleep();
+				//player.GetComponent<CircleCollider2D>().enabled = false;
+				GameObject tempPlayer = (GameObject)Instantiate(Resources.Load("FaceSprite 1"), new Vector3(0.0f,0.0f,0.0f), Quaternion.identity);
+				player.transform.localScale = player.transform.localScale / 5;
+				player.transform.position = new Vector3(0.0f, 0.0f, -1.0f);
+				player.transform.parent = tempPlayer.transform;
+				player = tempPlayer;
+				tempPlayer.GetComponent<Rigidbody2D>().gravityScale = 5.0f;
 
 				facePicked = false;
 			}

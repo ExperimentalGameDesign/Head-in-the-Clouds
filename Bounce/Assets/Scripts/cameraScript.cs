@@ -17,6 +17,7 @@ public class cameraScript : MonoBehaviour {
 	void Start () {
 		switchCamIcon = (GameObject)Instantiate(Resources.Load("switchCamIcon"), camera.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height - (Screen.height / 5.0f), 10.0f)), Quaternion.identity);
 		camIcon = (GameObject)Instantiate(Resources.Load("camIcon"), camera.ScreenToWorldPoint(new Vector3(Screen.width/2, (Screen.height / 5.0f) , 10.0f)), Quaternion.identity);
+
 		isFront = true;
 
 		//picturePlane = (GameObject)Instantiate(Resources.Load("Thread"), new Vector3 (0.0f, 0.0f, -1.0f), new Quaternion( 0.0f, -180.0f, 0.0f, 0.0f));
@@ -57,11 +58,12 @@ public class cameraScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetMouseButtonUp(0)) {
+
 			//StartFade ();
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 			if (hit.collider != null) {
-				if(hit.collider.name == switchCamIcon.name) {
+				if(hit.collider.name == switchCamIcon.name || hit.collider.name == "switchCamIcon(Clone)") {
 					if(isFront == true){
 						cameraFront.Stop();
 						cameraBack.Play ();
@@ -75,7 +77,7 @@ public class cameraScript : MonoBehaviour {
 						isFront = true;
 					}
 				}
-				else if(hit.collider.name == camIcon.name) {
+				if(hit.collider.name == camIcon.name || hit.collider.name == "camIcon(Clone)" || hit.collider.CompareTag("camTag")) {
 					if (isFront)
 						finalCamTexture = cameraFront;
 					else
@@ -89,7 +91,7 @@ public class cameraScript : MonoBehaviour {
 					text.Apply();
 
 					string fileName = "testIMAGE.png";
-					SaveTextureToFile(text, fileName);
+					//SaveTextureToFile(text, fileName);
 					//Ashley done messing with camera stuff
 					cameraFront.Stop ();
 					cameraBack.Stop ();

@@ -3,7 +3,7 @@ using System.Collections;
 using System.IO;
 
 public class cameraScript : MonoBehaviour {
-
+	private GameObject switchCamIcon, camIcon;
 	public WebCamTexture cameraFront, cameraBack;
 	public WebCamTexture finalCamTexture;
 	public GUITexture BackgroundTexture;
@@ -15,6 +15,8 @@ public class cameraScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		switchCamIcon = (GameObject)Instantiate(Resources.Load("switchCamIcon"), camera.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height - (Screen.height / 5.0f), 10.0f)), Quaternion.identity);
+		camIcon = (GameObject)Instantiate(Resources.Load("camIcon"), camera.ScreenToWorldPoint(new Vector3(Screen.width/2, (Screen.height / 5.0f) , 10.0f)), Quaternion.identity);
 		isFront = true;
 
 		//picturePlane = (GameObject)Instantiate(Resources.Load("Thread"), new Vector3 (0.0f, 0.0f, -1.0f), new Quaternion( 0.0f, -180.0f, 0.0f, 0.0f));
@@ -54,7 +56,54 @@ public class cameraScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetMouseButtonUp(0)) {
+			//StartFade ();
+			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+			RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+			if (hit.collider != null) {
+				if(hit.collider.name == switchCamIcon.name) {
+					if(isFront == true){
+						cameraFront.Stop();
+						cameraBack.Play ();
+						picturePlane.renderer.material.mainTexture = cameraBack;
+						isFront = false;
+					}
+					else{
+						cameraBack.Stop ();
+						cameraFront.Play ();
+						picturePlane.renderer.material.mainTexture = cameraFront;
+						isFront = true;
+					}
+				}
+				else if(hit.collider.name == camIcon.name) {
+					if (isFront)
+						finalCamTexture = cameraFront;
+					else
+						finalCamTexture = cameraBack;
+					
+					picturePlane.renderer.material.mainTexture = finalCamTexture;
 
+					Texture2D text = new Texture2D(finalCamTexture.width, finalCamTexture.height, TextureFormat.ARGB32, false); //finalCamTexture.width, finalCamTexture.height, TextureFormat.ARGB32, false);
+					Color[] textureData = finalCamTexture.GetPixels();
+					text.SetPixels(textureData);
+					text.Apply();
+
+					string fileName = "testIMAGE.png";
+					SaveTextureToFile(text, fileName);
+					//Ashley done messing with camera stuff
+					cameraFront.Stop ();
+					cameraBack.Stop ();
+					GetComponent<GameController>().playerPicked = true;
+					GetComponent<GameController>().facePicked = true;
+					
+					Destroy(camIcon);
+					Destroy(switchCamIcon);
+					GameObject.Find("greyDashedLine").GetComponent<SpriteRenderer>().enabled = true;
+					GameObject.Find("DrawALineText").GetComponent<SpriteRenderer>().enabled = true;
+					enabled = false;
+				}
+			}
+		}
 	}
 	/*
 	void TakeSnapshot()
@@ -77,12 +126,12 @@ public class cameraScript : MonoBehaviour {
 		binary.Write(bytes);
 		file2.Close();
 	}
-
+	/*
 	void OnGUI(){
 		//Stops the picture
 		Texture2D CamIcon = (Texture2D)(Resources.Load ("CameraIconFORASHLEY"));
 		//GUI.backgroundColor = Color.clear;
-		if(GUI.Button(new Rect(0.0f, (Screen.height / 4.0f) * 3.0f, Screen.width, Screen.height / 4), CamIcon)){
+		if(GUI.Button(new Rect(0.0f, (Screen.height / 4.0f) * 3.0f, Screen.width/6, Screen.height / 8), CamIcon)){
 			if (isFront)
 				finalCamTexture = cameraFront;
 			else
@@ -97,7 +146,7 @@ public class cameraScript : MonoBehaviour {
 			text.SetPixels(textureData);
 			text.Apply();
 			//START CIRCLE STUFF
-			/*
+			//////
 			Color[] colors = new Color[3];
 			colors[0] = new Color(0.0f,0.0f,0.0f,0.1f);
 			colors[1] = Color.green;
@@ -112,7 +161,7 @@ public class cameraScript : MonoBehaviour {
 				text.SetPixels( cols, mip );
 			}
 			// actually apply all SetPixels, don't recalculate mip levels
-			text.Apply( false );*/
+			text.Apply( false );////////
 			//END OF CIRCLE STUFF
 			//Texture text = picturePlane.renderer.material.mainTexture;
 			string fileName = "testIMAGE.png";
@@ -129,7 +178,7 @@ public class cameraScript : MonoBehaviour {
 
 		//Switches camera
 		Texture2D SwitchIcon = (Texture2D)(Resources.Load ("SwitchCameraIcon"));
-		if(GUI.Button (new Rect(0.0f, 0.0f, Screen.width, Screen.height / 4), SwitchIcon)){
+		if(GUI.Button (new Rect(0.0f, 0.0f, Screen.width/6, Screen.height / 8), SwitchIcon)){
 			if(isFront == true){
 				cameraFront.Stop();
 				cameraBack.Play ();
@@ -148,6 +197,6 @@ public class cameraScript : MonoBehaviour {
 				isFront = true;
 			}
 		}
-	}
+	}*/
 	
 }

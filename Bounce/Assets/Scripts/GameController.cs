@@ -34,10 +34,7 @@ public class GameController : MonoBehaviour {
 			player = GameObject.Find (playerChoice.name);
 			tiler.player = player;
 			if (player.name == "Face(Clone)") {
-				player.transform.position = new Vector3 (0.0f, 0.0f, -1.0f);
-				player.transform.rotation = new Quaternion(180.0f, -180.0f, 0.0f, 0.0f);
-				player.transform.localScale = player.transform.localScale * 5;
-				
+//				continue;
 			}
 			
 			else {

@@ -57,7 +57,6 @@ public class SelectScreen : MonoBehaviour {
 					GetComponent<cameraScript>().enabled = true;
 					game.playerChoice = (GameObject)Instantiate(Resources.Load("Face"), new Vector3 (0.0f, 0.0f, -1.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 					GetComponent<cameraScript>().picturePlane = game.playerChoice;
-					game.playerPicked = true;
 				}
 				else {
 					game.playerChoice = GameObject.Find(hit.collider.gameObject.name);

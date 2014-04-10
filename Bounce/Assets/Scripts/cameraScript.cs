@@ -18,10 +18,9 @@ public class cameraScript : MonoBehaviour {
 		isFront = true;
 
 		//picturePlane = (GameObject)Instantiate(Resources.Load("Thread"), new Vector3 (0.0f, 0.0f, -1.0f), new Quaternion( 0.0f, -180.0f, 0.0f, 0.0f));
-		frontRotation = new Vector3(0.0f, 270.0f, 90.0f);
-		frontScale = new Vector3 (5.0f, -1.0f, 5.0f);
-		backRotation = new Vector3 (0.0f, 270.0f, 270.0f);
-		backScale = new Vector3 (5.0f, 1.0f, 5.0f);
+		picturePlane.transform.position = new Vector3 (0.0f, 0.0f, -1.0f);
+		picturePlane.transform.rotation = new Quaternion(180.0f, -180.0f, 0.0f, 0.0f);
+		picturePlane.transform.localScale = picturePlane.transform.localScale * 5;
 		//picturePlane.transform.eulerAngles = frontRotation;
 
 		BackgroundTexture = gameObject.AddComponent<GUITexture>();
@@ -81,7 +80,9 @@ public class cameraScript : MonoBehaviour {
 
 	void OnGUI(){
 		//Stops the picture
-		if(GUI.Button(new Rect(0.0f, (Screen.height / 4.0f) * 3.0f, Screen.width, Screen.height / 4), "Tap Here to take Picture")){
+		Texture2D CamIcon = (Texture2D)(Resources.Load ("CameraIconFORASHLEY"));
+		//GUI.backgroundColor = Color.clear;
+		if(GUI.Button(new Rect(0.0f, (Screen.height / 4.0f) * 3.0f, Screen.width, Screen.height / 4), CamIcon)){
 			if (isFront)
 				finalCamTexture = cameraFront;
 			else
@@ -119,12 +120,16 @@ public class cameraScript : MonoBehaviour {
 			//Ashley done messing with camera stuff
 			cameraFront.Stop ();
 			cameraBack.Stop ();
+			GetComponent<GameController>().playerPicked = true;
 			GetComponent<GameController>().facePicked = true;
+
+
 			enabled = false;
 		}
 
 		//Switches camera
-		if(GUI.Button (new Rect(0.0f, 0.0f, Screen.width, Screen.height / 4), "Tap Here to switch camera")){
+		Texture2D SwitchIcon = (Texture2D)(Resources.Load ("SwitchCameraIcon"));
+		if(GUI.Button (new Rect(0.0f, 0.0f, Screen.width, Screen.height / 4), SwitchIcon)){
 			if(isFront == true){
 				cameraFront.Stop();
 				cameraBack.Play ();

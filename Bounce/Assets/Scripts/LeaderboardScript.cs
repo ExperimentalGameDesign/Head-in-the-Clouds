@@ -304,7 +304,10 @@ public class LeaderboardScript : MonoBehaviour {
 
 			thePlayerName = GUI.TextArea(new Rect ((Screen.width-(861.0f/4.0f*resx))/2.0f + customSkin.customStyles[6].fontSize*9.5f, 135.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), thePlayerName, 17, customSkin.customStyles[7]);
 
-			if(GUI.Button (new Rect((Screen.width-(861.0f/4.0f*resx))/2.0f, 175.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), "", customSkin.customStyles[5])){
+			if(GUI.Button (new Rect((Screen.width-(861.0f/4.0f*resx))/2.0f, 175.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), "", customSkin.customStyles[5])
+			   && !thePlayerName.ToLower().Contains ("fuck") && !thePlayerName.ToLower().Contains ("shit")
+			   && !thePlayerName.ToLower().Contains ("Bitch") && !thePlayerName.ToLower().Contains ("cunt")
+			   && !thePlayerName.ToLower().Contains ("nigga") && !thePlayerName.ToLower().Contains ("nigger")){
 				createNewLeaderboard (thePlayerName);
 			}
 			//print (thePlayerName);

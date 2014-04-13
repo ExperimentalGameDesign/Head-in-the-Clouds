@@ -54,7 +54,7 @@ public class SelectScreen : MonoBehaviour {
 
 			if (hit.collider != null) {
 				GameObject Ad = GameObject.Find("AdvertisementManager");
-				Ad.GetComponent<AdvertisementManager>().hide();
+				//Ad.GetComponent<AdvertisementManager>().hide();
 
 				if(hit.collider.name == "FaceSelectButton(Clone)") {
 					GetComponent<cameraScript>().enabled = true;

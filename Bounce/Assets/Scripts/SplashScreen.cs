@@ -4,7 +4,7 @@ using System.Collections;
 public class SplashScreen : MonoBehaviour {
 
 
-	public GameObject splashSprite, faceSprite;
+	public GameObject splashSprite, faceSprite, iArt, actualIArt;
 	private GameObject startButton, instructionsButton;
 	private float fadeValue = 1.0f;
 	private float currentTime = 0.0f;
@@ -35,11 +35,15 @@ public class SplashScreen : MonoBehaviour {
 						GameObject.Destroy(splashSprite);
 						GameObject.Destroy (instructionsButton);
 						didInstructions = true;
+					}else{
+						GameObject.Destroy (actualIArt);
 					}
 					GetComponent<SelectScreen>().enabled = true;
 					enabled = false;
 				}else if(hit.collider.name == instructionsButton.name){	//Player touched the Instructions Button
-					Debug.Log ("instructions");
+					//Debug.Log ("instructions");
+					startButton.transform.position = new Vector3(0.0f, -34.0f, startButton.transform.position.z);
+					actualIArt = (GameObject)Instantiate (iArt, new Vector3(14.67756f, -4.20952f, -1.0f), Quaternion.identity);
 					GameObject.Destroy (splashSprite);
 					GameObject.Destroy (instructionsButton);
 

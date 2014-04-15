@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\LeaderboardScript.cs" />
      <Compile Include="Assets\Scripts\Mics\Advertisement\AdvertisementHandler.cs" />
      <Compile Include="Assets\Scripts\Mics\Advertisement\AdvertisementManager.cs" />
+     <Compile Include="Assets\Scripts\PauseMenu.cs" />
      <Compile Include="Assets\Scripts\SelectScreen.cs" />
      <Compile Include="Assets\Scripts\SpaceSound.cs" />
      <Compile Include="Assets\Scripts\SplashScreen.cs" />

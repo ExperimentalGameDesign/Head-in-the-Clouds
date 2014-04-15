@@ -7,11 +7,6 @@ public class SelectScreen : MonoBehaviour {
 	public GameObject selectSprite;//, redBall, blueBall, greenBall;
 	public GameController game;
 	private GameObject temp, ballTemp, ground;
-	private float fadeValue = 1.0f;
-	private float currentTime = 0.0f;
-	private const float timeItTakesToFade = 0.5f;
-	private bool isFading = false;
-	private SelectScreen selecter;
 	public List<GameObject> ballFabs;
 	public List<GameObject> balls;
 	private GameObject[] selectors;
@@ -47,7 +42,7 @@ public class SelectScreen : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//mousebuttonup because it will start drawing a line otherwise.
-		if (Input.GetMouseButtonUp (0) && isFading == false) {
+		if (Input.GetMouseButtonUp (0)) {
 
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
@@ -67,6 +62,8 @@ public class SelectScreen : MonoBehaviour {
 					GameObject.Find("DrawALineText").GetComponent<SpriteRenderer>().enabled = true;
 					for (int i = 0; i < balls.Count; i++)
 					game.playerPicked = true;
+					GetComponent<draw>().enabled = true;
+					GameObject.Find("PauseButton").GetComponent<PauseMenu> ().enabled = true;
 				}
 				for (int i = 0; i < balls.Count; i++) 
 					if (balls[i].name != game.playerChoice.name)

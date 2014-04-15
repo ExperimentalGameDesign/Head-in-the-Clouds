@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour {
 	public GameObject player; 
 	public GameObject playerChoice, threadPickup, whiteCloud, darkCloud, birdy;
 	public bool playerPicked = false, facePicked = false;
-	public bool isGameOver, tester;
+	public bool isGameOver;
 	public float actualScore, thread, spawnPoint;
 	public List<GameObject> threadList, whiteCloudList, darkCloudList;
 	public GameObject leaderboard;
@@ -70,18 +70,13 @@ public class GameController : MonoBehaviour {
 
 				facePicked = false;
 			}
-			if (thread > 0 && isGameOver == false)
+			//this is what turns off drawing if out of h2o
+			if (thread <= 0)
 			{
-				this.GetComponent<draw>().enabled = true;
-				//player.GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.Interpolate;
+				GetComponent<draw>().enabled = false;
 			}
-			else if (tester)
-				thread = 100;
-			else	 
-				this.GetComponent<draw>().enabled = false;
 			if (player.transform.position.y >= spawnPoint) {
 
-				//threadPickup = (GameObject)Instantiate(Resources.Load("Thread"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
 				whiteCloud = (GameObject)Instantiate(Resources.Load("WhiteCloud"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
 				darkCloud = (GameObject)Instantiate(Resources.Load("DarkCloud"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
 				int randDirection = Random.Range (0,2);
@@ -165,7 +160,7 @@ public class GameController : MonoBehaviour {
 					//Ad.GetComponent<AdvertisementManager>().show ();
 				}
 
-				this.GetComponent<draw>().enabled = false;
+				GetComponent<draw>().enabled = false;
 			}
 		}
 	}

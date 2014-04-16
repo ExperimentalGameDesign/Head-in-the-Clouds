@@ -9,7 +9,7 @@ public class PauseMenu : MonoBehaviour {
 	void Start () {
 		pauseSprite.transform.position = new Vector3 ( 28, 45, 0.0f);//Camera.main.ScreenToWorldPoint(new Vector3 (70*resx, 15*resy, 10.0f));
 		pauseSprite.GetComponent<SpriteRenderer> ().enabled = true;
-		pauseSprite.GetComponent<CircleCollider2D> ().enabled = true;
+		pauseSprite.GetComponent<BoxCollider2D> ().enabled = true;
 	}
 	
 	// Update is called once per frame

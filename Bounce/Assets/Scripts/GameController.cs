@@ -83,23 +83,23 @@ public class GameController : MonoBehaviour {
 				if (randDirection == 0) //Bird comes from left of screen
 				{
 					if (player.transform.position.y < 1200) {
-						//birdy = (GameObject)Instantiate(Resources.Load("Bird"), new Vector3(/*Screen.width*/ -35, Random.Range(player.transform.position.y + 25, player.transform.position.y + 50), 0.0f), Quaternion.identity);
-						//birdy.GetComponent<Bird>().screenStart = "left";
+						birdy = (GameObject)Instantiate(Resources.Load("Bird"), new Vector3(/*Screen.width*/ -35, Random.Range(player.transform.position.y + 25, player.transform.position.y + 50), 0.0f), Quaternion.identity);
+						birdy.GetComponent<Bird>().screenStart = "left";
 					}
 					else {
-						//birdy = (GameObject)Instantiate(Resources.Load("AstroBird"), new Vector3(/*Screen.width*/ -35, Random.Range(player.transform.position.y + 25, player.transform.position.y + 50), 0.0f), Quaternion.identity);
-						//birdy.GetComponent<Bird>().screenStart = "left";
+						birdy = (GameObject)Instantiate(Resources.Load("AstroBird"), new Vector3(/*Screen.width*/ -35, Random.Range(player.transform.position.y + 25, player.transform.position.y + 50), 0.0f), Quaternion.identity);
+						birdy.GetComponent<Bird>().screenStart = "left";
 					}
 				}
 				else //Bird comes from right of screen
 				{
 					if (player.transform.position.y < 1200) {
-						//birdy = (GameObject)Instantiate(Resources.Load("Bird"), new Vector3(/*Screen.width*/ 35, Random.Range(player.transform.position.y + 25, player.transform.position.y + 50), 0.0f), Quaternion.identity);
-						//birdy.GetComponent<Bird>().screenStart = "right";
+						birdy = (GameObject)Instantiate(Resources.Load("Bird"), new Vector3(/*Screen.width*/ 35, Random.Range(player.transform.position.y + 25, player.transform.position.y + 50), 0.0f), Quaternion.identity);
+						birdy.GetComponent<Bird>().screenStart = "right";
 					}
 					else {
-						//birdy = (GameObject)Instantiate(Resources.Load("AstroBird"), new Vector3(/*Screen.width*/ 35, Random.Range(player.transform.position.y + 25, player.transform.position.y + 50), 0.0f), Quaternion.identity);
-						//birdy.GetComponent<Bird>().screenStart = "right";
+						birdy = (GameObject)Instantiate(Resources.Load("AstroBird"), new Vector3(/*Screen.width*/ 35, Random.Range(player.transform.position.y + 25, player.transform.position.y + 50), 0.0f), Quaternion.identity);
+						birdy.GetComponent<Bird>().screenStart = "right";
 					}
 				}
 

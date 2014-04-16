@@ -112,6 +112,8 @@ public class cameraScript : MonoBehaviour {
 					Destroy(switchCamIcon);
 					GameObject.Find("greyDashedLine").GetComponent<SpriteRenderer>().enabled = true;
 					GameObject.Find("DrawALineText").GetComponent<SpriteRenderer>().enabled = true;
+					GameObject.Find("PauseButton").GetComponent<PauseMenu> ().enabled = true;
+					GetComponent<draw>().enabled = true;
 					enabled = false;
 				}
 			}

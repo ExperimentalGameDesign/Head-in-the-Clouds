@@ -24,10 +24,19 @@ public class GameOver : MonoBehaviour {
 			game.isGameOver = true;
 		}
 		else {
-			if (thing.name != "ModularSprite")
-				GameObject.Destroy (thing.gameObject);
+			if (thing.name != "ModularSprite") {
+				Destroy (thing.gameObject);
+				if (thing.transform.parent != null) {
+					Destroy (thing.transform.parent.gameObject);
+				}
+			}
 		}
 
+	}
+	void OnCollisionEnter2D (Collision2D thing)
+	{
+		print (thing);
+		Destroy (thing.gameObject);
 	}
 	// Update is called once per frame
 	void Update () {

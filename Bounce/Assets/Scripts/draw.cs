@@ -98,7 +98,7 @@ public class draw : MonoBehaviour {
 		float xDist = lastPos.x - firstPos.x;
 		float yDist = lastPos.y - firstPos.y;
 		distanceBetweenPos = Mathf.Sqrt((xDist*xDist) + (yDist*yDist));
-		this.GetComponent<GameController>().thread -= distanceBetweenPos;
+		GetComponent<GameController>().thread -= distanceBetweenPos;
 		//print ("dist2 = " + distanceBetweenPos);
 		Vector3 move_direction = new Vector3(lastPos.x-firstPos.x, lastPos.y-firstPos.y, 0);
 
@@ -129,6 +129,7 @@ public class draw : MonoBehaviour {
 				test = (GameObject)Instantiate(Resources.Load("DawCloudEndRight")); //tilingCloudTexture2"));
 				if (adjusted)
 					new_finalRotation = Quaternion.Euler(new Vector3(0f, 180.0f, 360.0f-tempZ));
+
 				//test.transform.rotation = new Quaternion(0,180,0,0);
 				//new_finalRotation = new Quaternion(0, 0, finalRotation.z, 0);
 				//print ("first" + finalRotation.z);
@@ -160,11 +161,14 @@ public class draw : MonoBehaviour {
 			Vector3 drawPoint = new Vector3(rx2, ry2, 0);
 
 			test.transform.position = drawPoint;
-			test.collider2D.enabled = false;
+			//test.collider2D.enabled = false;
 		}
 		if (distanceBetweenPos != 0) 
 			shape.collider2D.enabled = true;
 		shape.renderer.enabled = false;
+
+
+
 		/*
 
 //Calculate point at end of raycast so we can draw the line

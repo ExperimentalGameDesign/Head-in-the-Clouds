@@ -4,11 +4,10 @@ using System.Collections;
 public class PauseMenu : MonoBehaviour {
 
 	public GameObject pauseSprite;
-	public float xPos = 105, yPos = 170;
 	public bool isPaused = false;
 	// Use this for initialization
 	void Start () {
-		pauseSprite.transform.position = Camera.main.ScreenToWorldPoint(new Vector3 ((Screen.width/2) + xPos, (Screen.height/2) + yPos, 10.0f));
+		pauseSprite.transform.position = new Vector3 ( 28, 45, 0.0f);//Camera.main.ScreenToWorldPoint(new Vector3 (70*resx, 15*resy, 10.0f));
 		pauseSprite.GetComponent<SpriteRenderer> ().enabled = true;
 		pauseSprite.GetComponent<CircleCollider2D> ().enabled = true;
 	}

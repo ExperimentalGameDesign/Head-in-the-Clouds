@@ -35,9 +35,10 @@ public class SplashScreen : MonoBehaviour {
 						GameObject.Destroy(splashSprite);
 						GameObject.Destroy (instructionsButton);
 						didInstructions = true;
-					}else{
-						GameObject.Destroy (actualIArt);
 					}
+
+					GameObject.Destroy (actualIArt);
+
 					GetComponent<SelectScreen>().enabled = true;
 					enabled = false;
 				}else if(hit.collider.name == instructionsButton.name){	//Player touched the Instructions Button

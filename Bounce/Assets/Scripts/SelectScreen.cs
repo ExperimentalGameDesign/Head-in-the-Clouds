@@ -47,7 +47,8 @@ public class SelectScreen : MonoBehaviour {
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-			if (hit.collider != null && hit.collider.name != "GroundTexture" && hit.collider.name != "PauseButton") {
+			if (hit.collider != null && hit.collider.name != "GroundTexture" && hit.collider.name != "PauseButton"
+			    && hit.collider.name != "PickNewBallButton" && hit.collider.name != "PlayAgainButton" && hit.collider.name != "QuitButton") {
 				GameObject Ad = GameObject.Find("AdvertisementManager");
 				//Ad.GetComponent<AdvertisementManager>().hide();
 				if(hit.collider.name == "FaceSelectButton(Clone)") {

@@ -63,7 +63,7 @@ public class SelectScreen : MonoBehaviour {
 					for (int i = 0; i < balls.Count; i++)
 					game.playerPicked = true;
 					GetComponent<draw>().enabled = true;
-					GameObject.Find("PauseButton").GetComponent<PauseMenu> ().enabled = true;
+					//GameObject.Find("PauseButton").GetComponent<PauseMenu> ().enabled = true;
 				}
 				for (int i = 0; i < balls.Count; i++) 
 					if (balls[i].name != game.playerChoice.name)

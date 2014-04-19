@@ -213,6 +213,7 @@ public class GameController : MonoBehaviour {
 		GameObject.Find("right_wall").GetComponent<GameOver>().didFall = false;
 		GameObject.Find("right_wall").GetComponent<GameOver>().hasExploded = false;
 		//GetComponent<draw> ().enabled = true;
+		toggleButton = false;
 		isGameOver = false;
 	}
 	public void PickNewBall() {

@@ -70,10 +70,9 @@ public class SelectScreen : MonoBehaviour {
 					game.playerChoice = GameObject.Find(hit.collider.gameObject.name);
 					GameObject.Find("greyDashedLine").GetComponent<SpriteRenderer>().enabled = true;
 					GameObject.Find("DrawALineText").GetComponent<SpriteRenderer>().enabled = true;
-					GameObject.Find("PauseButton").GetComponent<SpriteRenderer> ().enabled = true;
-					GameObject.Find("PauseButton").GetComponent<BoxCollider2D> ().enabled = true;
+					//GameObject.Find("PauseButton").GetComponent<SpriteRenderer> ().enabled = true;
+					//GameObject.Find("PauseButton").GetComponent<BoxCollider2D> ().enabled = true;
 					game.playerPicked = true;
-					GetComponent<draw>().enabled = true;
 					GameObject.Find("PauseButton").GetComponent<PauseMenu> ().enabled = true;
 				}
 				for (int i = 0; i < balls.Count; i++) 

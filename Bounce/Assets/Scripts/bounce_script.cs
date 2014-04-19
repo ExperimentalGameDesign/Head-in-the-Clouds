@@ -64,8 +64,8 @@ public class bounce_script : MonoBehaviour {
 			}
 			thing.GetComponent<CloudScript>().shrink = true;
 			rigidbody2D.AddForce(new Vector2(0.0f, cloudForce));
-			if (game.thread < maxThread-threadCount)
-				game.thread += threadCount;
+			if (game.thread < maxThread-5)
+				game.thread += 5;
 			//if not then just make it the max thread so that you don't have more than the max
 			else
 				game.thread = maxThread;
@@ -77,12 +77,13 @@ public class bounce_script : MonoBehaviour {
 			}
 			thing.GetComponent<CloudScript>().shrink = true;
 			rigidbody2D.velocity = rigidbody2D.velocity - new Vector2(0.0f, rigidbody2D.velocity.y/blackCloudForce);
-			if (game.thread < maxThread-threadCount)
-				game.thread += threadCount;
+			if (game.thread < maxThread-5)
+				game.thread += 5;
 			//if not then just make it the max thread so that you don't have more than the max
 			else
 				game.thread = maxThread;
 		}
+
 	}
 	
 	void Update () {

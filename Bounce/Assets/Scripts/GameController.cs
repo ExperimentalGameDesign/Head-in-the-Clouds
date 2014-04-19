@@ -140,7 +140,6 @@ public class GameController : MonoBehaviour {
 			string firstText = "";
 			if(GUI.Button (new Rect (((Screen.width+(861.0f/5.0f*resx))/2.0f) , 10.0f*resy, 35*resx, 30.0f*resy), firstText, customSkin.customStyles[10])){
 				if(GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == false) {
-					GameObject.Find("PauseButton").GetComponent<PauseMenu>().enabled = true;
 					GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = true;
 				}
 				else if (GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == true) {

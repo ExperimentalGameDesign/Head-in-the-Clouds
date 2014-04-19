@@ -21,7 +21,7 @@ public class GameOver : MonoBehaviour {
 				audio.Play();
 				didFall = true;
 			}
-
+			GameObject.Find("PauseButton").GetComponent<PauseMenu>().enabled = false;
 			game.isGameOver = true;
 
 		}

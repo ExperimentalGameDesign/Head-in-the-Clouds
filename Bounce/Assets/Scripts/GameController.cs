@@ -184,6 +184,7 @@ public class GameController : MonoBehaviour {
 				}
 
 				GetComponent<draw>().enabled = false;
+				toggleButton = false;
 			}
 		}
 	}

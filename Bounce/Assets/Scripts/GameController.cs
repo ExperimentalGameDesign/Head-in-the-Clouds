@@ -16,11 +16,13 @@ public class GameController : MonoBehaviour {
 	public TilingBackground tiler;
 	public GUIStyle customStyle;
 	private GameObject[] deletables;
+	private bool toggleButton;
 
 
 	// Use this for initialization
 	void Start () {
 		leaderboardCreated = false;
+		toggleButton = false;
 		thread = 100;
 		actualScore = 0.0f;
 		spawnPoint = 0.0f;
@@ -138,15 +140,37 @@ public class GameController : MonoBehaviour {
 			//GUI.Box (new Rect (0.0f, 0.0f, camVect.x, camVect.y / 2.0f), theScore, customStyle);
 			//GUI.Box (new Rect (0.0f, fontSize+5.0f, camVect.x, camVect.y / 2.0f), threadLeft, customStyle);
 			string firstText = "";
-			if(GUI.Button (new Rect (((Screen.width+(861.0f/5.0f*resx))/2.0f) , 10.0f*resy, 35*resx, 30.0f*resy), firstText, customSkin.customStyles[10])){
-				if(GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == false) {
+
+			if (toggleButton == false && !isGameOver) //displaying Pause button
+			{
+				if(GUI.Button (new Rect (((Screen.width+(861.0f/5.0f*resx))/2.0f) , 10.0f*resy, 35*resx, 30.0f*resy), firstText, customSkin.customStyles[10])){
+					//if(GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == false) {
 					GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = true;
-				}
-				else if (GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == true) {
 					GetComponent<draw>().enabled = false;
-					GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = false;
+					//}
+					/*else if (GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == true) {
+						GetComponent<draw>().enabled = false;
+						GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = false;
+					}*/
+					toggleButton = true;
 				}
 			}
+			else if (!isGameOver)//toggleButton == true, displaying Play button
+			{
+				if(GUI.Button (new Rect (((Screen.width+(861.0f/5.0f*resx))/2.0f) , 10.0f*resy, 35*resx, 30.0f*resy), firstText, customSkin.customStyles[11])){
+					/*if(GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == false) {
+						GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = true;
+					}
+					else if (GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == true) {*/
+					GetComponent<draw>().enabled = false;
+					GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = false;
+
+					toggleButton = false;
+					//}
+				}
+			}
+
+
 			GUI.Box (new Rect (0.0f, 0.0f, 70*resx, 15*resy), theScore, customStyle);
 			GUI.Box (new Rect (0.0f, fontSize+5.0f, 70*resx, 15*resy), threadLeft, customStyle);
 			if (isGameOver) {

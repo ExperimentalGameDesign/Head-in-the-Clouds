@@ -328,8 +328,12 @@ public class LeaderboardScript : MonoBehaviour {
 			//GUI.color = Color.green;
 			string firstText = "";
 
-			if(GUI.Button (new Rect ((Screen.width-(861.0f/8.0f*resx))/2.0f, 50.0f*resy, 861.0f/8.0f*resx, 345.0f/8.0f*resy), firstText, customSkin.customStyles[0])){
-				Application.LoadLevel (0);
+			if(GUI.Button (new Rect (((Screen.width-(861.0f/8.0f*resx))/2.0f) - 65, 50.0f*resy, 861.0f/8.0f*resx, 345.0f/8.0f*resy), firstText, customSkin.customStyles[0])){
+				Camera.main.GetComponent<GameController>().ResetGame();
+
+			}
+			if(GUI.Button (new Rect (((Screen.width-(861.0f/8.0f*resx))/2.0f) + 65, 50.0f*resy, 861.0f/8.0f*resx, 345.0f/8.0f*resy), firstText, customSkin.customStyles[9])){
+				Camera.main.GetComponent<GameController>().PickNewBall();
 			}
 
 			//Screenshot button
@@ -343,6 +347,7 @@ public class LeaderboardScript : MonoBehaviour {
 			}else{	//Back to Normal leaderboard stuff
 				if(isGlobal == true){
 					newestText = "Tap here to see your high scores!";
+
 					if(GUI.Button (new Rect ((Screen.width-(861.0f/4.0f*resx))/2.0f, 95.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), newestText, customSkin.customStyles[1])){
 						isGlobal = false;
 					}

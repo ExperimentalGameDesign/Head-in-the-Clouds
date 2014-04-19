@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour {
 	public GameObject player; 
 	public GameObject playerChoice, threadPickup, whiteCloud, darkCloud, birdy;
 	public bool playerPicked = false, facePicked = false;
-	public bool isGameOver;
+	public bool isGameOver, started;
 	public float actualScore, thread, spawnPoint;
 	public List<GameObject> threadList, whiteCloudList, darkCloudList;
 	public GameObject leaderboard;
@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour {
 	public GameObject actualLeaderboard;
 	public TilingBackground tiler;
 	public GUIStyle customStyle;
+	private GameObject[] deletables;
 
 
 	// Use this for initialization
@@ -31,6 +32,10 @@ public class GameController : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKey(KeyCode.Escape))
+		{
+			Application.Quit();
+		}
 		if (playerChoice != null && playerPicked == true) {
 			player = GameObject.Find (playerChoice.name);
 			tiler.player = player;
@@ -48,26 +53,16 @@ public class GameController : MonoBehaviour {
 			playerPicked = false;
 		}
 		if (player != null) {
+			started = true;
+			if (started && !isGameOver && GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == false)
+				GetComponent<draw>().enabled = true;
 			if (facePicked) {
-				//tempPlayer.GetComponentInChildren<gameObject>().renderer.material.mainTexture = 
-				//GameObject tempPlayer = (GameObject)Instantiate(Resources.Load("FaceSprite"));
-				//Destroy(player);
-				//player = tempPlayer;
-
-				//player.GetComponent<SpriteRenderer>().sprite = (Sprite)(Resources.Load ("testIMAGE"));
-				//player.GetComponent<SpriteRenderer>().sprite = //(Sprite)(Resources.Load ("testIMAGE"));
-
-				//player.GetComponent<Rigidbody2D>().gravityScale = 5.0f;
-				//player.GetComponent<bounce_script>().enabled = false;
-				//player.GetComponent<Rigidbody2D>().Sleep();
-				//player.GetComponent<CircleCollider2D>().enabled = false;
 				GameObject tempPlayer = (GameObject)Instantiate(Resources.Load("FaceSprite 1"), new Vector3(0.0f,0.0f,0.0f), Quaternion.identity);
 				player.transform.localScale = player.transform.localScale / 5;
 				player.transform.position = new Vector3(0.0f, 0.0f, -1.0f);
 				player.transform.parent = tempPlayer.transform;
 				player = tempPlayer;
 				tempPlayer.GetComponent<Rigidbody2D>().gravityScale = 5.0f;
-
 				facePicked = false;
 			}
 			//this is what turns off drawing if out of h2o
@@ -113,11 +108,6 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
-		if (isGameOver) {
-			if (Input.GetMouseButtonDown(0)) { 
-				//Application.LoadLevel(0);
-			}
-		}
 	}
 
 	void OnGUI(){
@@ -138,7 +128,7 @@ public class GameController : MonoBehaviour {
 		//customStyle.normal = null;
 
 		if(player != null){
-			if(player.transform.position.y > actualScore){
+			if(player.transform.position.y > actualScore && isGameOver == false && started == true){
 				actualScore = player.transform.position.y;
 			}
 			int tempThread = (int)thread;
@@ -163,5 +153,46 @@ public class GameController : MonoBehaviour {
 				GetComponent<draw>().enabled = false;
 			}
 		}
+	}
+	public void ResetGame() {
+		GameObject.Find ("GroundMusic").GetComponent<AudioSource> ().enabled = false;
+		GameObject.Find ("GroundMusic").GetComponent<AudioSource> ().enabled = true;
+		deletables = GameObject.FindGameObjectsWithTag("Deletables");
+		for (int i = 0; i < deletables.Length; i++)
+			GameObject.Destroy(deletables[i]);
+		player.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+		player.transform.rotation = new Quaternion (0.0f, 0.0f, 0.0f, 0.0f);
+		player.rigidbody2D.velocity = new Vector2 (0.0f, 0.0f);
+		player.rigidbody2D.angularVelocity = 0.0f;
+		transform.position = new Vector3(0.0f, 0.0f, -10.0f);
+		actualScore = 0.0f;
+		thread = 100.0f;
+		spawnPoint = 0.0f;
+		leaderboardCreated = false;
+		GameObject.Find ("floor").GetComponent<GameOver> ().audio.Stop ();
+		GameObject.Find ("left_wall").GetComponent<GameOver> ().audio.Stop ();
+		GameObject.Find ("right_wall").GetComponent<GameOver> ().audio.Stop ();
+		GameObject.Find("floor").GetComponent<GameOver>().didFall = false;
+		GameObject.Find("floor").GetComponent<GameOver>(). hasExploded = false;
+		GameObject.Find("left_wall").GetComponent<GameOver>().didFall = false;
+		GameObject.Find("left_wall").GetComponent<GameOver>().hasExploded = false;
+		GameObject.Find("right_wall").GetComponent<GameOver>().didFall = false;
+		GameObject.Find("right_wall").GetComponent<GameOver>().hasExploded = false;
+		//GetComponent<draw> ().enabled = true;
+		isGameOver = false;
+	}
+	public void PickNewBall() {
+		playerPicked = false;
+		playerChoice = null;
+		ResetGame ();
+		GameObject.Destroy (player);
+		player = null;
+		GameObject.Find("greyDashedLine").GetComponent<SpriteRenderer>().enabled = false;
+		GameObject.Find("DrawALineText").GetComponent<SpriteRenderer>().enabled = false;
+		GameObject.Find("PauseButton").GetComponent<SpriteRenderer> ().enabled = false;
+		GameObject.Find("PauseButton").GetComponent<BoxCollider2D> ().enabled = false;
+		GetComponent<SelectScreen> ().enabled = true;
+		GetComponent<SelectScreen> ().Init ();
+		GetComponent<draw> ().enabled = false;
 	}
 }

@@ -14,7 +14,9 @@ public class cameraScript : MonoBehaviour {
 	public Texture finalPicture;
 
 	// Use this for initialization
-	void Start () {
+	void Start() {
+	}
+	public void Init () {
 		switchCamIcon = (GameObject)Instantiate(Resources.Load("switchCamIcon"), camera.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height - (Screen.height / 5.0f), 10.0f)), Quaternion.identity);
 		camIcon = (GameObject)Instantiate(Resources.Load("camIcon"), camera.ScreenToWorldPoint(new Vector3(Screen.width/2, (Screen.height / 5.0f) , 10.0f)), Quaternion.identity);
 
@@ -24,10 +26,10 @@ public class cameraScript : MonoBehaviour {
 		picturePlane.transform.position = new Vector3 (0.0f, 0.0f, -1.0f);
 		picturePlane.transform.rotation = Quaternion.Euler(0.0f, 180.0f, 90.0f);
 		print (picturePlane.transform.rotation.eulerAngles);
-		picturePlane.transform.localScale = new Vector3(picturePlane.transform.localScale.x *-5, picturePlane.transform.localScale.y *5, picturePlane.transform.localScale.z*5);
+		//picturePlane.transform.localScale = new Vector3(picturePlane.transform.localScale.x *-5, picturePlane.transform.localScale.y *5, picturePlane.transform.localScale.z*5);
 		//picturePlane.transform.eulerAngles = frontRotation;
 
-		BackgroundTexture = gameObject.AddComponent<GUITexture>();
+		BackgroundTexture = gameObject.GetComponent<GUITexture>();
 		BackgroundTexture.pixelInset = new Rect(0 ,0,Screen.width,Screen.height);
 
 		WebCamDevice[] devices = WebCamTexture.devices;
@@ -113,7 +115,9 @@ public class cameraScript : MonoBehaviour {
 					GameObject.Find("greyDashedLine").GetComponent<SpriteRenderer>().enabled = true;
 					GameObject.Find("DrawALineText").GetComponent<SpriteRenderer>().enabled = true;
 					GetComponent<draw>().enabled = true;
-					//GameObject.Find("PauseButton").GetComponent<PauseMenu> ().enabled = true;
+					GameObject.Find("PauseButton").GetComponent<SpriteRenderer> ().enabled = true;
+					GameObject.Find("PauseButton").GetComponent<BoxCollider2D> ().enabled = true;
+					GameObject.Find("PauseButton").GetComponent<PauseMenu> ().enabled = true;
 					enabled = false;
 				}
 			}

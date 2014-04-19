@@ -5,7 +5,7 @@ public class GameOver : MonoBehaviour {
 
 	public GameController game;
 	public AudioClip falling, sploding;
-	private bool hasExploded = false, didFall = false;
+	public bool hasExploded = false, didFall = false;
 	// Use this for initialization
 	void Start () {
 	
@@ -21,7 +21,9 @@ public class GameOver : MonoBehaviour {
 				audio.Play();
 				didFall = true;
 			}
+
 			game.isGameOver = true;
+
 		}
 		else {
 			if (thing.name != "ModularSprite") {
@@ -44,6 +46,7 @@ public class GameOver : MonoBehaviour {
 			if (audio.isPlaying == false) {
 				AudioSource.PlayClipAtPoint(sploding, transform.position);
 				hasExploded = true;
+
 			}
 		}
 	}

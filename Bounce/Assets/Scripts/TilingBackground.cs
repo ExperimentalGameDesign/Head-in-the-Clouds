@@ -15,7 +15,8 @@ public class TilingBackground : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D thing) {
-		if (thing.name == player.name) {
+		//Debug.Log (thing.name + " ***** " + player.name);
+		if (thing.name == player.name || thing.name == "FaceSprite 1(Clone)") {
 			newTile = (GameObject)Instantiate(Resources.Load("ModularSpriteKing"), new Vector3(0.0f, tiler.transform.position.y + 608, 0.0f), Quaternion.identity);
 			newTile.GetComponentInChildren<TilingBackground>().player = player;
 			tiler = newTile;

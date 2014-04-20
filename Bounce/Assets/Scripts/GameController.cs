@@ -43,6 +43,10 @@ public class GameController : MonoBehaviour {
 		if (playerChoice != null && playerPicked == true) {
 			player = GameObject.Find (playerChoice.name);
 			tiler.player = player;
+			if (GameObject.Find("ModularSpriteKing(Clone)")) {
+				GameObject newTile = GameObject.Find("ModularSpriteKing(Clone)");
+				newTile.GetComponentInChildren<TilingBackground> ().player = player;
+			}
 			if (player.name == "Face(Clone)") {
 //				continue;
 			}
@@ -221,9 +225,9 @@ public class GameController : MonoBehaviour {
 		isGameOver = false;
 	}
 	public void PickNewBall() {
+		ResetGame ();
 		playerPicked = false;
 		playerChoice = null;
-		ResetGame ();
 		GameObject.Destroy (player);
 		player = null;
 		GameObject.Find("greyDashedLine").GetComponent<SpriteRenderer>().enabled = false;

@@ -214,6 +214,8 @@ public class GameController : MonoBehaviour {
 		GameObject.Find("left_wall").GetComponent<GameOver>().hasExploded = false;
 		GameObject.Find("right_wall").GetComponent<GameOver>().didFall = false;
 		GameObject.Find("right_wall").GetComponent<GameOver>().hasExploded = false;
+		GameObject newTile = (GameObject)Instantiate(Resources.Load("ModularSpriteKing"), new Vector3(0.0f, 1707.0f, 0.0f), Quaternion.identity);
+		newTile.GetComponentInChildren<TilingBackground> ().player = player;
 		//GetComponent<draw> ().enabled = true;
 		toggleButton = false;
 		isGameOver = false;

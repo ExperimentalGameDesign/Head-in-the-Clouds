@@ -4,11 +4,13 @@ using System.Collections;
 public class CloudScript : MonoBehaviour {
 	Vector3 midSize;
 	float smallestSize;
+	public int charges;
 	public bool shrink;
 	// Use this for initialization
 	void Start () {
 		midSize = new Vector3(transform.localScale.x/2.0f, transform.localScale.y/2.0f, 1);
 		smallestSize = 0.5f;
+		charges = 1;
 		shrink = false;
 	}
 	
@@ -26,6 +28,7 @@ public class CloudScript : MonoBehaviour {
 				if (transform.localScale.x < midSize.x + 0.2f)
 				{
 					midSize = new Vector3(0.1f, 0.1f, 1.0f);
+					charges += 1;
 					shrink = false;
 				}
 			}

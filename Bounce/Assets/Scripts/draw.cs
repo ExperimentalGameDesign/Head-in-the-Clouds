@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class draw : MonoBehaviour {
+	public bool inSpace = false;
 	private bool firstClick = true;
 	private float distanceBetweenPos = 0;	
 	Vector3 lastPos = new Vector3(-9999,-9999,-9999);
@@ -19,9 +20,10 @@ public class draw : MonoBehaviour {
 	List<GameObject> textureArray;
 	Quaternion finalRotation;
 	//public GameController game;
-
+	
 	// Use this for initialization
 	void Start () {
+		
 		textureArray = new List<GameObject>();
 	}
 	
@@ -32,7 +34,7 @@ public class draw : MonoBehaviour {
 		{
 			lastPosExists = false;		
 			//print ("released");
-		
+			
 			DrawTexture();
 			textureArray = new List<GameObject>();
 		}
@@ -73,25 +75,28 @@ public class draw : MonoBehaviour {
 			{
 				EditShape();
 			}
-
+			
 		}
-
+		
 	}
 	//Here's where rendering happens
 	void MakeShape(Vector3 newPos)
 	{
-		shape = (GameObject)Instantiate(Resources.Load("Cube"));
+		string shapeType = "Cube";
+		if (inSpace)
+			shapeType = "SpaceCube";
+		shape = (GameObject)Instantiate(Resources.Load(shapeType));
 		shape.collider2D.enabled = false;
 		lastPos = newPos;
 	}
-
+	
 	void AddShape(Vector3 newPos)
 	{
 		GameObject textureSquare = new GameObject(); //(GameObject)Instantiate(Resources.Load("box"));
 		textureSquare.transform.position = newPos;
 		textureArray.Add(textureSquare);
-
-
+		
+		
 	}
 	void DrawTexture()
 	{
@@ -101,12 +106,21 @@ public class draw : MonoBehaviour {
 		GetComponent<GameController>().thread -= distanceBetweenPos;
 		//print ("dist2 = " + distanceBetweenPos);
 		Vector3 move_direction = new Vector3(lastPos.x-firstPos.x, lastPos.y-firstPos.y, 0);
-
+		
 		GameObject test;
 		
 		Quaternion new_finalRotation = new Quaternion(0,0,0,0);
 		float tempZ = 0;
 		bool adjusted = false;
+		string endRight = "DawCloudEndRight";
+		string endLeft = "DawCloudEndLeft";
+		string tileMid = "tilingCloudTexture2";
+		if (inSpace)
+		{
+			endRight = "TilingNebulaEndRight";
+			endLeft = "TilingNebulaEndLeft";
+			tileMid = "TilingNebula2";
+		}
 		
 		
 		for (float i=0.0f; i<distanceBetweenPos; i+=1.28f)
@@ -126,10 +140,10 @@ public class draw : MonoBehaviour {
 			//first node
 			if (i==0.0f)
 			{
-				test = (GameObject)Instantiate(Resources.Load("DawCloudEndRight")); //tilingCloudTexture2"));
+				test = (GameObject)Instantiate(Resources.Load(endRight)); //tilingCloudTexture2"));
 				if (adjusted)
 					new_finalRotation = Quaternion.Euler(new Vector3(0f, 180.0f, 360.0f-tempZ));
-
+				
 				//test.transform.rotation = new Quaternion(0,180,0,0);
 				//new_finalRotation = new Quaternion(0, 0, finalRotation.z, 0);
 				//print ("first" + finalRotation.z);
@@ -137,7 +151,7 @@ public class draw : MonoBehaviour {
 			//last node 
 			else if (i+1.28f >= distanceBetweenPos)
 			{
-				test = (GameObject)Instantiate(Resources.Load("DawCloudEndLeft"));
+				test = (GameObject)Instantiate(Resources.Load(endLeft));
 				if (adjusted)
 					new_finalRotation = Quaternion.Euler(new Vector3(0f, 180.0f, 360.0f - tempZ));
 				//new_finalRotation = new Quaternion(0, 180, finalRotation.z, 0);
@@ -146,29 +160,29 @@ public class draw : MonoBehaviour {
 			//middle node
 			else
 			{
-				test = (GameObject)Instantiate(Resources.Load("tilingCloudTexture2"));
+				test = (GameObject)Instantiate(Resources.Load(tileMid));
 			}
 			
 			
 			test.transform.rotation = new_finalRotation;
-
-
+			
+			
 			float angleInDeg = Mathf.Atan2 (move_direction.y, move_direction.x) * 180 / Mathf.PI;
 			float angleInRad = Mathf.Deg2Rad*angleInDeg;
 			//	print ("angle = " + angleInDeg);
 			float rx2 = firstPos.x + Mathf.Cos(angleInRad) * i;
 			float ry2 = firstPos.y + Mathf.Sin(angleInRad) * i;
 			Vector3 drawPoint = new Vector3(rx2, ry2, 0);
-
+			
 			test.transform.position = drawPoint;
 			//test.collider2D.enabled = false;
 		}
 		if (distanceBetweenPos != 0) 
 			shape.collider2D.enabled = true;
 		shape.renderer.enabled = false;
-
-
-
+		
+		
+		
 		/*
 
 //Calculate point at end of raycast so we can draw the line
@@ -192,22 +206,22 @@ public class draw : MonoBehaviour {
 			distanceBetweenPos = Mathf.Sqrt((xDist*xDist) + (yDist*yDist));
 			//print ("dist = " + distanceBetweenPos);
 			shape.transform.localScale = new Vector3(distanceBetweenPos, 1, 1);
-
+			
 			shape.transform.position = new Vector3((newPos.x + firstPos.x)/2, (newPos.y+firstPos.y)/2, 0);
-
+			
 			Vector2 mousePosition = new Vector2(newPos.x, newPos.y);
 			Vector2 origPosition = new Vector2(firstPos.x, firstPos.y);
 			Vector2 dPos = origPosition - mousePosition; //_arrow.Position - mousePosition;
 			float angle = Mathf.Atan2 (dPos.y, dPos.x);
 			float new_value = angle * Mathf.Rad2Deg;
-
+			
 			Quaternion rotation2 = Quaternion.Euler(new Vector3(0f, 0f, new_value));
 			//shape.transform.rotation = rotation2;
 			//shape.transform.rotation = Quaternion.Euler(new Vector3(0f,0f,new_value)); //_arrow.Rotation = (float)Math.Atan2(dPos.Y, dPos.X);
-
+			
 			//float angle = Mathf.Atan2(diff.y, diff.x);
 			//transform.rotation = Quaternion.Euler(0f, 0f, RadToDeg(angle));
-
+			
 			shape.transform.rotation = rotation2;
 			finalRotation = rotation2;
 			/*
@@ -218,10 +232,10 @@ public class draw : MonoBehaviour {
 			shape.transform.RotateAround(firstPos, zAxis, angleInDegrees);
 
 */
-	
+			
 			//shape.transform.localScale.x = (float)( desiredLength / lengthNow );
 			//shape.transform.localPosition.x += (float)(0.5 * desiredLength);
-
+			
 			//shape.transform.localScale = new Vector3(( desiredLength / lengthNow ), shape.transform.localScale.y, shape.transform.localScale.z);
 			//shape.transform.localPosition = new Vector3( (shape.transform.localPosition.x + (0.5 * desiredLength)), shape.transform.localPosition.y, shape.transform.localPosition.z);
 			/*
@@ -233,14 +247,14 @@ public class draw : MonoBehaviour {
 			locPos.x += (0.5f * desiredLength); // your new value
 			shape.transform.localPosition = locPos;*/
 			
-		
+			
 			//Orient the shape toward the new position
-		//	shape.transform.LookAt(newPos);
-
+			//	shape.transform.LookAt(newPos);
+			
 		}       
 		//Reset stuff
 		lastPos = newPos; 
 		lastPosExists = true;
 	}
-
+	
 }

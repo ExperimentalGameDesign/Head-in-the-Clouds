@@ -30,18 +30,19 @@ public class bounce_script : MonoBehaviour {
 			rigidbody2D.AddForce(new Vector2(temp.x,temp.y));
 		}
 		
-		if(thing.transform.name == "Cube(Clone)")// != "floor" && thing.transform.name != "Thread") // && thing.transform.name != "left_wall" && thing.transform.name != "right_wall") 
+		if(thing.transform.name == "Cube(Clone)" || thing.transform.name == "SpaceCube(Clone)")// != "floor" && thing.transform.name != "Thread") // && thing.transform.name != "left_wall" && thing.transform.name != "right_wall") 
 		{
 			//print ("< 1");
 			if (thing.transform.localScale.x < 1)
-				bounceForce = 4000;
+				bounceForce = 6000;
 			//print (">=1 < 5");
 			else if (thing.transform.localScale.x >=1 && thing.transform.localScale.x < 5)
-				bounceForce = 3000;
+				bounceForce = 5500;
 			//print (">=5 < 15");
-			else if (thing.transform.localScale.x >=5 && thing.transform.localScale.x < 15)
-				bounceForce = 2500;
-			//print (">=15");
+			else if (thing.transform.localScale.x >=5 && thing.transform.localScale.x < 10)
+				bounceForce = 4000;
+			else if (thing.transform.localScale.x >=10 && thing.transform.localScale.x < 15)
+				bounceForce = 3000;
 			else
 				bounceForce = 1500;
 			//bounceForce = (Mathf.Min(5000 / (thing.transform.localScale.x), 4000));
@@ -50,7 +51,16 @@ public class bounce_script : MonoBehaviour {
 			//if (thing.transform.name == "left_wall" || thing.transform.name == "right_wall")
 			temp = temp.normalized;
 			temp = new Vector3(temp.x*xbounceForce, temp.y*bounceForce, temp.z);
+			
 			rigidbody2D.AddForce(new Vector2(temp.x,temp.y));
+		}
+		
+		if (thing.transform.name == "Bird(Clone)" || thing.transform.name == "AstroBird(Clone)")
+		{
+			Vector3 temp = thing.contacts[0].normal;
+			temp = temp.normalized;
+			temp = new Vector3(temp.x*2000.0f, temp.y*2000.0f, temp.z);
+			rigidbody2D.AddForce(new Vector2(temp.x, temp.y));
 		}
 		
 	}
@@ -64,10 +74,13 @@ public class bounce_script : MonoBehaviour {
 			}
 			thing.GetComponent<CloudScript>().shrink = true;
 			rigidbody2D.AddForce(new Vector2(0.0f, cloudForce));
-			if (game.thread < maxThread-5)
+			if (game.thread < maxThread-5 && thing.GetComponent<CloudScript>().charges >= 1)
+			{
 				game.thread += 5;
+				thing.GetComponent<CloudScript>().charges -= 1;
+			}
 			//if not then just make it the max thread so that you don't have more than the max
-			else
+			else if (thing.GetComponent<CloudScript>().charges >= 1)
 				game.thread = maxThread;
 			
 		}
@@ -77,13 +90,16 @@ public class bounce_script : MonoBehaviour {
 			}
 			thing.GetComponent<CloudScript>().shrink = true;
 			rigidbody2D.velocity = rigidbody2D.velocity - new Vector2(0.0f, rigidbody2D.velocity.y/blackCloudForce);
-			if (game.thread < maxThread-5)
+			if (game.thread < maxThread-5 && thing.GetComponent<CloudScript>().charges >= 1)
+			{
 				game.thread += 5;
+				thing.GetComponent<CloudScript>().charges -= 1;
+			}
 			//if not then just make it the max thread so that you don't have more than the max
-			else
+			else if (thing.GetComponent<CloudScript>().charges >= 1)
 				game.thread = maxThread;
 		}
-
+		
 	}
 	
 	void Update () {

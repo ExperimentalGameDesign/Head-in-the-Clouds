@@ -73,6 +73,10 @@ public class GameController : MonoBehaviour {
 				tempPlayer.GetComponent<Rigidbody2D>().gravityScale = 5.0f;
 				facePicked = false;
 			}
+			if (player.transform.position.y >= 1200)
+			{
+				GetComponent<draw>().inSpace = true;
+			}
 			//this is what turns off drawing if out of h2o
 			if (thread <= 0)
 			{

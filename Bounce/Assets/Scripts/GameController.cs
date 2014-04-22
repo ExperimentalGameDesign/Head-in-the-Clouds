@@ -184,14 +184,22 @@ public class GameController : MonoBehaviour {
 					GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = false;
 
 					toggleButton = false;
+
 					//}
 				}
+
 			}
 
 
-			GUI.Box (new Rect (0.0f, 0.0f, 70*resx, 15*resy), theScore, customStyle);
-			GUI.Box (new Rect (0.0f, fontSize+5.0f, 70*resx, 15*resy), threadLeft, customStyle);
-			if (isGameOver) {
+			if(!isGameOver) {
+				GUI.Box (new Rect (0.0f, 0.0f, 70*resx, 15*resy), theScore, customStyle);
+				GUI.Box (new Rect (0.0f, fontSize+5.0f, 70*resx, 15*resy), threadLeft, customStyle);
+			}
+			else if (isGameOver) {
+				customSkin.customStyles[12].overflow.left = theScore.Length + 30;
+				customSkin.customStyles[12].overflow.right = theScore.Length + 30;
+				GUI.Box (new Rect (Screen.width/2 - (theScore.Length + 30), fontSize+10.0f, 70*resx, 15*resy), theScore, customSkin.customStyles[12]);
+				//GUI.Box (new Rect (Screen.width/2 - 70, fontSize+5.0f, 70*resx, 15*resy), threadLeft, customStyle);
 				//GUI.Box (new Rect (0.0f, Screen.height/2, Screen.width, Screen.height/4), "Game Over");
 				if(!leaderboardCreated){
 					leaderboardCreated = true;

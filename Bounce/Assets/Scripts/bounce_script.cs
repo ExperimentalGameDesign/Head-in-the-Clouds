@@ -21,6 +21,13 @@ public class bounce_script : MonoBehaviour {
 			if (!thing.collider.audio.isPlaying) {
 				thing.collider.audio.Play();
 			}
+			Vector3 temp = thing.contacts[0].normal;
+			temp = temp.normalized;
+			gameObject.rigidbody2D.velocity = new Vector2 (0,0);
+			temp = new Vector3(temp.x*2000.0f, temp.y*2000.0f, temp.z);
+			
+			rigidbody2D.AddForce(new Vector2(temp.x, temp.y));
+			print ("hit");
 		}
 		if (thing.transform.name == "GroundTexture")
 		{
@@ -54,21 +61,12 @@ public class bounce_script : MonoBehaviour {
 			
 			rigidbody2D.AddForce(new Vector2(temp.x,temp.y));
 		}
-		
-		if (thing.transform.name == "Bird(Clone)" || thing.transform.name == "AstroBird(Clone)")
-		{
-			Vector3 temp = thing.contacts[0].normal;
-			temp = temp.normalized;
-			temp = new Vector3(temp.x*2000.0f, temp.y*2000.0f, temp.z);
-			rigidbody2D.AddForce(new Vector2(temp.x, temp.y));
-		}
-		
 	}
 	
 	void OnTriggerEnter2D(Collider2D thing) {
 		//running into a bird
 		//send character up if hit a white cloud
-		if (thing.name == "WhiteCloud(Clone)") {
+		if (thing.name == "WhiteCloud(Clone)" || thing.name == "SpaceWhiteCloud(Clone)") {
 			if (!thing.audio.isPlaying) {
 				thing.audio.Play();
 			}
@@ -84,7 +82,7 @@ public class bounce_script : MonoBehaviour {
 				game.thread = maxThread;
 			
 		}
-		if (thing.name == "DarkCloud(Clone)") {
+		if (thing.name == "DarkCloud(Clone)" || thing.name == "SpaceDarkCloud(Clone)") {
 			if (!thing.audio.isPlaying) {
 				thing.audio.Play();
 			}
@@ -111,11 +109,12 @@ public class bounce_script : MonoBehaviour {
 		//Mathf.Clamp(vel, min, max);
 		
 		//velocityDiff = rigidbody2D.velocity.x - 15;
+		/* ASH
 		if (rigidbody2D.velocity.x < 0)
 			rigidbody2D.velocity = new Vector2 (Mathf.Max(rigidbody2D.velocity.x, -15.0f), rigidbody2D.velocity.y);
 		else 
 			rigidbody2D.velocity = new Vector2 (Mathf.Min(rigidbody2D.velocity.x, 15.0f), rigidbody2D.velocity.y);
-		
+		*/ //ASH
 		/*else if (rigidbody2D.velocity.x < -15)
 		{
 			rigidbody2D.velocity = new Vector2 (-15.0f, rigidbody2D.velocity.y);

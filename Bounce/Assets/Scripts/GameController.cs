@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour {
 	public GUIStyle customStyle;
 	private GameObject[] deletables;
 	private bool toggleButton;
+	private string whiteCloudType;
+	private string darkCloudType;
 
 
 	// Use this for initialization
@@ -76,6 +78,13 @@ public class GameController : MonoBehaviour {
 			if (player.transform.position.y >= 1200)
 			{
 				GetComponent<draw>().inSpace = true;
+				whiteCloudType = "SpaceWhiteCloud";
+				darkCloudType = "SpaceDarkCloud";
+			}
+			else
+			{
+				whiteCloudType = "WhiteCloud";
+				darkCloudType = "DarkCloud";
 			}
 			//this is what turns off drawing if out of h2o
 			if (thread <= 0)
@@ -83,9 +92,8 @@ public class GameController : MonoBehaviour {
 				GetComponent<draw>().enabled = false;
 			}
 			if (player.transform.position.y >= spawnPoint) {
-
-				whiteCloud = (GameObject)Instantiate(Resources.Load("WhiteCloud"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
-				darkCloud = (GameObject)Instantiate(Resources.Load("DarkCloud"), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
+				whiteCloud = (GameObject)Instantiate(Resources.Load(whiteCloudType), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
+				darkCloud = (GameObject)Instantiate(Resources.Load(darkCloudType), new Vector3(Random.Range(-30, 30), Random.Range(player.transform.position.y + 80, player.transform.position.y + 150), 0.0f), Quaternion.identity);
 				int randDirection = Random.Range (0,2);
 				if (randDirection == 0) //Bird comes from left of screen
 				{

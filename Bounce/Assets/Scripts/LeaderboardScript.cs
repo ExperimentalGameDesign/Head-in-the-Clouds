@@ -20,6 +20,7 @@ public class LeaderboardScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
 		isGlobal = true;
 		timePassed = 0.0f;
 		reDo = false;
@@ -30,36 +31,36 @@ public class LeaderboardScript : MonoBehaviour {
 		names = new string[] {"", "", "", "", "", "", "", "", "", ""};
 		scores = new float[]{0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
-		/*ParseObject gameScore = new ParseObject("PlayerScores");
-		gameScore["score0"] = 1.0f;
-		gameScore["score1"] = 1.0f;
-		gameScore["score2"] = 1.0f;
-		gameScore["score3"] = 1.0f;
-		gameScore["score4"] = 1.0f;
-		gameScore["score5"] = 1.0f;
-		gameScore["score6"] = 1.0f;
-		gameScore["score7"] = 1.0f;
-		gameScore["score8"] = 1.0f;
-		gameScore["score9"] = 1.0f;
+		/*ParseObject newGameScore = new ParseObject("PlayerScores");
+		newGameScore["score0"] = 1.0f;
+		newGameScore["score1"] = 1.0f;
+		newGameScore["score2"] = 1.0f;
+		newGameScore["score3"] = 1.0f;
+		newGameScore["score4"] = 1.0f;
+		newGameScore["score5"] = 1.0f;
+		newGameScore["score6"] = 1.0f;
+		newGameScore["score7"] = 1.0f;
+		newGameScore["score8"] = 1.0f;
+		newGameScore["score9"] = 1.0f;
 
-		gameScore["playerName0"] = "AAA";
-		gameScore["playerName1"] = "AAA";
-		gameScore["playerName2"] = "AAA";
-		gameScore["playerName3"] = "AAA";
-		gameScore["playerName4"] = "AAA";
-		gameScore["playerName5"] = "AAA";
-		gameScore["playerName6"] = "AAA";
-		gameScore["playerName7"] = "AAA";
-		gameScore["playerName8"] = "AAA";
-		gameScore["playerName9"] = "AAA";
-		gameScore.SaveAsync();*/
+		newGameScore["playerName0"] = "AAA";
+		newGameScore["playerName1"] = "AAA";
+		newGameScore["playerName2"] = "AAA";
+		newGameScore["playerName3"] = "AAA";
+		newGameScore["playerName4"] = "AAA";
+		newGameScore["playerName5"] = "AAA";
+		newGameScore["playerName6"] = "AAA";
+		newGameScore["playerName7"] = "AAA";
+		newGameScore["playerName8"] = "AAA";
+		newGameScore["playerName9"] = "AAA";
+		newGameScore.SaveAsync();*/
 		//resetLeaderboards ();
 
-		objectId = "poCITRovy1";
+		objectId = "lYFGz0XjTt";
 
 		//namesScores = null;
 		ParseQuery<ParseObject> query = ParseObject.GetQuery("PlayerScores");
-		query.GetAsync("poCITRovy1").ContinueWith(t =>
+		query.GetAsync("lYFGz0XjTt").ContinueWith(t =>
 		                                          {
 			namesScores = t.Result;
 			//Changed Code
@@ -139,7 +140,7 @@ public class LeaderboardScript : MonoBehaviour {
 
 	void resetLeaderboards(){
 		ParseQuery<ParseObject> query = ParseObject.GetQuery("PlayerScores");
-		query.GetAsync("poCITRovy1").ContinueWith(t =>
+		query.GetAsync("lYFGz0XjTt").ContinueWith(t =>
 		                                          {
 			namesScores = t.Result;
 		//namesScores.SaveAsync().ContinueWith(t =>

@@ -364,14 +364,18 @@ public class LeaderboardScript : MonoBehaviour {
 					float startingHeight = 400;
 					for(int i = 0; i < 10; i++){
 						if(names[i] == ""){
-							newestText = "Loading...";
+							//newestText = "Loading...";
+							if(i == 3){
+								newestText = "                    Loading...                    ";
+							}
 						}else{
 							newestText = (i + 1) + ". " + names[i];
 						}
 						GUI.Box (new Rect ((Screen.width-(861.0f/3.5f*resx))/2.0f, 125.0f*resy+(customSkin.customStyles[4].fontSize*i), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
 
 						if(scores[i] == 0.0f){
-							newestText = "Loading...";
+							//newestText = "Loading...";
+							newestText = "";
 						}else{
 							newestText = scores[i].ToString();
 						}

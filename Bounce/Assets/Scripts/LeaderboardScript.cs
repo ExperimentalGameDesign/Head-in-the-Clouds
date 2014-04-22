@@ -365,6 +365,7 @@ public class LeaderboardScript : MonoBehaviour {
 					for(int i = 0; i < 10; i++){
 						if(names[i] == ""){
 							//newestText = "Loading...";
+							newestText = "";
 							if(i == 3){
 								newestText = "                    Loading...                    ";
 							}

@@ -40,6 +40,7 @@ public class SplashScreen : MonoBehaviour {
 					enabled = false;
 				}else if(hit.collider.name == instructionsButton.name){	//Player touched the Instructions Button
 					//Debug.Log ("instructions");
+					didInstructions = true;
 					startButton.transform.position = new Vector3(0.0f, -29.0f, startButton.transform.position.z);
 					actualIArt = (GameObject)Instantiate (iArt, new Vector3(12.9f, -1.0f, -1.0f), Quaternion.identity);
 					GameObject.Destroy (splashSprite);

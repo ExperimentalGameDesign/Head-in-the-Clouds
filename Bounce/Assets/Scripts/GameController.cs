@@ -119,7 +119,7 @@ public class GameController : MonoBehaviour {
 				darkCloudList.Add(darkCloud);
 				spawnPoint = player.transform.position.y + 80;
 			}
-			if (player.transform.position.y > transform.position.y) {
+			if (player.transform.position.y > transform.position.y && !isGameOver) {
 				transform.position = Vector3.Lerp(transform.position, new Vector3 (transform.position.x, player.transform.position.y, transform.position.z), Time.deltaTime*2);
 			}
 		}
@@ -195,6 +195,12 @@ public class GameController : MonoBehaviour {
 			else if (isGameOver) {
 				//customSkin.customStyles[12].overflow.left = theScore.Length + 30;
 				//customSkin.customStyles[12].overflow.right = theScore.Length + 30;
+				player.rigidbody2D.gravityScale = 0;
+				player.rigidbody2D.velocity = Vector2.zero;
+				player.rigidbody2D.isKinematic = true;
+				player.transform.rotation = Quaternion.Euler(0,0,0);
+				player.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2 + (127*resy), 10));
+
 				GUI.Box (new Rect (Screen.width/2 - (((theScore.Length*fontSize)/2 + fontSize*(2*resx))/2), fontSize+10.0f, ((theScore.Length*fontSize)/2 + fontSize*(2*resx)), 20*resy), theScore, customSkin.customStyles[12]);
 				//GUI.Box (new Rect (Screen.width/2 - 70, fontSize+5.0f, 70*resx, 15*resy), threadLeft, customStyle);
 				//GUI.Box (new Rect (0.0f, Screen.height/2, Screen.width, Screen.height/4), "Game Over");
@@ -214,6 +220,9 @@ public class GameController : MonoBehaviour {
 	public void ResetGame() {
 		GameObject.Find ("GroundMusic").GetComponent<AudioSource> ().enabled = false;
 		GameObject.Find ("GroundMusic").GetComponent<AudioSource> ().enabled = true;
+		GetComponent<draw>().inSpace = false;
+		player.rigidbody2D.isKinematic = false;
+		player.rigidbody2D.gravityScale = 5;
 		deletables = GameObject.FindGameObjectsWithTag("Deletables");
 		for (int i = 0; i < deletables.Length; i++)
 			GameObject.Destroy(deletables[i]);

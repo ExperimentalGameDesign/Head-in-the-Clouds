@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -20,11 +20,27 @@ public class GameController : MonoBehaviour {
 	private string whiteCloudType;
 	private string darkCloudType;
 	private float startTime;
+	private int isMuted;
 
 
 	// Use this for initialization
 	void Start () {
 		leaderboardCreated = false;
+		isMuted = PlayerPrefs.GetInt("Muted");
+		if (isMuted == null)
+		{
+			PlayerPrefs.SetInt ("Muted", 0); //set it to unmuted 0
+			isMuted = PlayerPrefs.GetInt("Muted");
+		}
+		else if (isMuted == 0)
+		{
+			AudioListener.volume = 1;
+		}
+		else if (isMuted == 1)
+		{
+			AudioListener.volume = 0;
+		}
+		GameObject.Find("GroundMusic").audio.Play();
 		toggleButton = false;
 		startTime = -1.0f;
 		thread = 100;
@@ -219,6 +235,29 @@ public class GameController : MonoBehaviour {
 			}
 			else if (!isGameOver)//toggleButton == true, displaying Play button
 			{
+				//display Mute button
+				isMuted = PlayerPrefs.GetInt ("Muted");
+
+				//if the game is not Muted, display the Mute symbol
+				if (isMuted == 0)
+				{
+					if(GUI.Button (new Rect (((Screen.width+(861.0f/9.0f*resx))/2.0f) , 10.0f*resy, 35*resx, 30*resy), firstText, customSkin.customStyles[13]))
+					{
+						AudioListener.volume = 0;
+						PlayerPrefs.SetInt("Muted", 1);
+						isMuted = PlayerPrefs.GetInt("Muted");
+					}
+				}
+				//if the game is Muted, display the Unmute symbol
+				else if (isMuted == 1)
+				{
+					if(GUI.Button (new Rect (((Screen.width+(861.0f/9.0f*resx))/2.0f) , 10.0f*resy, 35*resx, 30*resy), firstText, customSkin.customStyles[14]))
+					{
+						AudioListener.volume = 1;
+						PlayerPrefs.SetInt("Muted", 0);
+						isMuted = PlayerPrefs.GetInt("Muted");
+					}
+				}
 				if(GUI.Button (new Rect (((Screen.width+(861.0f/5.0f*resx))/2.0f) , 10.0f*resy, 35*resx, 30.0f*resy), firstText, customSkin.customStyles[11]) || (Input.GetKey(KeyCode.Escape))){
 					/*if(GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == false) {
 						GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = true;
@@ -268,6 +307,7 @@ public class GameController : MonoBehaviour {
 	public void ResetGame() {
 		GameObject.Find ("GroundMusic").GetComponent<AudioSource> ().enabled = false;
 		GameObject.Find ("GroundMusic").GetComponent<AudioSource> ().enabled = true;
+		GameObject.Find ("GroundMusic").audio.Play();
 		GetComponent<draw>().inSpace = false;
 		player.rigidbody2D.isKinematic = false;
 		player.rigidbody2D.gravityScale = 5;

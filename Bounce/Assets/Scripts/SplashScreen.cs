@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class SplashScreen : MonoBehaviour {
-
-
+	public GUISkin customSkin;
+	private int isMuted;
 	public GameObject splashSprite, faceSprite, iArt, actualIArt;
 	private GameObject startButton, instructionsButton;
 	private bool didInstructions;
@@ -12,6 +12,21 @@ public class SplashScreen : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		isMuted = PlayerPrefs.GetInt("Muted");
+		if (isMuted == null)
+		{
+			PlayerPrefs.SetInt ("Muted", 0); //set it to unmuted 0
+			isMuted = PlayerPrefs.GetInt("Muted");
+		}
+		else if (isMuted == 0)
+		{
+			AudioListener.volume = 1;
+		}
+		else if (isMuted == 1)
+		{
+			AudioListener.volume = 0;
+		}
+
 		didInstructions = false;
 		startButton = GameObject.Find ("StartButton");
 		instructionsButton = GameObject.Find ("InstructionsButton");
@@ -50,5 +65,32 @@ public class SplashScreen : MonoBehaviour {
 			}
 		}
 	}
-		   
+		
+	void OnGUI()
+	{
+		Vector2 resolution = new Vector2(Screen.width, Screen.height);
+		float resx = resolution.x/265.0f; // 1280 is the x value of the working resolution
+		float resy = resolution.y/398.0f; // 800 is the y value of the working resolution
+		//if the game is not Muted, display the Mute symbol
+		isMuted = PlayerPrefs.GetInt ("Muted");
+		if (isMuted == 0)
+		{
+			if(GUI.Button (new Rect (((Screen.width+(861.0f/5.0f*resx))/2.0f) , 10.0f*resy, 35*resx, 30*resy), "", customSkin.customStyles[13]))
+			{
+				AudioListener.volume = 0;
+				PlayerPrefs.SetInt("Muted", 1);
+				isMuted = PlayerPrefs.GetInt("Muted");
+			}
+		}
+		//if the game is Muted, display the Unmute symbol
+		else if (isMuted == 1)
+		{
+			if(GUI.Button (new Rect (((Screen.width+(861.0f/5.0f*resx))/2.0f) , 10.0f*resy, 35*resx, 30*resy), "", customSkin.customStyles[14]))
+			{
+				AudioListener.volume = 1;
+				PlayerPrefs.SetInt("Muted", 0);
+				isMuted = PlayerPrefs.GetInt("Muted");
+			}
+		}
+	}
 }

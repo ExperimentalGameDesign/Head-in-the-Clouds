@@ -2,7 +2,12 @@ fileFormatVersion: 2
 guid: 885bdd5305d496445a6fef687355cd3e
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - customSkin: {fileID: 11400000, guid: 2b111d77026e64f439176b2780a3a891, type: 2}
+  - splashSprite: {instanceID: 0}
+  - faceSprite: {instanceID: 0}
+  - iArt: {instanceID: 0}
+  - actualIArt: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

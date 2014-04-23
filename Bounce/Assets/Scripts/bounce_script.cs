@@ -27,7 +27,6 @@ public class bounce_script : MonoBehaviour {
 			temp = new Vector3(temp.x*2000.0f, temp.y*2000.0f, temp.z);
 			
 			rigidbody2D.AddForce(new Vector2(temp.x, temp.y));
-			print ("hit");
 		}
 		if (thing.transform.name == "GroundTexture")
 		{

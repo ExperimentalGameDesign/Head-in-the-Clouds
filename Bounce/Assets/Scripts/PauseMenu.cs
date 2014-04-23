@@ -51,7 +51,7 @@ public class PauseMenu : MonoBehaviour {
 			}
 		}
 		if (isPaused == false) {
-			pauseSprite.GetComponent<SpriteRenderer>().sprite = rePauseSprite.GetComponent<SpriteRenderer>().sprite;
+
 			Time.timeScale = 1.0f;
 			retrySprite.GetComponent<SpriteRenderer> ().enabled = false;
 			retrySprite.GetComponent<BoxCollider2D> ().enabled = false;

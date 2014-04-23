@@ -60,6 +60,18 @@ public class cameraScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKeyUp(KeyCode.Escape)) {
+			cameraFront.Stop ();
+			cameraBack.Stop ();
+			GameObject[] camStuff = GameObject.FindGameObjectsWithTag("camTag");
+			for(int i = 0; i<camStuff.Length; i++) 
+				Destroy(camStuff[i]);
+			GetComponent<SelectScreen>().Init();
+			GetComponent<SelectScreen>().enabled = true;
+
+			enabled = false;
+
+		}
 		if (Input.GetMouseButtonUp(0)) {
 
 			//StartFade ();
@@ -67,6 +79,7 @@ public class cameraScript : MonoBehaviour {
 			RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 			if (hit.collider != null) {
 				if(hit.collider.name == switchCamIcon.name || hit.collider.name == "switchCamIcon(Clone)") {
+					Debug.Log("switching");
 					if(isFront == true){
 						cameraFront.Stop();
 						cameraBack.Play ();
@@ -89,7 +102,7 @@ public class cameraScript : MonoBehaviour {
 						isFront = true;
 					}
 				}
-				if(hit.collider.name == camIcon.name || hit.collider.name == "camIcon(Clone)" || hit.collider.CompareTag("camTag")) {
+				if(hit.collider.name == camIcon.name || hit.collider.name == "camIcon(Clone)") {// hit.collider.CompareTag("camTag")) {
 					if (isFront)
 						finalCamTexture = cameraFront;
 					else

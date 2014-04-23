@@ -45,6 +45,36 @@ public class GameController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (toggleButton == false && !isGameOver && started) //displaying Pause button
+		{
+			if(Input.GetKeyUp(KeyCode.Escape)){
+				//if(GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == false) {
+				GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = true;
+				GetComponent<draw>().enabled = false;
+				//}
+				/*else if (GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == true) {
+						GetComponent<draw>().enabled = false;
+						GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = false;
+					}*/
+				toggleButton = true;
+			}
+		}
+		else if (!isGameOver && started)//toggleButton == true, displaying Play button
+		{
+			if(Input.GetKeyUp(KeyCode.Escape)){
+				/*if(GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == false) {
+						GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = true;
+					}
+					else if (GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == true) {*/
+				GetComponent<draw>().enabled = false;
+				GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = false;
+				
+				toggleButton = false;
+				
+				//}
+			}
+			
+		}
 		if (thread < 0)
 			thread = 0;
 		if (playerChoice != null && playerPicked == true) {
@@ -272,6 +302,7 @@ public class GameController : MonoBehaviour {
 	}
 	public void PickNewBall() {
 		ResetGame ();
+		started = false;
 		playerPicked = false;
 		playerChoice = null;
 		GameObject.Destroy (player);

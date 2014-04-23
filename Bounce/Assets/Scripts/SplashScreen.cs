@@ -44,9 +44,7 @@ public class SplashScreen : MonoBehaviour {
 					actualIArt = (GameObject)Instantiate (iArt, new Vector3(12.9f, -1.0f, -1.0f), Quaternion.identity);
 					GameObject.Destroy (splashSprite);
 					GameObject.Destroy (instructionsButton);
-					if (Input.GetKey(KeyCode.Escape)) {
-						Application.LoadLevel(0);
-					}
+					didInstructions = true;
 				}
 			}
 		}

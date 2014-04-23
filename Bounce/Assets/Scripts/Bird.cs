@@ -24,7 +24,16 @@ public class Bird : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.GetMouseButtonUp(0)) {
+			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+			RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+			if (hit.collider != null) {
+				if(hit.collider.name == this.name) {
+					Debug.Log (this.name);//Player touched the Start Button
+					Destroy (gameObject);
+				}
+			}
+		}
 		BezierTime = BezierTime + Time.deltaTime;
 		
 		

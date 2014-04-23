@@ -17,20 +17,20 @@ public class LeaderboardScript : MonoBehaviour {
 	public bool reDo;
 	public bool changedLocal;
 	public bool isGlobal;
-
+	
 	// Use this for initialization
 	void Start () {
-
+		
 		isGlobal = true;
 		timePassed = 0.0f;
 		reDo = false;
-
+		
 		lastPlace = 0.0f;
 		//print (score);
 		thePlayerName = "";
 		names = new string[] {"", "", "", "", "", "", "", "", "", ""};
 		scores = new float[]{0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
-
+		
 		/*ParseObject newGameScore = new ParseObject("PlayerScores");
 		newGameScore["score0"] = 1.0f;
 		newGameScore["score1"] = 1.0f;
@@ -55,16 +55,16 @@ public class LeaderboardScript : MonoBehaviour {
 		newGameScore["playerName9"] = "AAA";
 		newGameScore.SaveAsync();*/
 		//resetLeaderboards ();
-
+		
 		objectId = "lYFGz0XjTt";
-
+		
 		//namesScores = null;
 		ParseQuery<ParseObject> query = ParseObject.GetQuery("PlayerScores");
 		query.GetAsync("lYFGz0XjTt").ContinueWith(t =>
 		                                          {
 			namesScores = t.Result;
 			//Changed Code
-
+			
 			//Get the names of the top 10 players
 			names[0] = namesScores.Get<string>("playerName0");
 			names[1] = namesScores.Get<string>("playerName1");
@@ -87,10 +87,10 @@ public class LeaderboardScript : MonoBehaviour {
 			scores[7] = namesScores.Get<float>("score7");
 			scores[8] = namesScores.Get<float>("score8");
 			scores[9] = namesScores.Get<float>("score9");
-
+			
 			lastPlace = namesScores.Get<float> ("score9");
 		});
-
+		
 		changedHighScores = false;
 		phase = 0;
 		//print (tempFloat);
@@ -98,13 +98,13 @@ public class LeaderboardScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		
 		/*timePassed += Time.deltaTime;
 		if(timePassed > 3.0f && !reDo){
 			resetLeaderboards();
 			reDo = true;
 		}*/
-
+		
 		//print (names[0]);
 		if(!changedHighScores && score > lastPlace && lastPlace != 0.0f){
 			phase = 1;	//put a new score in the leaderboard
@@ -117,34 +117,34 @@ public class LeaderboardScript : MonoBehaviour {
 	void createNewLeaderboard(string playerName){
 		string curName = playerName;
 		float curScore = score;
-
+		
 		for(int i = 0; i < 10; i++){
 			if(curScore > scores[i]){
 				float tempScore = scores[i];
 				string tempName = names[i];
-
+				
 				scores[i] = curScore;
 				names[i] = curName;
-
+				
 				curScore = tempScore;
 				curName = tempName;
 			}
 		}
-
+		
 		writeNewHighScores ();				//	THIS WILL BE BACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		//print(playerName);
 		changedHighScores = true;
 		phase = 2;
 		return;
 	}
-
+	
 	void resetLeaderboards(){
 		ParseQuery<ParseObject> query = ParseObject.GetQuery("PlayerScores");
 		query.GetAsync("lYFGz0XjTt").ContinueWith(t =>
 		                                          {
 			namesScores = t.Result;
-		//namesScores.SaveAsync().ContinueWith(t =>
-		  //                                   {
+			//namesScores.SaveAsync().ContinueWith(t =>
+			//                                   {
 			namesScores["playerName0"] = "AAA";
 			namesScores["playerName1"] = "AAA";
 			namesScores["playerName2"] = "AAA";
@@ -172,16 +172,16 @@ public class LeaderboardScript : MonoBehaviour {
 		});
 		return;
 	}
-
+	
 	void writeNewHighScores(){
 		for(int i = 0; i < 10; i++){
 			if(names[i] == ""){
 				names[i] = "Anonymous";
 			}
 		}
-
+		
 		namesScores.SaveAsync().ContinueWith(t =>
-		                                   {
+		                                     {
 			namesScores["playerName0"] = names[0];
 			namesScores["playerName1"] = names[1];
 			namesScores["playerName2"] = names[2];
@@ -192,7 +192,7 @@ public class LeaderboardScript : MonoBehaviour {
 			namesScores["playerName7"] = names[7];
 			namesScores["playerName8"] = names[8];
 			namesScores["playerName9"] = names[9];
-
+			
 			namesScores["score0"] = scores[0];
 			namesScores["score1"] = scores[1];
 			namesScores["score2"] = scores[2];
@@ -204,12 +204,12 @@ public class LeaderboardScript : MonoBehaviour {
 			namesScores["score8"] = scores[8];
 			namesScores["score9"] = scores[9];
 			//print ("hello there");
-
+			
 			namesScores.SaveAsync();
 		});
 		return;
 	}
-
+	
 	void setLocalLeaderboard(){
 		float curScore = score;
 		if(curScore > PlayerPrefs.GetFloat ("HighScore")){
@@ -262,15 +262,15 @@ public class LeaderboardScript : MonoBehaviour {
 			PlayerPrefs.SetFloat ("HighScore10", curScore);
 			curScore = tempFloat;
 		}
-
-
+		
+		
 		changedLocal = true;
 		return;
 	}
-
+	
 	void OnGUI(){
 		GUI.skin = customSkin;
-
+		
 		Vector2 resolution = new Vector2(Screen.width, Screen.height);
 		float resx = resolution.x/265.0f; // 1280 is the x value of the working resolution
 		float resy = resolution.y/398.0f; // 800 is the y value of the working resolution
@@ -288,29 +288,29 @@ public class LeaderboardScript : MonoBehaviour {
 		customSkin.customStyles[6].fontSize = (int)(10.0f*resx);
 		customSkin.customStyles[6].padding.top = (int)(9.0f*resx);
 		customSkin.customStyles[6].padding.left = (int)(8.0f*resx);
-
+		
 		customSkin.customStyles[7].fontSize = (int)(10.0f*resx);
 		customSkin.customStyles[7].padding.top = (int)(8.5f*resx);
 		customSkin.customStyles[7].padding.left = (int)(7.0f*resx);
-
+		
 		//Congrats Font Size
 		customSkin.customStyles[8].fontSize = (int)(17.0f*resx);
-
-
-
+		
+		
+		
 		if(phase == 1){		//New High Score
-
+			
 			GUIStyle customBox = new GUIStyle("box");
 			customBox.fontSize = 30;
-
+			
 			string congrats = "CONGRATULATIONS!";
 			GUI.Box (new Rect ((Screen.width-(861.0f/4.0f*resx))/2.0f, 90.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), congrats, customSkin.customStyles[8]);
 			string theText = "Enter name: ";
-
+			
 			GUI.Box (new Rect ((Screen.width-(861.0f/4.0f*resx))/2.0f, 135.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), theText, customSkin.customStyles[6]);
-
+			
 			thePlayerName = GUI.TextArea(new Rect ((Screen.width-(861.0f/4.0f*resx))/2.0f + customSkin.customStyles[6].fontSize*9.5f, 135.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), thePlayerName, 17, customSkin.customStyles[7]);
-
+			
 			if(GUI.Button (new Rect((Screen.width-(861.0f/4.0f*resx))/2.0f, 175.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), "", customSkin.customStyles[5])
 			   && !thePlayerName.ToLower().Contains ("fuck") && !thePlayerName.ToLower().Contains ("shit")
 			   && !thePlayerName.ToLower().Contains ("Bitch") && !thePlayerName.ToLower().Contains ("cunt")
@@ -319,10 +319,10 @@ public class LeaderboardScript : MonoBehaviour {
 			}
 			//print (thePlayerName);
 		}else if(phase == 2){	//No New High Score
-
+			
 			GUIStyle customButton = new GUIStyle("button");
 			customButton.fontSize = 30;
-
+			
 			Color superTransColor = Color.white;
 			//superTransColor.a = 0.0f;
 			//GUI.color = superTransColor;
@@ -334,40 +334,40 @@ public class LeaderboardScript : MonoBehaviour {
 			//Restart button (PLAY AGAIN)
 			//GUI.color = Color.green;
 			string firstText = "";
-
-			if(GUI.Button (new Rect (((Screen.width-(861.0f/8.0f*resx))/2.0f) - 65*resx, 50.0f*resy, 861.0f/8.0f*resx, 345.0f/8.0f*resy), firstText, customSkin.customStyles[0])){
+			
+			if(GUI.Button (new Rect (((Screen.width-(861.0f/8.0f*resx))/2.0f) - 65*resx, 300.0f*resy, 861.0f/8.0f*resx, 345.0f/8.0f*resy), firstText, customSkin.customStyles[0])){
 				Camera.main.GetComponent<GameController>().ResetGame();
-
+				
 			}
-			if(GUI.Button (new Rect (((Screen.width-(861.0f/8.0f*resx))/2.0f) + 65*resx, 50.0f*resy, 861.0f/8.0f*resx, 345.0f/8.0f*resy), firstText, customSkin.customStyles[9])){
+			if(GUI.Button (new Rect (((Screen.width-(861.0f/8.0f*resx))/2.0f) + 65*resx, 300.0f*resy, 861.0f/8.0f*resx, 345.0f/8.0f*resy), firstText, customSkin.customStyles[9])){
 				Camera.main.GetComponent<GameController>().PickNewBall();
 			}
-
+			
 			//Screenshot button
-
+			
 			/*if(GUI.Button (new Rect ((Screen.width-(861.0f/5.0f*resx))/2.0f, 85.0f*resy + 345.0f/8.0f*resy + 582.0f/3.5f*resy, 861.0f/5.0f*resx, 204.0f/5.0f*resy), firstText, customSkin.customStyles[3])){
 				print ("Taking screenshot.. JK");
 				Application.CaptureScreenshot("ss.png");
 			}*/
-
+			
 			if(score > PlayerPrefs.GetFloat("HighScore10") && !changedLocal){	//Local Leaderboard Stuff
 				setLocalLeaderboard();
 			}else{	//Back to Normal leaderboard stuff
 				if(isGlobal == true){
 					newestText = "Tap here to see your high scores!";
-
+					
 					if(GUI.Button (new Rect ((Screen.width-(861.0f/4.0f*resx))/2.0f, 95.0f*resy, 861.0f/4.0f*resx, 111.0f/4.0f*resy), newestText, customSkin.customStyles[1])){
 						isGlobal = false;
 					}
-
+					
 					newestText = "Global Leaderboard";
 					//Draw Leaderboard Background and Text
 					GUI.Box (new Rect((Screen.width-(861.0f/3.5f*resx))/2.0f, 125.0f*resy, 861.0f/3.5f*resx, 582.0f/3.5f*resy), newestText, customSkin.customStyles[2]);
 					//GUI.Box (new Rect (0.0f, 340.0f, Screen.width, 50), newestText, customBox);
-
+					
 					//newestText = lastPlace.ToString();
 					//GUI.Box (new Rect (0.0f, 250.0f, Screen.width, 50), newestText, customBox);
-
+					
 					//Draws the high scores to the screen
 					float startingHeight = 400;
 					for(int i = 0; i < 10; i++){
@@ -381,7 +381,7 @@ public class LeaderboardScript : MonoBehaviour {
 							newestText = (i + 1) + ". " + names[i];
 						}
 						GUI.Box (new Rect ((Screen.width-(861.0f/3.5f*resx))/2.0f, 125.0f*resy+(customSkin.customStyles[4].fontSize*i), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
-
+						
 						if(scores[i] == 0.0f){
 							//newestText = "Loading...";
 							newestText = "";
@@ -396,54 +396,54 @@ public class LeaderboardScript : MonoBehaviour {
 						isGlobal = true;
 					}
 					
-
-
+					
+					
 					float theIncrement = 0.0f;
 					//Background Box
 					newestText = "";
 					//Draw Leaderboard Background and Text
 					GUI.Box (new Rect((Screen.width-(861.0f/3.5f*resx))/2.0f, 125.0f*resy, 861.0f/3.5f*resx, 582.0f/3.5f*resy), newestText, customSkin.customStyles[2]);
-
+					
 					newestText = "Your High Scores";
 					GUI.Box (new Rect((Screen.width-(861.0f/3.5f*resx))/2.0f, 125.0f*resy, 861.0f/3.5f*resx, 582.0f/3.5f*resy), newestText, customSkin.customStyles[2]);
-
+					
 					//Actually print local high scores--------------------------------------------------------------------------------------------------------------------
 					newestText = "1st:   " + PlayerPrefs.GetFloat("HighScore").ToString ("F2");
 					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
 					theIncrement += 1.0f;
-
+					
 					newestText = "2nd:   " + PlayerPrefs.GetFloat("HighScore2").ToString ("F2");
 					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
 					theIncrement += 1.0f;
-
+					
 					newestText = "3rd:   " + PlayerPrefs.GetFloat("HighScore3").ToString ("F2");
 					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
 					theIncrement += 1.0f;
-
+					
 					newestText = "4th:   " + PlayerPrefs.GetFloat("HighScore4").ToString ("F2");
 					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
 					theIncrement += 1.0f;
-
+					
 					newestText = "5th:   " + PlayerPrefs.GetFloat("HighScore5").ToString ("F2");
 					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
 					theIncrement += 1.0f;
-
+					
 					newestText = "6th:   " + PlayerPrefs.GetFloat("HighScore6").ToString ("F2");
 					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
 					theIncrement += 1.0f;
-
+					
 					newestText = "7th:   " + PlayerPrefs.GetFloat("HighScore7").ToString ("F2");
 					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
 					theIncrement += 1.0f;
-
+					
 					newestText = "8th:   " + PlayerPrefs.GetFloat("HighScore8").ToString ("F2");
 					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
 					theIncrement += 1.0f;
-
+					
 					newestText = "9th:   " + PlayerPrefs.GetFloat("HighScore9").ToString ("F2");
 					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
 					theIncrement += 1.0f;
-
+					
 					newestText = "10th:  " + PlayerPrefs.GetFloat("HighScore10").ToString ("F2");
 					GUI.Box (new Rect ((861.0f/3.5f*resx)/3.5f, 125.0f*resy+(customSkin.customStyles[4].fontSize*theIncrement), 861.0f/3.5f*resx / 2, 582.0f/3.5f*resy), newestText, customSkin.customStyles[4]);
 					theIncrement += 1.0f;

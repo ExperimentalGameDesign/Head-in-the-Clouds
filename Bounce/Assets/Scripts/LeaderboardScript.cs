@@ -174,6 +174,12 @@ public class LeaderboardScript : MonoBehaviour {
 	}
 
 	void writeNewHighScores(){
+		for(int i = 0; i < 10; i++){
+			if(names[i] == ""){
+				names[i] = "Anonymous";
+			}
+		}
+
 		namesScores.SaveAsync().ContinueWith(t =>
 		                                   {
 			namesScores["playerName0"] = names[0];

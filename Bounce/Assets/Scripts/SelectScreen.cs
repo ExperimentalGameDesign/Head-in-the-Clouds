@@ -45,6 +45,9 @@ public class SelectScreen : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKey(KeyCode.Escape)) {
+			Application.LoadLevel(0);
+		}
 		//mousebuttonup because it will start drawing a line otherwise.
 		if (Input.GetMouseButtonUp (0)) {
 
@@ -70,8 +73,6 @@ public class SelectScreen : MonoBehaviour {
 					game.playerChoice = GameObject.Find(hit.collider.gameObject.name);
 					GameObject.Find("greyDashedLine").GetComponent<SpriteRenderer>().enabled = true;
 					GameObject.Find("DrawALineText").GetComponent<SpriteRenderer>().enabled = true;
-					//GameObject.Find("PauseButton").GetComponent<SpriteRenderer> ().enabled = true;
-					//GameObject.Find("PauseButton").GetComponent<BoxCollider2D> ().enabled = true;
 					game.playerPicked = true;
 					GameObject.Find("PauseButton").GetComponent<PauseMenu> ().enabled = true;
 				}

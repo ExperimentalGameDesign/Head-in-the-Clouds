@@ -19,8 +19,8 @@ public class GameController : MonoBehaviour {
 	private bool toggleButton;
 	private string whiteCloudType;
 	private string darkCloudType;
-	
-	
+
+
 	// Use this for initialization
 	void Start () {
 		leaderboardCreated = false;
@@ -32,16 +32,12 @@ public class GameController : MonoBehaviour {
 	}
 	void OnCollisionEnter2D(Collision2D thing)
 	{
-		
+
 	}
 	// Update is called once per frame
 	void Update () {
 		if (thread < 0)
 			thread = 0;
-		if (Input.GetKey(KeyCode.Escape))
-		{
-			Application.Quit();
-		}
 		if (playerChoice != null && playerPicked == true) {
 			player = GameObject.Find (playerChoice.name);
 			tiler.player = player;
@@ -50,7 +46,7 @@ public class GameController : MonoBehaviour {
 				newTile.GetComponentInChildren<TilingBackground> ().player = player;
 			}
 			if (player.name == "Face(Clone)") {
-				//				continue;
+//				continue;
 			}
 			
 			else {
@@ -117,19 +113,19 @@ public class GameController : MonoBehaviour {
 						birdy.GetComponent<Bird>().screenStart = "right";
 					}
 				}
-				
+
 				//threadList.Add(threadPickup);
 				whiteCloudList.Add(whiteCloud);
 				darkCloudList.Add(darkCloud);
 				spawnPoint = player.transform.position.y + 80;
 			}
-			if (player.transform.position.y > transform.position.y && !isGameOver) {
+			if (player.transform.position.y > transform.position.y) {
 				transform.position = Vector3.Lerp(transform.position, new Vector3 (transform.position.x, player.transform.position.y, transform.position.z), Time.deltaTime*2);
 			}
 		}
-		
+
 	}
-	
+
 	void OnGUI(){
 		//GUI.skin = customSkin;
 		//customStyle = new GUIStyle("box");
@@ -141,13 +137,13 @@ public class GameController : MonoBehaviour {
 		float resy = resolution.y/398.0f; // 800 is the y value of the working resolution
 		//print ("screen width = " + Screen.width);
 		//print ("screen height = " + Screen.height);
-		
+
 		int fontSize = (int)(15.0f*resx);
 		customStyle.fontSize = fontSize;
 		customSkin.customStyles [12].fontSize = fontSize;
-		//(int)(camVect.x/2.0f);
+			//(int)(camVect.x/2.0f);
 		//customStyle.normal = null;
-		
+
 		if(player != null){
 			if(player.transform.position.y > actualScore && isGameOver == false && started == true){
 				actualScore = player.transform.position.y;
@@ -155,14 +151,14 @@ public class GameController : MonoBehaviour {
 			int tempThread = (int)thread;
 			string theScore = "Score: " + actualScore.ToString ("F2");
 			string threadLeft = "H20: " + tempThread.ToString();
-			
+
 			//GUI.Box (new Rect (0.0f, 0.0f, camVect.x, camVect.y / 2.0f), theScore, customStyle);
 			//GUI.Box (new Rect (0.0f, fontSize+5.0f, camVect.x, camVect.y / 2.0f), threadLeft, customStyle);
 			string firstText = "";
-			
+
 			if (toggleButton == false && !isGameOver) //displaying Pause button
 			{
-				if(GUI.Button (new Rect (((Screen.width+(861.0f/5.0f*resx))/2.0f) , 10.0f*resy, 35*resx, 30.0f*resy), firstText, customSkin.customStyles[10])){
+				if(GUI.Button (new Rect (((Screen.width+(861.0f/5.0f*resx))/2.0f) , 10.0f*resy, 35*resx, 30.0f*resy), firstText, customSkin.customStyles[10]) || (Input.GetKey(KeyCode.Escape))){
 					//if(GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == false) {
 					GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = true;
 					GetComponent<draw>().enabled = false;
@@ -176,22 +172,22 @@ public class GameController : MonoBehaviour {
 			}
 			else if (!isGameOver)//toggleButton == true, displaying Play button
 			{
-				if(GUI.Button (new Rect (((Screen.width+(861.0f/5.0f*resx))/2.0f) , 10.0f*resy, 35*resx, 30.0f*resy), firstText, customSkin.customStyles[11])){
+				if(GUI.Button (new Rect (((Screen.width+(861.0f/5.0f*resx))/2.0f) , 10.0f*resy, 35*resx, 30.0f*resy), firstText, customSkin.customStyles[11]) || (Input.GetKey(KeyCode.Escape))){
 					/*if(GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == false) {
 						GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = true;
 					}
 					else if (GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused == true) {*/
 					GetComponent<draw>().enabled = false;
 					GameObject.Find("PauseButton").GetComponent<PauseMenu>().isPaused = false;
-					
+
 					toggleButton = false;
-					
+
 					//}
 				}
-				
+
 			}
-			
-			
+
+
 			if(!isGameOver) {
 				GUI.Box (new Rect (0.0f, 0.0f, 70*resx, 15*resy), theScore, customStyle);
 				GUI.Box (new Rect (0.0f, fontSize+5.0f, 70*resx, 15*resy), threadLeft, customStyle);
@@ -199,12 +195,6 @@ public class GameController : MonoBehaviour {
 			else if (isGameOver) {
 				//customSkin.customStyles[12].overflow.left = theScore.Length + 30;
 				//customSkin.customStyles[12].overflow.right = theScore.Length + 30;
-				player.rigidbody2D.gravityScale = 0;
-				player.rigidbody2D.velocity = Vector2.zero;
-				player.rigidbody2D.isKinematic = true;
-				player.transform.rotation = Quaternion.Euler(0,0,0);
-				player.transform.localScale = new Vector3(1.4f,1.4f,1.0f);
-				player.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2,Screen.height/2 + (128*resy),10));
 				GUI.Box (new Rect (Screen.width/2 - (((theScore.Length*fontSize)/2 + fontSize*(2*resx))/2), fontSize+10.0f, ((theScore.Length*fontSize)/2 + fontSize*(2*resx)), 20*resy), theScore, customSkin.customStyles[12]);
 				//GUI.Box (new Rect (Screen.width/2 - 70, fontSize+5.0f, 70*resx, 15*resy), threadLeft, customStyle);
 				//GUI.Box (new Rect (0.0f, Screen.height/2, Screen.width, Screen.height/4), "Game Over");
@@ -215,7 +205,7 @@ public class GameController : MonoBehaviour {
 					GameObject Ad = GameObject.Find("AdvertisementManager");
 					//Ad.GetComponent<AdvertisementManager>().show ();
 				}
-				
+
 				GetComponent<draw>().enabled = false;
 				toggleButton = false;
 			}
@@ -224,10 +214,6 @@ public class GameController : MonoBehaviour {
 	public void ResetGame() {
 		GameObject.Find ("GroundMusic").GetComponent<AudioSource> ().enabled = false;
 		GameObject.Find ("GroundMusic").GetComponent<AudioSource> ().enabled = true;
-		GetComponent<draw>().inSpace = false;
-		player.rigidbody2D.isKinematic = false;
-		player.rigidbody2D.gravityScale = 5;
-		player.transform.localScale = new Vector3(1.0f,1.0f,1.0f);
 		deletables = GameObject.FindGameObjectsWithTag("Deletables");
 		for (int i = 0; i < deletables.Length; i++)
 			GameObject.Destroy(deletables[i]);

@@ -6,10 +6,6 @@ public class SplashScreen : MonoBehaviour {
 
 	public GameObject splashSprite, faceSprite, iArt, actualIArt;
 	private GameObject startButton, instructionsButton;
-	private float fadeValue = 1.0f;
-	private float currentTime = 0.0f;
-	private const float timeItTakesToFade = 0.5f;
-	private bool isFading = false;
 	private bool didInstructions;
 	//private SelectScreen selecter;
 //	private bool isAppearing = false;
@@ -23,12 +19,13 @@ public class SplashScreen : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonUp(0) && isFading == false) {
-			//StartFade ();
+		if (Input.GetKey(KeyCode.Escape) && !didInstructions) {
+			Application.Quit();
+		}
+		if (Input.GetMouseButtonUp(0)) {
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 			if (hit.collider != null) {
-				//Debug.Log (hit.collider.name);
 				if(hit.collider.name == startButton.name) {		//Player touched the Start Button
 					GameObject.Destroy (startButton);
 					if(!didInstructions){
@@ -47,7 +44,9 @@ public class SplashScreen : MonoBehaviour {
 					actualIArt = (GameObject)Instantiate (iArt, new Vector3(12.9f, -1.0f, -1.0f), Quaternion.identity);
 					GameObject.Destroy (splashSprite);
 					GameObject.Destroy (instructionsButton);
-
+					if (Input.GetKey(KeyCode.Escape)) {
+						Application.LoadLevel(0);
+					}
 				}
 			}
 		}

@@ -19,12 +19,14 @@ public class GameController : MonoBehaviour {
 	private bool toggleButton;
 	private string whiteCloudType;
 	private string darkCloudType;
+	private float startTime;
 
 
 	// Use this for initialization
 	void Start () {
 		leaderboardCreated = false;
 		toggleButton = false;
+		startTime = -1.0f;
 		thread = 100;
 		actualScore = 0.0f;
 		spawnPoint = 0.0f;
@@ -34,6 +36,13 @@ public class GameController : MonoBehaviour {
 	{
 
 	}
+	IEnumerator MyCoroutine()
+	{
+		yield return new WaitForSeconds(6f);    //Wait one frame
+		if (thread <= 0)
+			isGameOver = true;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (thread < 0)
@@ -70,6 +79,14 @@ public class GameController : MonoBehaviour {
 				player = tempPlayer;
 				tempPlayer.GetComponent<Rigidbody2D>().gravityScale = 5.0f;
 				facePicked = false;
+			}
+			if (thread <= 0)
+			{
+				if (startTime < 0)
+				{
+					StartCoroutine(MyCoroutine());
+					startTime = 1;
+				}
 			}
 			if (player.transform.position.y >= 1200)
 			{
@@ -234,6 +251,7 @@ public class GameController : MonoBehaviour {
 		player.rigidbody2D.angularVelocity = 0.0f;
 		transform.position = new Vector3(0.0f, 0.0f, -10.0f);
 		actualScore = 0.0f;
+		startTime = -1;
 		thread = 100.0f;
 		spawnPoint = 0.0f;
 		leaderboardCreated = false;

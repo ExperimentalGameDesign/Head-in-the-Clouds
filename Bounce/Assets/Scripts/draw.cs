@@ -32,22 +32,21 @@ public class draw : MonoBehaviour {
 		//MouseUp means a line has ended
 		if (Input.GetMouseButtonUp(0))
 		{
-			lastPosExists = false;		
-			//print ("released");
-			
-			DrawTexture();
+			if (lastPosExists)	
+				DrawTexture();
 			textureArray = new List<GameObject>();
+			lastPosExists = false;	
 		}
 		//MouseDown means a new line is being started
 		if (Input.GetMouseButtonDown(0))
 		{
-			lastPos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x,Input.mousePosition.y,50));
+			lastPos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x,Input.mousePosition.y,0));
 			firstCamPos = Camera.main.transform.position;
 			lastCamPos = Camera.main.transform.position;
 			firstPos = lastPos;
-			lastPosExists = true;
-			//firstClick = true;
-			MakeShape (lastPos);
+
+			firstClick = true;
+
 			//print ("here");
 		}
 		//Mouse is drawing!
@@ -73,6 +72,12 @@ public class draw : MonoBehaviour {
 			}	
 			if (newPos != lastPos)
 			{
+				if (firstClick)
+				{
+					MakeShape (firstPos);
+					lastPosExists = true;
+					firstClick = false;
+				}
 				EditShape();
 			}
 			
@@ -80,14 +85,15 @@ public class draw : MonoBehaviour {
 		
 	}
 	//Here's where rendering happens
-	void MakeShape(Vector3 newPos)
+	void MakeShape(Vector3 tempPos)
 	{
 		string shapeType = "Cube";
 		if (inSpace)
 			shapeType = "SpaceCube";
 		shape = (GameObject)Instantiate(Resources.Load(shapeType));
+		shape.transform.position = tempPos;
 		shape.collider2D.enabled = false;
-		lastPos = newPos;
+		lastPos = tempPos;
 	}
 	
 	void AddShape(Vector3 newPos)
@@ -201,28 +207,34 @@ public class draw : MonoBehaviour {
 			//float lengthNow = shape.transform.localScale.x;
 			//float desiredLength = lengthNow + distanceBetweenPos;
 			Vector3 zAxis = new Vector3(0,0,1);
-			float xDist = newPos.x - firstPos.x;
-			float yDist = newPos.y - firstPos.y;
-			distanceBetweenPos = Mathf.Sqrt((xDist*xDist) + (yDist*yDist));
-			//print ("dist = " + distanceBetweenPos);
-			shape.transform.localScale = new Vector3(distanceBetweenPos, 1, 1);
 			
+			//POSITIONING IT IN THE CENTER AND SCALING
+			float xDist = newPos.x - firstPos.x; //CALCULATE DISTANCE BETWEEN CURRENT MOUSE POS AND VERY FIRST POS
+			float yDist = newPos.y - firstPos.y;
+			distanceBetweenPos = Mathf.Sqrt((xDist*xDist) + (yDist*yDist)); //DISTANCE FORMULA
+			shape.transform.localScale = new Vector3(distanceBetweenPos, 1, 1); //SCALE X TO FIT DISTANCE
+			
+			//POSITION IT HALFWAY BETWEEN CURRENT MOUSE POS AND VERY FIRST POS
 			shape.transform.position = new Vector3((newPos.x + firstPos.x)/2, (newPos.y+firstPos.y)/2, 0);
 			
-			Vector2 mousePosition = new Vector2(newPos.x, newPos.y);
-			Vector2 origPosition = new Vector2(firstPos.x, firstPos.y);
-			Vector2 dPos = origPosition - mousePosition; //_arrow.Position - mousePosition;
-			float angle = Mathf.Atan2 (dPos.y, dPos.x);
-			float new_value = angle * Mathf.Rad2Deg;
+			//ROTATION STUFF
+			Vector2 mousePosition = new Vector2(newPos.x, newPos.y); //CURRENT MOUSE POSITION
+			Vector2 origPosition = new Vector2(firstPos.x, firstPos.y); //VERY FIRST MOUSE POSITION
+			Vector2 dPos = origPosition - mousePosition; //MATH STUFF
+			float angle = Mathf.Atan2 (dPos.y, dPos.x); //GET ANGLE
+			float new_value = angle * Mathf.Rad2Deg; //CONVERT TO DEGREES			
+			Quaternion rotation2 = Quaternion.Euler(new Vector3(0f, 0f, new_value)); //Z ROTATION ONLY
+			shape.transform.rotation = rotation2; //SET YOUR ROTATION
 			
-			Quaternion rotation2 = Quaternion.Euler(new Vector3(0f, 0f, new_value));
+			
+			
 			//shape.transform.rotation = rotation2;
 			//shape.transform.rotation = Quaternion.Euler(new Vector3(0f,0f,new_value)); //_arrow.Rotation = (float)Math.Atan2(dPos.Y, dPos.X);
 			
 			//float angle = Mathf.Atan2(diff.y, diff.x);
 			//transform.rotation = Quaternion.Euler(0f, 0f, RadToDeg(angle));
 			
-			shape.transform.rotation = rotation2;
+			
 			finalRotation = rotation2;
 			/*
 			float deltaY = firstPos.y - newPos.y; //P2_y - P1_y;

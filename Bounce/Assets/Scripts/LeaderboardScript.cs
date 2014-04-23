@@ -345,10 +345,10 @@ public class LeaderboardScript : MonoBehaviour {
 
 			//Screenshot button
 
-			if(GUI.Button (new Rect ((Screen.width-(861.0f/5.0f*resx))/2.0f, 85.0f*resy + 345.0f/8.0f*resy + 582.0f/3.5f*resy, 861.0f/5.0f*resx, 204.0f/5.0f*resy), firstText, customSkin.customStyles[3])){
+			/*if(GUI.Button (new Rect ((Screen.width-(861.0f/5.0f*resx))/2.0f, 85.0f*resy + 345.0f/8.0f*resy + 582.0f/3.5f*resy, 861.0f/5.0f*resx, 204.0f/5.0f*resy), firstText, customSkin.customStyles[3])){
 				print ("Taking screenshot.. JK");
 				Application.CaptureScreenshot("ss.png");
-			}
+			}*/
 
 			if(score > PlayerPrefs.GetFloat("HighScore10") && !changedLocal){	//Local Leaderboard Stuff
 				setLocalLeaderboard();

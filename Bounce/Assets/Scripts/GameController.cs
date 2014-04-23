@@ -144,6 +144,7 @@ public class GameController : MonoBehaviour {
 
 		int fontSize = (int)(15.0f*resx);
 		customStyle.fontSize = fontSize;
+		customSkin.customStyles [12].fontSize = fontSize;
 			//(int)(camVect.x/2.0f);
 		//customStyle.normal = null;
 
@@ -196,9 +197,9 @@ public class GameController : MonoBehaviour {
 				GUI.Box (new Rect (0.0f, fontSize+5.0f, 70*resx, 15*resy), threadLeft, customStyle);
 			}
 			else if (isGameOver) {
-				customSkin.customStyles[12].overflow.left = theScore.Length + 30 + fontSize;
-				customSkin.customStyles[12].overflow.right = theScore.Length + 30 + fontSize;
-				GUI.Box (new Rect (Screen.width/2 - (theScore.Length + 30), fontSize+10.0f, 70*resx, 15*resy), theScore, customSkin.customStyles[12]);
+				//customSkin.customStyles[12].overflow.left = theScore.Length + 30;
+				//customSkin.customStyles[12].overflow.right = theScore.Length + 30;
+				GUI.Box (new Rect (Screen.width/2 - (((theScore.Length*fontSize)/2 + fontSize*(2*resx))/2), fontSize+10.0f, ((theScore.Length*fontSize)/2 + fontSize*(2*resx)), 20*resy), theScore, customSkin.customStyles[12]);
 				//GUI.Box (new Rect (Screen.width/2 - 70, fontSize+5.0f, 70*resx, 15*resy), threadLeft, customStyle);
 				//GUI.Box (new Rect (0.0f, Screen.height/2, Screen.width, Screen.height/4), "Game Over");
 				if(!leaderboardCreated){
@@ -215,7 +216,6 @@ public class GameController : MonoBehaviour {
 		}
 	}
 	public void ResetGame() {
-		GetComponent<draw>().inSpace = false;
 		GameObject.Find ("GroundMusic").GetComponent<AudioSource> ().enabled = false;
 		GameObject.Find ("GroundMusic").GetComponent<AudioSource> ().enabled = true;
 		deletables = GameObject.FindGameObjectsWithTag("Deletables");

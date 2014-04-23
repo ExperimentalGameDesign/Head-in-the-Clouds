@@ -199,6 +199,7 @@ public class GameController : MonoBehaviour {
 				player.rigidbody2D.velocity = Vector2.zero;
 				player.rigidbody2D.isKinematic = true;
 				player.transform.rotation = Quaternion.Euler(0,0,0);
+				player.transform.localScale = new Vector3(1.4f,1.4f,1.0f);
 				player.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2 + (127*resy), 10));
 
 				GUI.Box (new Rect (Screen.width/2 - (((theScore.Length*fontSize)/2 + fontSize*(2*resx))/2), fontSize+10.0f, ((theScore.Length*fontSize)/2 + fontSize*(2*resx)), 20*resy), theScore, customSkin.customStyles[12]);
@@ -223,6 +224,7 @@ public class GameController : MonoBehaviour {
 		GetComponent<draw>().inSpace = false;
 		player.rigidbody2D.isKinematic = false;
 		player.rigidbody2D.gravityScale = 5;
+		player.transform.localScale = new Vector3(1.0f,1.0f,1.0f);
 		deletables = GameObject.FindGameObjectsWithTag("Deletables");
 		for (int i = 0; i < deletables.Length; i++)
 			GameObject.Destroy(deletables[i]);

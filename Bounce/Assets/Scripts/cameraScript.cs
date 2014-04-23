@@ -97,6 +97,9 @@ public class cameraScript : MonoBehaviour {
 					
 					picturePlane.renderer.material.mainTexture = finalCamTexture;
 
+					if (!GameObject.Find("GroundTexture").audio.isPlaying) {
+						GameObject.Find("GroundTexture").audio.Play();
+					}
 					Texture2D text = new Texture2D(finalCamTexture.width, finalCamTexture.height, TextureFormat.ARGB32, false); //finalCamTexture.width, finalCamTexture.height, TextureFormat.ARGB32, false);
 					Color[] textureData = finalCamTexture.GetPixels();
 					text.SetPixels(textureData);
